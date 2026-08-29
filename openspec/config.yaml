@@ -1,0 +1,59 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+# Example:
+#   context: |
+#     Tech stack: TypeScript, React, Node.js
+#     We use conventional commits
+#     Domain: e-commerce platform
+context: |
+  Domain: Bible arcing/bracketing, the discourse-analysis method developed by
+  Daniel Fuller and popularized by John Piper and Thomas Schreiner. No free,
+  open-source tool exists today; the only paid option is Biblearc.
+
+  Two data models, kept strictly separate — never conflate them in a spec:
+  - Discourse analysis (arcing/bracketing): propositions (clauses) linked by
+    the canonical 18 logical relationships (+4 extended), rendered as arcs or
+    brackets — one model, two view layers, not two features.
+  - Grammatical/sentence diagramming: word-level syntax (Reed-Kellogg style),
+    requires morphological tagging. Deferred — out of scope until morphology
+    data is sourced and licensed. See docs/reference/model-notes.md.
+
+  Source text: SBL Greek New Testament (SBLGNT), CC BY 4.0. Greek only for
+  v1; Hebrew is deferred pending an openly-licensed Leningrad Codex-based
+  text. Bundling SBLGNT requires retaining its copyright notice, license
+  link, CC BY 4.0 statement, and a note of any modifications — both in-repo
+  and in the shipped UI.
+
+  Structural note: Bilateral is the one relationship with arity > 2 (one
+  proposition supports two parents), so the proposition model cannot be a
+  strict parent-child tree — see docs/reference/model-notes.md.
+
+  Canonical references: docs/reference/logical-relationships.md (the 18+4
+  taxonomy) and docs/reference/model-notes.md (findings that constrain the
+  data model). Read these before proposing changes to the taxonomy or
+  proposition model.
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing

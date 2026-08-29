@@ -1,0 +1,748 @@
+{
+  "source": "Greek Conjunctions and their associated logical relationships (Biblearc bracketing sheet)",
+  "source_pdf": "docs/source-pdfs/greek-conjunctions-bracketing-sheet.pdf",
+  "source_url": "https://s3.amazonaws.com/cdn.gospelpaths.com/tenants/5/1741980881175-Greekconjunctionsbracketingsheetsheetnewlogo.pdf",
+  "note": "Extracted programmatically from the PDF via ToUnicode CMap decoding + positional column reconstruction. Spot-checked, not exhaustively verified. Suggestive, not determinative.",
+  "conjunctions": [
+    {
+      "conjunction": "ἀλλά",
+      "relationships": [
+        {
+          "rel": "-/+",
+          "example": "Mt 7:21"
+        },
+        {
+          "rel": "Csv",
+          "example": "Mt 9:18"
+        }
+      ]
+    },
+    {
+      "conjunction": "ἄρα",
+      "relationships": [
+        {
+          "rel": "∴",
+          "example": "2 Th 2:15"
+        },
+        {
+          "rel": "If/Th",
+          "example": "1 Co 15:15"
+        }
+      ]
+    },
+    {
+      "conjunction": "ἄχρι",
+      "relationships": [
+        {
+          "rel": "T",
+          "example": "Lk 21:24"
+        }
+      ]
+    },
+    {
+      "conjunction": "γάρ",
+      "relationships": [
+        {
+          "rel": "Id/Exp",
+          "example": "Mt 3:3"
+        },
+        {
+          "rel": "G",
+          "example": "Jn 3:19"
+        }
+      ]
+    },
+    {
+      "conjunction": "δέ",
+      "relationships": [
+        {
+          "rel": "S",
+          "example": "Mt 16:14"
+        },
+        {
+          "rel": "P",
+          "example": "Mt 1:13"
+        },
+        {
+          "rel": "-/+",
+          "example": "2 Co 10:1"
+        },
+        {
+          "rel": "Id/Exp",
+          "example": "1 Co 10:11"
+        }
+      ]
+    },
+    {
+      "conjunction": "διό",
+      "relationships": [
+        {
+          "rel": "∴",
+          "example": "Php 2:9"
+        },
+        {
+          "rel": "BL",
+          "example": "Ac 26:3"
+        }
+      ]
+    },
+    {
+      "conjunction": "διοπερ",
+      "relationships": [
+        {
+          "rel": "∴",
+          "example": "1 Co 8:13"
+        }
+      ]
+    },
+    {
+      "conjunction": "διότι",
+      "relationships": [
+        {
+          "rel": "G",
+          "example": "Lk 1:13"
+        },
+        {
+          "rel": "∴",
+          "example": "Ac 20:26"
+        }
+      ]
+    },
+    {
+      "conjunction": "ἐάν",
+      "relationships": [
+        {
+          "rel": "If/Th",
+          "example": "Jn 6:44"
+        },
+        {
+          "rel": "T",
+          "example": "1 Jn 3:2"
+        }
+      ]
+    },
+    {
+      "conjunction": "ἐάνπερ",
+      "relationships": [
+        {
+          "rel": "If/Th",
+          "example": "He 6:3"
+        }
+      ]
+    },
+    {
+      "conjunction": "εἰ",
+      "relationships": [
+        {
+          "rel": "Q/A",
+          "example": "Lk 22:49"
+        },
+        {
+          "rel": "Id/Exp",
+          "example": "Mk 15:44"
+        },
+        {
+          "rel": "If/Th",
+          "example": "Rom 8:11"
+        },
+        {
+          "rel": "Csv",
+          "example": "Lk 18:4"
+        }
+      ]
+    },
+    {
+      "conjunction": "ειπερ",
+      "relationships": [
+        {
+          "rel": "If/Th",
+          "example": "Rom 8:9"
+        }
+      ]
+    },
+    {
+      "conjunction": "εἴτε",
+      "relationships": [
+        {
+          "rel": "A",
+          "example": "Eph 6:8"
+        },
+        {
+          "rel": "If/Th",
+          "example": "2 Co 1:6"
+        }
+      ]
+    },
+    {
+      "conjunction": "ἐπάν",
+      "relationships": [
+        {
+          "rel": "T",
+          "example": "Lk 11:22"
+        }
+      ]
+    },
+    {
+      "conjunction": "ἐπεί",
+      "relationships": [
+        {
+          "rel": "G",
+          "example": "Heb 11:11"
+        }
+      ]
+    },
+    {
+      "conjunction": "ἐπειδή",
+      "relationships": [
+        {
+          "rel": "G",
+          "example": "Ac 14:12"
+        },
+        {
+          "rel": "T",
+          "example": "Lk 7:1"
+        }
+      ]
+    },
+    {
+      "conjunction": "ἐπειδήπερ",
+      "relationships": [
+        {
+          "rel": "G",
+          "example": "Lk 1:1"
+        }
+      ]
+    },
+    {
+      "conjunction": "ἕως",
+      "relationships": [
+        {
+          "rel": "T",
+          "example": "Mt 10:23"
+        }
+      ]
+    },
+    {
+      "conjunction": "ἤ",
+      "relationships": [
+        {
+          "rel": "S",
+          "example": "Jn 7:17"
+        },
+        {
+          "rel": "A",
+          "example": "Rom 6:16"
+        },
+        {
+          "rel": "Cf",
+          "example": "1 Co 7:9"
+        }
+      ]
+    },
+    {
+      "conjunction": "ἡνίκα",
+      "relationships": [
+        {
+          "rel": "T",
+          "example": "2 Co 3:15"
+        }
+      ]
+    },
+    {
+      "conjunction": "ἵνα",
+      "relationships": [
+        {
+          "rel": "Id/Exp",
+          "example": "2 Jn 6"
+        },
+        {
+          "rel": "Ac/Res",
+          "example": "Rev 11:6"
+        },
+        {
+          "rel": "Ac/Pur",
+          "example": "Ga 6:13"
+        }
+      ]
+    },
+    {
+      "conjunction": "κἀγώ",
+      "relationships": [
+        {
+          "rel": "S",
+          "example": "Jn 15:5"
+        }
+      ]
+    },
+    {
+      "conjunction": "καθά",
+      "relationships": [
+        {
+          "rel": "Cf",
+          "example": "Mt 27:10"
+        }
+      ]
+    },
+    {
+      "conjunction": "καθάπερ",
+      "relationships": [
+        {
+          "rel": "Cf",
+          "example": "1 Th 3:12"
+        }
+      ]
+    },
+    {
+      "conjunction": "καθό",
+      "relationships": [
+        {
+          "rel": "Cf",
+          "example": "2 Co 8:12"
+        }
+      ]
+    },
+    {
+      "conjunction": "καθότι",
+      "relationships": [
+        {
+          "rel": "Cf",
+          "example": "Ac 4:35"
+        },
+        {
+          "rel": "G",
+          "example": "Ac 17:31"
+        }
+      ]
+    },
+    {
+      "conjunction": "καθώς",
+      "relationships": [
+        {
+          "rel": "Cf",
+          "example": "Eph 5:25"
+        },
+        {
+          "rel": "T",
+          "example": "Ac 7:17"
+        }
+      ]
+    },
+    {
+      "conjunction": "καθώσπερ",
+      "relationships": [
+        {
+          "rel": "Cf",
+          "example": "Heb 5:4"
+        }
+      ]
+    },
+    {
+      "conjunction": "καί",
+      "relationships": [
+        {
+          "rel": "S",
+          "example": "Mt 7:8"
+        },
+        {
+          "rel": "P",
+          "example": "Rom 8:30"
+        },
+        {
+          "rel": "Id/Exp",
+          "example": "Mt 8:33"
+        },
+        {
+          "rel": "Csv",
+          "example": "Jn 17:25"
+        }
+      ]
+    },
+    {
+      "conjunction": "καίπερ",
+      "relationships": [
+        {
+          "rel": "Csv",
+          "example": "Heb 7:5"
+        }
+      ]
+    },
+    {
+      "conjunction": "καίτοι",
+      "relationships": [
+        {
+          "rel": "Csv",
+          "example": "Heb 4:3"
+        }
+      ]
+    },
+    {
+      "conjunction": "καίτοιγε",
+      "relationships": [
+        {
+          "rel": "Csv",
+          "example": "Jn 4:2"
+        }
+      ]
+    },
+    {
+      "conjunction": "κἀκεῖνος",
+      "relationships": [
+        {
+          "rel": "S",
+          "example": "Jn 7:29"
+        },
+        {
+          "rel": "P",
+          "example": "Mt 15:18"
+        }
+      ]
+    },
+    {
+      "conjunction": "κἄν",
+      "relationships": [
+        {
+          "rel": "If/Th",
+          "example": "Lk 12:38"
+        },
+        {
+          "rel": "Csv",
+          "example": "Mt 26:35"
+        }
+      ]
+    },
+    {
+      "conjunction": "μέντοι",
+      "relationships": [
+        {
+          "rel": "Csv",
+          "example": "Jn 12:42"
+        }
+      ]
+    },
+    {
+      "conjunction": "μέχρι",
+      "relationships": [
+        {
+          "rel": "T",
+          "example": "Ga 4:19"
+        }
+      ]
+    },
+    {
+      "conjunction": "μήδέ",
+      "relationships": [
+        {
+          "rel": "S",
+          "example": "Lk 12:22"
+        },
+        {
+          "rel": "P",
+          "example": "Mt 10:14"
+        }
+      ]
+    },
+    {
+      "conjunction": "μήποτε",
+      "relationships": [
+        {
+          "rel": "Ac/Pur",
+          "example": "Heb 2:1"
+        }
+      ]
+    },
+    {
+      "conjunction": "μήτε",
+      "relationships": [
+        {
+          "rel": "S",
+          "example": "Mt 5:34-35"
+        }
+      ]
+    },
+    {
+      "conjunction": "ὅθεν",
+      "relationships": [
+        {
+          "rel": "∴",
+          "example": "1 Jn 2:18"
+        },
+        {
+          "rel": "L",
+          "example": "Mt 25:24"
+        }
+      ]
+    },
+    {
+      "conjunction": "ὁπότε",
+      "relationships": [
+        {
+          "rel": "T",
+          "example": "Lk 6:3"
+        }
+      ]
+    },
+    {
+      "conjunction": "ὅπου",
+      "relationships": [
+        {
+          "rel": "L",
+          "example": "Ja 3:16"
+        }
+      ]
+    },
+    {
+      "conjunction": "ὅπως",
+      "relationships": [
+        {
+          "rel": "Id/Exp",
+          "example": "Ac 25:3"
+        },
+        {
+          "rel": "Ac/Pur",
+          "example": "2 Th 1:12"
+        }
+      ]
+    },
+    {
+      "conjunction": "ὅταν",
+      "relationships": [
+        {
+          "rel": "T",
+          "example": "Col 3:4"
+        }
+      ]
+    },
+    {
+      "conjunction": "ὅτε",
+      "relationships": [
+        {
+          "rel": "T",
+          "example": "Php 4:15"
+        }
+      ]
+    },
+    {
+      "conjunction": "ὅτι",
+      "relationships": [
+        {
+          "rel": "Id/Exp",
+          "example": "2 Pe 3:5"
+        },
+        {
+          "rel": "G",
+          "example": "1 Pe 5:7"
+        }
+      ]
+    },
+    {
+      "conjunction": "οὗ",
+      "relationships": [
+        {
+          "rel": "L",
+          "example": "Rev 17.15"
+        }
+      ]
+    },
+    {
+      "conjunction": "οὐδέ",
+      "relationships": [
+        {
+          "rel": "S",
+          "example": "Mt 7.18"
+        },
+        {
+          "rel": "P",
+          "example": "Mt 6:26"
+        },
+        {
+          "rel": "If/Th",
+          "example": "Mt 6:15"
+        }
+      ]
+    },
+    {
+      "conjunction": "οὐκοῦν",
+      "relationships": [
+        {
+          "rel": "∴",
+          "example": "Jn 18:37"
+        }
+      ]
+    },
+    {
+      "conjunction": "οὖν",
+      "relationships": [
+        {
+          "rel": "∴",
+          "example": "2 Co 12:9"
+        }
+      ]
+    },
+    {
+      "conjunction": "οὔτε",
+      "relationships": [
+        {
+          "rel": "S",
+          "example": "Ac 2:31"
+        },
+        {
+          "rel": "P",
+          "example": "Mt 12:32"
+        }
+      ]
+    },
+    {
+      "conjunction": "οὕτως",
+      "relationships": [
+        {
+          "rel": "Ac/Mn",
+          "example": "1 Co 8:12"
+        },
+        {
+          "rel": "Cf",
+          "example": "Lk 24:24"
+        }
+      ]
+    },
+    {
+      "conjunction": "πλήν",
+      "relationships": [
+        {
+          "rel": "-/+",
+          "example": "Ac 27:22"
+        },
+        {
+          "rel": "Csv",
+          "example": "Mt 18:7"
+        }
+      ]
+    },
+    {
+      "conjunction": "πόθεν",
+      "relationships": [
+        {
+          "rel": "Q/A",
+          "example": "Jas 4:1"
+        },
+        {
+          "rel": "L",
+          "example": "Rev 2:5"
+        }
+      ]
+    },
+    {
+      "conjunction": "πότερον",
+      "relationships": [
+        {
+          "rel": "A",
+          "example": "Jn 7:17"
+        }
+      ]
+    },
+    {
+      "conjunction": "πρίν",
+      "relationships": [
+        {
+          "rel": "T",
+          "example": "Ac 25:16"
+        }
+      ]
+    },
+    {
+      "conjunction": "τέ",
+      "relationships": [
+        {
+          "rel": "S",
+          "example": "Ac 2:43"
+        },
+        {
+          "rel": "P",
+          "example": "Ac 5:19"
+        }
+      ]
+    },
+    {
+      "conjunction": "τοιγαροῦν",
+      "relationships": [
+        {
+          "rel": "∴",
+          "example": "1 Th 4:8"
+        }
+      ]
+    },
+    {
+      "conjunction": "τοίνυν",
+      "relationships": [
+        {
+          "rel": "∴",
+          "example": "Heb 13:13"
+        }
+      ]
+    },
+    {
+      "conjunction": "τότε",
+      "relationships": [
+        {
+          "rel": "P",
+          "example": "Mt 5:24"
+        },
+        {
+          "rel": "T",
+          "example": "Mt 24:30"
+        }
+      ]
+    },
+    {
+      "conjunction": "ὡς",
+      "relationships": [
+        {
+          "rel": "Cf",
+          "example": "Eph 5:23"
+        },
+        {
+          "rel": "Ac/Pur",
+          "example": "Lk 9:52"
+        },
+        {
+          "rel": "T",
+          "example": "Jn 11:6"
+        }
+      ]
+    },
+    {
+      "conjunction": "ὡσεί",
+      "relationships": [
+        {
+          "rel": "Cf",
+          "example": "Rom 6:13"
+        }
+      ]
+    },
+    {
+      "conjunction": "ὥσπερ",
+      "relationships": [
+        {
+          "rel": "Cf",
+          "example": "Rev 10:3"
+        }
+      ]
+    },
+    {
+      "conjunction": "ὥστε",
+      "relationships": [
+        {
+          "rel": "∴",
+          "example": "Php 4:1"
+        },
+        {
+          "rel": "Ac/Res",
+          "example": "1 Th 1:8"
+        },
+        {
+          "rel": "Ac/Pur",
+          "example": "Mt 10:1"
+        }
+      ]
+    }
+  ]
+}
