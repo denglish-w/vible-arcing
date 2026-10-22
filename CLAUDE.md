@@ -15,6 +15,7 @@ Use the pinned Node (`fnm use`, reads `.node-version`).
 - `npm run lint`: oxlint, configured in `.oxlintrc.json` (ignores `.claude/`, `.agents/`, `.venv/`). There is no ESLint.
 - `npm run format` / `npm run format:check`: Prettier over `src/` and root config files only, not docs.
 - `npm test`: Vitest, passes with no tests. One file: `npx vitest run path/to/file.test.ts`; one test: add `-t "name"`.
+- A Husky `pre-push` hook (`.husky/pre-push`) runs `npm run lint && npm run format:check`; `npm install` wires it up through the `prepare` script.
 - CI is `.github/workflows/ci.yml` (the checks above plus `lat check`, then a Docker image build). `Dockerfile` builds the export and serves `out/` with nginx. Docker is not installed on the dev machine, so the image is only built in CI.
 - Next.js docs for the installed version are in `node_modules/next/dist/docs/`; the `next-devtools` MCP server in `.mcp.json` points to them.
 
