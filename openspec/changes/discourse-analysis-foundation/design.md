@@ -115,10 +115,13 @@ Next.js App Router with `output: 'export'`, deployable to any static host. The e
 - **Persistence:** analyses in IndexedDB (Dexie) with export/import to a file — which is what the *Analysis portability* requirement actually asks for. `localStorage` is too small and too synchronous for this.
 - **Rendering:** SVG first for both arc and bracket views; hit-testing is straightforward and sufficient at expected passage sizes. Canvas only if profiling demands it.
 - **Corpus:** fetched as static JSON from `public/corpus/`, per book.
+- **Tooling:** npm as package manager, with `package-lock.json` committed. Node is pinned to the 26 line through `.node-version`, which fnm reads. Tests run on Vitest, including the shared valid/invalid analysis fixtures from decision 7.
 
 This keeps v1 free to run and the editor fully functional before any persistence decision. Persistence, accounts, and suggestion are additive; Next.js leaves a path to route handlers or a separate service without a rewrite.
 
 *Alternative considered.* A Vite SPA — lighter for a client-heavy tool. Next.js was chosen for shareable/indexable per-passage routes and the easier path to server features later.
+
+*Alternatives considered for tooling.* Bun and pnpm — rejected; the app ships as static files so there is no runtime to speed up, and Next.js builds run on Node regardless. npm is already installed and familiar to contributors to an open-source project.
 
 ## Risks / Trade-offs
 

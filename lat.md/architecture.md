@@ -8,6 +8,12 @@ A Next.js App Router app exported as static files, with no application server. T
 
 The build uses `output: 'export'` so it can be hosted on any static host, which keeps the project free to run. Server components and server actions are not relied on. If the framework becomes a burden, the app should remain portable to a plain SPA.
 
+## Toolchain
+
+npm manages packages with a committed `package-lock.json`, Node is pinned to the 26 line in `.node-version` for fnm, and Vitest runs the tests.
+
+Bun and pnpm were rejected because the app ships as static files, so there is no runtime to speed up and Next.js builds run on Node regardless. The shared valid and invalid analysis fixtures run under Vitest.
+
 ## Editor state and persistence
 
 Editing is a rapid sequence of small structural edits, so every edit must resolve locally with no network round-trip.

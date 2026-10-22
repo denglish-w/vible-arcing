@@ -16,6 +16,7 @@ Changes are planned with OpenSpec before code is written. Slash commands live in
 
 - Next.js (App Router) + TypeScript, static export (`output: 'export'`), no application server. The editor is client-side (Zustand + Immer, IndexedDB via Dexie, SVG rendering).
 - Python is used only for the offline corpus-ingest script (`scripts/ingest/`), which turns MACULA Greek `SBLGNT/lowfat` XML into per-book JSON under `public/corpus/`. `.venv/` is the local Python environment.
+- Tooling: npm with a committed `package-lock.json`, Node pinned to 26 via `.node-version` (use `fnm use`), Vitest for tests.
 - Validation is one pure-TypeScript module shared by the editor and the import path.
 - Taxonomy and conjunction cue data are JSON in `docs/data/`; TypeScript types are generated from it, never hand-written.
 
