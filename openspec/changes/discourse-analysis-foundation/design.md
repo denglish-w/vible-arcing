@@ -115,11 +115,17 @@ Next.js App Router with `output: 'export'`, deployable to any static host. The e
 - **Persistence:** analyses in IndexedDB (Dexie) with export/import to a file — which is what the *Analysis portability* requirement actually asks for. `localStorage` is too small and too synchronous for this.
 - **Rendering:** SVG first for both arc and bracket views; hit-testing is straightforward and sufficient at expected passage sizes. Canvas only if profiling demands it.
 - **Corpus:** fetched as static JSON from `public/corpus/`, per book.
+- **Styling:** Tailwind CSS v4 for application chrome, wired through `@tailwindcss/turbopack`. Relationship colours and other renderer styling use CSS custom properties defined in `@theme`, so the arc and bracket renderers do not depend on utility classes.
+- **Config:** `next.config.ts` sets `output: 'export'`, `images.unoptimized` (the default image loader needs a server), and pins `turbopack.root`. The scaffold's `cacheComponents` and `partialPrefetching` options are removed; they are server caching features that a static export does not use.
+- **Linting and formatting:** oxlint lints (typescript, react, nextjs, jsx-a11y and vitest plugins, with `rules-of-hooks` and `exhaustive-deps` as errors) and Prettier formats. ESLint and `eslint-config-next` are not used.
+- **CI and deployment:** GitHub Actions runs lint, format check, tests, the static build and `lat check`, then builds a Docker image. The image is a two-stage build (Node 26 builds the export, nginx serves `out/`). Publishing the image and choosing a deploy target are deferred until hosting cost is weighed; the project is only scaffolded so far. CI runs on GitHub Actions.
 - **Tooling:** npm as package manager, with `package-lock.json` committed. Node is pinned to the 26 line through `.node-version`, which fnm reads. Tests run on Vitest, including the shared valid/invalid analysis fixtures from decision 7.
 
 This keeps v1 free to run and the editor fully functional before any persistence decision. Persistence, accounts, and suggestion are additive; Next.js leaves a path to route handlers or a separate service without a rewrite.
 
 *Alternative considered.* A Vite SPA — lighter for a client-heavy tool. Next.js was chosen for shareable/indexable per-passage routes and the easier path to server features later.
+
+*Alternatives considered for linting.* ESLint with `eslint-config-next` — rejected in favour of oxlint, which is faster and was confirmed to flag hook-rule, a11y and Next image violations on a probe file. Biome — rejected; `oxfmt` and Biome's formatter are less established than Prettier.
 
 *Alternatives considered for tooling.* Bun and pnpm — rejected; the app ships as static files so there is no runtime to speed up, and Next.js builds run on Node regardless. npm is already installed and familiar to contributors to an open-source project.
 

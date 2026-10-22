@@ -1,18 +1,24 @@
 # Architecture
 
-How the app is built and where code runs. Nothing is implemented yet; this describes the design in `openspec/changes/discourse-analysis-foundation/design.md`.
+How the app is built and where code runs. The Next.js app is scaffolded, but the editor, proposition model and ingest are not built yet. The design is in `openspec/changes/discourse-analysis-foundation/design.md`.
 
 ## Static client-side app
 
 A Next.js App Router app exported as static files, with no application server. The editor runs entirely in the browser.
 
-The build uses `output: 'export'` so it can be hosted on any static host, which keeps the project free to run. Server components and server actions are not relied on. If the framework becomes a burden, the app should remain portable to a plain SPA.
+The build uses `output: 'export'` so it can be hosted on any static host, which keeps the project free to run, and writes the site to `out/`. Images use `images.unoptimized` because the default loader needs a server, and `cacheComponents` is left off. Server components and server actions are not relied on. If the framework becomes a burden, the app should remain portable to a plain SPA.
 
 ## Toolchain
 
-npm manages packages with a committed `package-lock.json`, Node is pinned to the 26 line in `.node-version` for fnm, and Vitest runs the tests.
+npm manages packages with a committed `package-lock.json`, Node is pinned to the 26 line in `.node-version` for fnm, Vitest runs the tests, oxlint lints, Prettier formats, and Tailwind v4 styles the application chrome.
 
-Bun and pnpm were rejected because the app ships as static files, so there is no runtime to speed up and Next.js builds run on Node regardless. The shared valid and invalid analysis fixtures run under Vitest.
+Bun and pnpm were rejected because the app ships as static files, so there is no runtime to speed up and Next.js builds run on Node regardless. The shared valid and invalid analysis fixtures run under Vitest. Renderer colours come from CSS custom properties in the Tailwind theme rather than utility classes, so the SVG renderers stay independent of Tailwind. `@types/node` tracks the Node major so it satisfies Vitest's peer range. ESLint is not used: oxlint's `.oxlintrc.json` enables the typescript, react, nextjs, jsx-a11y and vitest plugins, and the hook rules are set to error.
+
+## Container and CI
+
+A GitHub Actions workflow checks every push and pull request, then builds a Docker image that serves the static export with nginx.
+
+The `check` job runs lint, the Prettier check, tests, the build and `lat check` on the Node version in `.node-version`. The `image` job runs only after it passes and builds the `Dockerfile` without pushing. The Dockerfile builds on `node:26-slim` and copies `out/` into `nginx:stable-alpine`, with `nginx.conf` resolving the export's `route.html` files and caching hashed assets. Where the image is published and deployed is undecided.
 
 ## Editor state and persistence
 

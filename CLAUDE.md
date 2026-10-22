@@ -4,7 +4,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-Pre-implementation. The repo holds research (`docs/`) and one OpenSpec change (`openspec/changes/discourse-analysis-foundation/`). There is no application code, `package.json`, or test suite yet, so there are no build/lint/test commands to record. Add them here when the Next.js app and ingest script are scaffolded.
+Early. The Next.js app is scaffolded (a placeholder home page only) and builds as a static export. The editor, proposition model, validation module and ingest script are not written yet. Research lives in `docs/`; the planned design is one OpenSpec change (`openspec/changes/discourse-analysis-foundation/`).
+
+## Commands
+
+Use the pinned Node (`fnm use`, reads `.node-version`).
+
+- `npm run dev`: dev server. Next.js may append its own agent block to `AGENTS.md` when it runs.
+- `npm run build`: static export to `out/`.
+- `npm run lint`: oxlint, configured in `.oxlintrc.json` (ignores `.claude/`, `.agents/`, `.venv/`). There is no ESLint.
+- `npm run format` / `npm run format:check`: Prettier over `src/` and root config files only, not docs.
+- `npm test`: Vitest, passes with no tests. One file: `npx vitest run path/to/file.test.ts`; one test: add `-t "name"`.
+- CI is `.github/workflows/ci.yml` (the checks above plus `lat check`, then a Docker image build). `Dockerfile` builds the export and serves `out/` with nginx. Docker is not installed on the dev machine, so the image is only built in CI.
+- Next.js docs for the installed version are in `node_modules/next/dist/docs/`; the `next-devtools` MCP server in `.mcp.json` points to them.
 
 The product is a free, open-source web app for Bible arcing and bracketing (discourse analysis). Grammatical diagramming is deferred.
 
@@ -12,11 +24,11 @@ The product is a free, open-source web app for Bible arcing and bracketing (disc
 
 Changes are planned with OpenSpec before code is written. Slash commands live in `.claude/commands/opsx/` (`/opsx:propose`, `/opsx:apply`, `/opsx:archive`, etc.). A change's `proposal.md`, `design.md` and `specs/` are the source of truth for what to build; `openspec/config.yaml` carries project context shown to the model when generating artifacts.
 
-## Planned stack (see `design.md`)
+## Stack (see `design.md`)
 
-- Next.js (App Router) + TypeScript, static export (`output: 'export'`), no application server. The editor is client-side (Zustand + Immer, IndexedDB via Dexie, SVG rendering).
+- Next.js (App Router) + TypeScript, static export (`output: 'export'`), no application server. The editor will be client-side (Zustand + Immer, IndexedDB via Dexie, SVG rendering), styled with Tailwind v4 for app chrome and CSS custom properties for renderer colours.
 - Python is used only for the offline corpus-ingest script (`scripts/ingest/`), which turns MACULA Greek `SBLGNT/lowfat` XML into per-book JSON under `public/corpus/`. `.venv/` is the local Python environment.
-- Tooling: npm with a committed `package-lock.json`, Node pinned to 26 via `.node-version` (use `fnm use`), Vitest for tests.
+- Tooling: npm with a committed `package-lock.json`, Node pinned to 26 via `.node-version` (use `fnm use`), Vitest for tests, oxlint for linting, Prettier for formatting.
 - Validation is one pure-TypeScript module shared by the editor and the import path.
 - Taxonomy and conjunction cue data are JSON in `docs/data/`; TypeScript types are generated from it, never hand-written.
 
