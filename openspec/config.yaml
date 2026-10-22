@@ -27,9 +27,19 @@ context: |
   link, CC BY 4.0 statement, and a note of any modifications — both in-repo
   and in the shipped UI.
 
-  Structural note: Bilateral is the one relationship with arity > 2 (one
-  proposition supports two parents), so the proposition model cannot be a
-  strict parent-child tree — see docs/reference/model-notes.md.
+  Tech stack: Next.js (App Router) + TypeScript, deployed as a static export
+  (output: 'export') — no application server. The editor is client-side:
+  Zustand + Immer state, IndexedDB (Dexie) for local-first persistence, SVG
+  rendering. Python is used only for the offline corpus-ingest script
+  (scripts/ingest/), which emits static per-book JSON to public/corpus/.
+  Validation is a single pure-TypeScript module shared by the editor and the
+  import path. The taxonomy and conjunction cue table are JSON in docs/data/,
+  with TypeScript types generated from them — never hand-transcribed.
+
+  Structural note: Bilateral is the one relationship with arity > 2. It is
+  modelled as a single ternary node (before, supporter, after) so the
+  proposition model stays a containment tree — see design.md decision 2 and
+  docs/reference/model-notes.md.
 
   Canonical references: docs/reference/logical-relationships.md (the 18+4
   taxonomy) and docs/reference/model-notes.md (findings that constrain the
