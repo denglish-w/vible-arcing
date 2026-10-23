@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "959d45de-80e5-400e-9847-3553154cd304",
+  "id": "9edb9beb-bfb9-4e6c-b323-a35ffddf0b86",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "attribution": {
@@ -52,6 +52,13 @@
         "modified": {
           "name": "modified",
           "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "modifications": {
+          "name": "modifications",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -275,7 +282,7 @@
           "name": "gloss",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "pos": {

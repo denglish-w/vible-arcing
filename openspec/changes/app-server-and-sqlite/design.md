@@ -67,7 +67,7 @@ Saved work refers to words only by MACULA id, and there are no SQL joins across 
 
 ### 4. Corpus format v1 and the corpus build
 
-**Format.** The *Corpus format* requirement moves from `base44-look-and-reader` into `text/corpus-store`, because the store is now its only consumer. `src/lib/corpus/format.ts` holds the v1 types and the one `parseChapter()`; base44's planned `types.ts` and parser are dropped (task 8.3). A chapter file is `corpus/v1/<BOOK>/<chapter>.json` with a `format: 1` field and the chapter's words in reading order. `<BOOK>` is the upper-case code used throughout the store (for example `PHP`). Lower-casing for URLs is a routing concern.
+**Format.** The *Corpus format* requirement moves from `base44-look-and-reader` into `text/corpus-store`, because the store is now its only consumer. `src/lib/corpus/format.ts` holds the v1 types and the one `parseChapter()`; base44's planned `types.ts` and parser are dropped (task 8.3). A chapter file is `corpus/v1/<BOOK>/<chapter>.json` with a `format: 1` field and the chapter's words in reading order. `<BOOK>` is the upper-case code used throughout the store (for example `PHP`). Lower-casing for URLs is a routing concern. Three refinements to the v1 shape in `base44-look-and-reader` decision 6: `after` is everything between a word and the next (MACULA's punctuation plus the space SBLGNT puts after it, so joining `text + after` reproduces the text, with elision marks such as ’ in `after`); `gloss` is omitted when MACULA has none (one word in Philippians 1), and each `attribution.json` dataset also carries `modifications`, the text of its modification note, because the credits must say what was changed, not only that something was.
 
 **Canonical books.** `src/lib/books.ts` lists the 27 New Testament books in canonical order with their codes and chapter counts. It moves here from `base44-look-and-reader` (which later adds names, Greek titles and groups to the same file) so the store can tell a chapter that does not exist from one that has not been ingested. The seed loads it into a `books` table.
 
@@ -88,8 +88,8 @@ The running server keeps its open handle on the old file (on POSIX the renamed-o
 
 - `books`: `code` (primary key), `seq`, `chapter_count`.
 - `chapters`: `(book, chapter)` primary key and `word_count`. A row means "ingested".
-- `words`: `id` (MACULA id, primary key), `book`, `chapter`, `verse`, `seq`, `text`, `after`, `lemma`, `gloss`, `pos`, and nullable `person`, `number`, `gender`, `case`, `tense`, `voice`, `mood` and `degree`. Indexed on `(book, chapter, seq)`.
-- `attribution`: one row per dataset, with the fields from the attribution JSON.
+- `words`: `id` (MACULA id, primary key), `book`, `chapter`, `verse`, `seq`, `text`, `after`, `lemma`, `pos`, and nullable `gloss`, `person`, `number`, `gender`, `case`, `tense`, `voice`, `mood` and `degree`. Indexed on `(book, chapter, seq)`.
+- `attribution`: one row per dataset, with the fields from the attribution JSON, including `modifications`.
 - `build`: a single row describing the build.
 
 Clause and conjunction data are added by the ingest change as new tables or columns through new migrations. They are reference data only (see proposal). There is no UBS column to drop, because ingest never emits one, and a test asserts that no column name matches `ln` or `domain`.

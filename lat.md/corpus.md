@@ -10,9 +10,9 @@ MACULA supplies per-word lemma and morphology plus explicit clause nodes (`<wg c
 
 ## Ingest pipeline
 
-A Python build script produces compact per-book JSON as static assets: words with stable ids, lemma, morphology, clause boundaries and conjunction classification.
+A stdlib Python script turns MACULA XML into versioned per-chapter JSON under `corpus/v1/`, and `npm run db:seed` loads that into a read-only SQLite store.
 
-It is a build step, never a request path. A database was rejected as premature because the corpus is read-only and versioned with each release. Per-book splitting limits asset size, and ingest keeps only fields the specs require. A transformed corpus beyond a few MB per book should prompt revisiting the format.
+Ingest is a build step, never a request path. Its output (corpus format v1) is committed, so the seed has real input; for now it holds Philippians 1, made by `scripts/ingest/sample_chapter.py` from a pinned MACULA commit. Joining each word's `text` and `after` reproduces the SBLGNT text. The seed (`src/db/seed.ts`) checks every file with the one parser in `src/lib/corpus/format.ts`, builds `data/corpus.sqlite` in a temp file and renames it into place, so a failed build leaves the old store. The store is kept apart from users' saved work, so a rebuild cannot touch it. Clause and conjunction data arrive with the full ingest as reference data only.
 
 ## Stable word identifiers
 

@@ -6,6 +6,7 @@ CREATE TABLE `attribution` (
 	`license_url` text NOT NULL,
 	`statement` text NOT NULL,
 	`modified` integer NOT NULL,
+	`modifications` text NOT NULL,
 	`url` text NOT NULL
 );
 --> statement-breakpoint
@@ -42,7 +43,7 @@ CREATE TABLE `words` (
 	`text` text NOT NULL,
 	`after` text NOT NULL,
 	`lemma` text NOT NULL,
-	`gloss` text NOT NULL,
+	`gloss` text,
 	`pos` text NOT NULL,
 	`person` text,
 	`number` text,

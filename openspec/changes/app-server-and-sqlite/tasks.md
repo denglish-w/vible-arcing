@@ -17,12 +17,12 @@
 
 ## 3. Corpus store
 
-- [ ] 3.1 `scripts/ingest/sample_chapter.py`: emit Philippians 1 in corpus format v1 plus `attribution.json` into `corpus/v1/` from a pinned MACULA commit (field whitelist, no `ln`/`domain`), run with `.venv/bin/python -I`; spot-check ids, punctuation, and a verb, participle and noun against MACULA; add `scripts/ingest/README.md`
-- [ ] 3.2 `src/lib/books.ts`: the 27 books in canonical order with upper-case codes and chapter counts
-- [ ] 3.3 `src/lib/corpus/format.ts`: v1 types and the single `parseChapter()`, which rejects unknown versions by name
-- [ ] 3.4 `scripts/seed-corpus.ts` (`db:seed`) per design decision 4: clean temp file, `journal_mode = DELETE`, migrations, books, one transaction per book, derived `seq`, `build` row with ingest hash, integrity check, close, remove stale `-wal`/`-shm`, rename; clean up on failure
-- [ ] 3.5 `src/db/corpus.ts`: `listBooks()`, `getChapter(book, chapter)` returning words in order, "unavailable" or "does not exist", `getWord(id)`, `wordsExist(ids)`, `getAttribution()`
-- [ ] 3.6 Tests: no committed `corpus/v1/**/*.json` has an `ln` or `domain` key; repeatable build gives identical rows in every table; unknown format refused with the old store intact; failure mid-build leaves the old store openable; no `ln`/`domain` columns; attribution has SBLGNT and MACULA; chapter ordering; "unavailable" vs "does not exist"; every `chapters` row's `word_count` matches its words, and no words exist for a chapter without a row
+- [x] 3.1 `scripts/ingest/sample_chapter.py`: emit Philippians 1 in corpus format v1 plus `attribution.json` into `corpus/v1/` from a pinned MACULA commit (field whitelist, no `ln`/`domain`), run with `python3 -I` (stdlib only); spot-check ids, punctuation, and a verb, participle and noun against MACULA; add `scripts/ingest/README.md`
+- [x] 3.2 `src/lib/books.ts`: the 27 books in canonical order with upper-case codes and chapter counts
+- [x] 3.3 `src/lib/corpus/format.ts`: v1 types and the single `parseChapter()`, which rejects unknown versions by name
+- [x] 3.4 `scripts/seed-corpus.ts` (`db:seed`) per design decision 4: clean temp file, `journal_mode = DELETE`, migrations, books, one transaction per book, derived `seq`, `build` row with ingest hash, integrity check, close, remove stale `-wal`/`-shm`, rename; clean up on failure
+- [x] 3.5 `src/db/corpus.ts`: `listBooks()`, `getChapter(book, chapter)` returning words in order, "unavailable" or "does not exist", `getWord(id)`, `wordsExist(ids)`, `getAttribution()`
+- [x] 3.6 Tests: no committed `corpus/v1/**/*.json` has an `ln` or `domain` key; repeatable build gives identical rows in every table; unknown format refused with the old store intact; failure mid-build leaves the old store openable; no `ln`/`domain` columns; attribution has SBLGNT and MACULA; chapter ordering; "unavailable" vs "does not exist"; every `chapters` row's `word_count` matches its words, and no words exist for a chapter without a row
 
 ## 4. Saved-work storage
 

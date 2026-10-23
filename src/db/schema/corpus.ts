@@ -46,7 +46,8 @@ export const words = sqliteTable(
     /** Following punctuation and space, verbatim. */
     after: text().notNull(),
     lemma: text().notNull(),
-    gloss: text().notNull(),
+    /** Absent when MACULA has no gloss for the word. */
+    gloss: text(),
     pos: text().notNull(),
     person: text(),
     number: text(),
@@ -73,6 +74,8 @@ export const attribution = sqliteTable("attribution", {
   licenseUrl: text("license_url").notNull(),
   statement: text().notNull(),
   modified: integer({ mode: "boolean" }).notNull(),
+  /** What was changed, shown on the credits page. */
+  modifications: text().notNull(),
   url: text().notNull(),
 });
 
