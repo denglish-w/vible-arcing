@@ -9,7 +9,7 @@
       "parchment": { "role": "neutral", "displayName": "Parchment", "canonical": "hsl(40 36% 93%)", "tonalRamp": ["#342b18", "#574729", "#796439", "#9c8149", "#baa16d", "#cebc97", "#e3d9c4", "#f7f4ee"] },
       "cream": { "role": "neutral", "displayName": "Cream", "canonical": "hsl(44 50% 96%)" },
       "ink": { "role": "neutral", "displayName": "Ink", "canonical": "hsl(30 14% 15%)", "tonalRamp": ["#2c2621", "#494037", "#66594d", "#837363", "#a39485", "#bdb2a8", "#dad4ce", "#f4f2f0"] },
-      "faded-ink": { "role": "neutral", "displayName": "Faded Ink", "canonical": "hsl(38 14% 42%)", "tonalRamp": ["#2c2821", "#494237", "#665d4d", "#837763", "#a39885", "#bdb5a8", "#dad5ce", "#f4f3f0"] },
+      "faded-ink": { "role": "neutral", "displayName": "Faded Ink", "canonical": "hsl(38 14% 40%)", "tonalRamp": ["#2c2821", "#494237", "#665d4d", "#837763", "#a39885", "#bdb5a8", "#dad5ce", "#f4f3f0"] },
       "rule-line": { "role": "neutral", "displayName": "Rule Line", "canonical": "hsl(38 22% 82%)", "tonalRamp": ["#2f281e", "#4e4332", "#6d5e46", "#8c795a", "#ab9a7c", "#c3b7a2", "#ddd6ca", "#f5f3ef"] },
       "amber-wash": { "role": "secondary", "displayName": "Amber Wash", "canonical": "hsl(40 50% 88%)", "tonalRamp": ["#392d13", "#604a20", "#86682d", "#ac8639", "#c9a65e", "#d9bf8c", "#e9dbbe", "#f9f4ec"] },
       "rose-highlight": { "role": "secondary", "displayName": "Rose Highlight", "canonical": "hsl(0 60% 90%)" },
@@ -61,7 +61,7 @@
       "refersTo": "option-chip",
       "description": "Theme, spacing and font choices in the Display menu.",
       "html": "<div class=\"ds-chips\"><button class=\"ds-chip ds-chip-on\">Light</button><button class=\"ds-chip\">Dark</button><button class=\"ds-chip\">Sepia</button></div>",
-      "css": ".ds-chips { display: flex; gap: 6px; width: 260px; } .ds-chip { flex: 1; padding: 4px 8px; border: 1px solid hsl(38 22% 82%); border-radius: 6px; background: transparent; color: hsl(38 14% 42%); font-family: 'EB Garamond', Georgia, serif; font-size: 12px; transition: color 150ms ease; cursor: pointer; } .ds-chip:hover { color: hsl(30 14% 15%); } .ds-chip-on { border-color: hsl(0 62% 32%); background: hsl(0 62% 32% / 0.1); color: hsl(0 62% 32%); }"
+      "css": ".ds-chips { display: flex; gap: 6px; width: 260px; } .ds-chip { flex: 1; padding: 4px 8px; border: 1px solid hsl(38 22% 82%); border-radius: 6px; background: transparent; color: hsl(38 14% 40%); font-family: 'EB Garamond', Georgia, serif; font-size: 12px; transition: color 150ms ease; cursor: pointer; } .ds-chip:hover { color: hsl(30 14% 15%); } .ds-chip-on { border-color: hsl(0 62% 32%); background: hsl(0 62% 32% / 0.1); color: hsl(0 62% 32%); }"
     },
     {
       "name": "Mode Control",
@@ -69,14 +69,14 @@
       "refersTo": "mode-segment-active",
       "description": "Segmented switch between Reading, Diagramming and Arcing.",
       "html": "<div class=\"ds-mode\"><button class=\"ds-seg ds-seg-on\">Reading</button><button class=\"ds-seg\">Diagramming</button><button class=\"ds-seg\">Arcing</button></div>",
-      "css": ".ds-mode { display: inline-flex; align-items: center; height: 36px; padding: 2px; border: 1px solid hsl(38 22% 82%); border-radius: 6px; background: hsl(40 20% 86% / 0.4); } .ds-seg { height: 32px; padding: 0 12px; border: none; border-radius: 5px; background: transparent; color: hsl(38 14% 42%); font-family: 'EB Garamond', Georgia, serif; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; transition: color 150ms ease; cursor: pointer; } .ds-seg:hover { color: hsl(30 14% 15%); } .ds-seg-on { background: hsl(40 36% 93%); color: hsl(0 62% 32%); box-shadow: 0 1px 2px rgba(43,38,32,0.08); }"
+      "css": ".ds-mode { display: inline-flex; align-items: center; height: 36px; padding: 2px; border: 1px solid hsl(38 22% 82%); border-radius: 6px; background: hsl(40 20% 86% / 0.4); } .ds-seg { height: 32px; padding: 0 12px; border: none; border-radius: 5px; background: transparent; color: hsl(38 14% 40%); font-family: 'EB Garamond', Georgia, serif; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; transition: color 150ms ease; cursor: pointer; } .ds-seg:hover { color: hsl(30 14% 15%); } .ds-seg-on { background: hsl(40 36% 93%); color: hsl(0 62% 32%); box-shadow: 0 1px 2px rgba(43,38,32,0.08); }"
     },
     {
       "name": "Small-Caps Label Strip",
       "kind": "custom",
       "description": "Hairline-ruled strip that opens every content page.",
       "html": "<div class=\"ds-strip\"><span class=\"ds-label\">Contents</span><span class=\"ds-label\">SBLGNT</span></div>",
-      "css": ".ds-strip { display: flex; justify-content: space-between; width: 360px; padding-bottom: 12px; border-bottom: 1px solid hsl(38 22% 82%); } .ds-label { font-family: 'EB Garamond', Georgia, serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: hsl(38 14% 42%); }"
+      "css": ".ds-strip { display: flex; justify-content: space-between; width: 360px; padding-bottom: 12px; border-bottom: 1px solid hsl(38 22% 82%); } .ds-label { font-family: 'EB Garamond', Georgia, serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: hsl(38 14% 40%); }"
     },
     {
       "name": "Chapter Tile",
@@ -91,7 +91,7 @@
       "kind": "custom",
       "description": "Flowing Greek with verse number, hover and selected word, and part-of-speech colouring.",
       "html": "<p class=\"ds-verse\"><sup class=\"ds-vn\">3</sup><span class=\"ds-w\">Εὐχαριστῶ</span> <span class=\"ds-w ds-w-sel\">τῷ</span> <span class=\"ds-w ds-noun\">θεῷ</span> <span class=\"ds-w\">μου</span></p>",
-      "css": ".ds-verse { font-family: 'EB Garamond', serif; font-size: 1.7rem; line-height: 2.1; color: hsl(30 14% 15%); margin: 0; } .ds-vn { margin-right: 6px; font-size: 11px; font-weight: 600; color: hsl(38 14% 42%); font-variant-numeric: tabular-nums; } .ds-w { padding: 0 1px; border-radius: 4px; cursor: pointer; transition: background-color 150ms ease, color 150ms ease; } .ds-w:hover { background: hsl(44 50% 96%); color: hsl(0 62% 32%); } .ds-w-sel { background: hsl(44 50% 96%); color: hsl(0 62% 32%); } .ds-noun { color: hsl(215 68% 42%); text-decoration: underline solid hsl(215 68% 42%); text-underline-offset: 3px; }"
+      "css": ".ds-verse { font-family: 'EB Garamond', serif; font-size: 1.7rem; line-height: 2.1; color: hsl(30 14% 15%); margin: 0; } .ds-vn { margin-right: 6px; font-size: 11px; font-weight: 600; color: hsl(38 14% 40%); font-variant-numeric: tabular-nums; } .ds-w { padding: 0 1px; border-radius: 4px; cursor: pointer; transition: background-color 150ms ease, color 150ms ease; } .ds-w:hover { background: hsl(44 50% 96%); color: hsl(0 62% 32%); } .ds-w-sel { background: hsl(44 50% 96%); color: hsl(0 62% 32%); } .ds-noun { color: hsl(215 68% 42%); text-decoration: underline solid hsl(215 68% 42%); text-underline-offset: 3px; }"
     },
     {
       "name": "Word Bubble",
@@ -99,7 +99,7 @@
       "refersTo": "word-bubble",
       "description": "Word detail popover anchored to the selected word.",
       "html": "<div class=\"ds-bubble\"><div class=\"ds-head\"><span class=\"ds-hw\">θεός, οῦ, ὁ</span></div><div class=\"ds-parse\">noun · dative · singular · masculine</div><div class=\"ds-gloss\">to God</div></div>",
-      "css": ".ds-bubble { position: relative; width: 320px; padding: 12px 16px; border: 1px solid hsl(38 22% 82%); border-radius: 8px; background: hsl(44 50% 96%); color: hsl(30 14% 15%); font-family: 'EB Garamond', Georgia, serif; box-shadow: 0 10px 15px -3px rgba(43,38,32,0.12), 0 4px 6px -4px rgba(43,38,32,0.1); } .ds-hw { font-size: 20px; font-weight: 600; line-height: 1.25; } .ds-parse { margin-top: 6px; font-size: 14px; color: hsl(38 14% 42%); } .ds-gloss { margin-top: 8px; padding-top: 8px; border-top: 1px solid hsl(38 22% 82% / 0.6); font-size: 12px; font-style: italic; color: hsl(30 14% 15% / 0.8); }"
+      "css": ".ds-bubble { position: relative; width: 320px; padding: 12px 16px; border: 1px solid hsl(38 22% 82%); border-radius: 8px; background: hsl(44 50% 96%); color: hsl(30 14% 15%); font-family: 'EB Garamond', Georgia, serif; box-shadow: 0 10px 15px -3px rgba(43,38,32,0.12), 0 4px 6px -4px rgba(43,38,32,0.1); } .ds-hw { font-size: 20px; font-weight: 600; line-height: 1.25; } .ds-parse { margin-top: 6px; font-size: 14px; color: hsl(38 14% 40%); } .ds-gloss { margin-top: 8px; padding-top: 8px; border-top: 1px solid hsl(38 22% 82% / 0.6); font-size: 12px; font-style: italic; color: hsl(30 14% 15% / 0.8); }"
     },
     {
       "name": "Workspace Tool Button",

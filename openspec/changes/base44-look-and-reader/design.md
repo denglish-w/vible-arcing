@@ -2,7 +2,7 @@
 
 See proposal.md for why. The current state:
 
-- **This repo:** Next.js 16 App Router with `output: 'export'`, TypeScript, Tailwind v4 through `@tailwindcss/turbopack`, oxlint, Prettier and Vitest. `src/app/` has only the scaffold's layout and page. There is no corpus yet: the ingest in `discourse-analysis-foundation` is unwritten, and its design leaves the corpus file granularity (per book or per chapter) open.
+- **This repo:** Next.js 16 App Router with `output: 'export'`, TypeScript, Tailwind v4 through `@tailwindcss/turbopack`, oxlint, Prettier and Vitest, plus Storybook 10 (`@storybook/nextjs-vite`) whose Vitest `storybook` project renders every story in headless Chromium and fails on axe violations. `src/app/` has only the scaffold's layout and page. There is no corpus yet: the ingest in `discourse-analysis-foundation` is unwritten, and its design leaves the corpus file granularity (per book or per chapter) open.
 - **The design system** is `DESIGN.md` at the repo root ("The Scholar's Desk"). It is normative for every visual decision in this change: tokens, type roles, shadows, component treatments and the named rules.
 - **The prototype** (`docs/design/base44-prototype/`): TanStack Start in plain JSX with Tailwind v3. Tokens are HSL triples in `src/index.css` (`--background: 40 36% 93%`), consumed as `hsl(var(--x))`, with `.dark` and `.sepia` class overrides. The reader is `src/routes/read.$bookId.$chapter.jsx` plus `src/components/reading/*`, and display settings live in `src/lib/study-defaults.js` and `src/lib/pos.js`. Settings and annotations sync to the Base44 backend when signed in, and fall back to localStorage otherwise.
 - **Static export rules** (from `node_modules/next/dist/docs/01-app/02-guides/static-exports.md`): dynamic routes need `generateStaticParams()` and `dynamicParams: false`. There are no server actions, cookies or runtime request handling.
@@ -113,9 +113,19 @@ The word popover uses `@radix-ui/react-popover` anchored to the selected word, w
 
 Words are rendered as `<button>` elements inside the verse text, so keyboard focus and Enter work without extra code. Styling resets them to look like inline text.
 
-### 9. Tests cover the pure modules
+### 9. Unit tests cover the pure modules, stories cover the components
 
-Vitest covers `wordCategory`, the settings validator and merge, `parseChapter` (accepts the committed fixture, rejects a wrong `format`, rejects words without `id`), prev/next chapter across book boundaries, and a licence test asserting that the committed fixture contains no `ln` or `domain` keys and that `attribution.json` names SBLGNT and MACULA Greek with `modified: true`. Component behaviour (popover, menus, theme flash) is checked by hand in the dev server and the exported build. Adding jsdom and Testing Library is left until the editor needs them.
+The `unit` Vitest project covers `wordCategory`, the settings validator and merge, `parseChapter` (accepts the committed fixture, rejects a wrong `format`, rejects words without `id`), prev/next chapter across book boundaries, and a licence test asserting that the committed fixture contains no `ln` or `domain` keys and that `attribution.json` names SBLGNT and MACULA Greek with `modified: true`.
+
+Every component ships with a `*.stories.tsx` beside it, covering its states rather than one happy path. The `storybook` Vitest project renders each story in headless Chromium, so a story that throws or has an axe violation fails `npm test`. Behaviour that the specs describe as keyboard or pointer interaction (Escape closes the word popover and returns focus to the word, reselecting a word, the display menu's switches) is asserted in `play` functions with `storybook/test`, which ships with Storybook and needs no new dependency. Stories feed components through props or through the settings store set in a decorator, and Greek text stories use the committed `PHP/1.json` fixture, so no story fetches.
+
+The theme flash on reload, static routing and the exported build cannot be seen from a story and are still checked by hand (task 6.2). jsdom and Testing Library are not added.
+
+*Alternative:* check component behaviour only by hand, as first planned. Rejected because the Storybook tests now exist, and they make the accessibility half of the design review (task 6.5) repeatable.
+
+### 10. Storybook shows the app's themes and fonts
+
+The font definitions move from `layout.tsx` into a shared `src/app/fonts.ts` that both the layout and `.storybook/preview.tsx` import, so stories render in the same faces. A toolbar global (Light, Dark, Sepia) drives a decorator that sets the same `dark` or `sepia` class on `<html>` that the app's theme effect sets (decision 2), so every story can be reviewed in all three themes without a separate theming path.
 
 ## Risks / Trade-offs
 

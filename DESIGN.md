@@ -8,7 +8,7 @@ colors:
   rubric-red: "hsl(0 62% 32%)"
   chi-rho-red: "hsl(357 60% 49%)"
   vellum-shade: "hsl(40 28% 88%)"
-  faded-ink: "hsl(38 14% 42%)"
+  faded-ink: "hsl(38 14% 40%)"
   muted-wash: "hsl(40 20% 86%)"
   rule-line: "hsl(38 22% 82%)"
   amber-wash: "hsl(40 50% 88%)"
@@ -24,16 +24,16 @@ colors:
   workspace-select: "hsl(13 39% 86%)"
   modifier-ochre: "hsl(33 63% 40%)"
   pos-verb: "hsl(0 62% 38%)"
-  pos-participle: "hsl(28 80% 45%)"
-  pos-infinitive: "hsl(43 75% 42%)"
+  pos-participle: "hsl(28 80% 36%)"
+  pos-infinitive: "hsl(43 75% 30%)"
   pos-noun: "hsl(215 68% 42%)"
-  pos-adj: "hsl(175 55% 38%)"
+  pos-adj: "hsl(175 55% 30%)"
   pos-det: "hsl(30 8% 42%)"
   pos-pron: "hsl(270 48% 45%)"
-  pos-prep: "hsl(140 52% 36%)"
-  pos-conj: "hsl(30 45% 42%)"
-  pos-adv: "hsl(330 62% 48%)"
-  pos-other: "hsl(30 10% 45%)"
+  pos-prep: "hsl(140 52% 31%)"
+  pos-conj: "hsl(30 45% 38%)"
+  pos-adv: "hsl(330 62% 46%)"
+  pos-other: "hsl(30 10% 41%)"
 typography:
   display:
     fontFamily: "EB Garamond, ui-serif, Georgia, serif"
@@ -207,11 +207,15 @@ The frontmatter holds the light theme. Dark and sepia override the same tokens (
 | parchment (background) | `hsl(40 36% 93%)` | `hsl(30 12% 12%)` | `hsl(36 40% 86%)` |
 | cream (card) | `hsl(44 50% 96%)` | `hsl(30 10% 16%)` | `hsl(36 36% 89%)` |
 | ink (foreground) | `hsl(30 14% 15%)` | `hsl(40 20% 92%)` | `hsl(28 24% 20%)` |
-| rubric-red (primary) | `hsl(0 62% 32%)` | `hsl(0 55% 58%)` | `hsl(0 52% 38%)` |
-| faded-ink (muted text) | `hsl(38 14% 42%)` | `hsl(38 12% 65%)` | `hsl(30 18% 38%)` |
+| rubric-red (primary) | `hsl(0 62% 32%)` | `hsl(0 55% 70%)` | `hsl(0 52% 38%)` |
+| faded-ink (muted text) | `hsl(38 14% 40%)` | `hsl(38 12% 65%)` | `hsl(30 18% 37%)` |
 | rule-line (border) | `hsl(38 22% 82%)` | `hsl(30 8% 26%)` | `hsl(34 24% 76%)` |
 
-Sepia does not override the part-of-speech colours. It inherits the light values. Sepia is a token swap, not a page filter: the red accents and the red Chi Rho stay red. The prototype's sepia screenshot (`10-menu-drawer-sepia`) shows a page-wide brown recolour and is not canonical.
+Sepia darkens the part-of-speech colours because its page is darker: participle `hsl(28 80% 32%)`, infinitive `hsl(43 75% 27%)`, noun `hsl(215 68% 40%)`, adjective `hsl(175 55% 27%)`, article `hsl(30 8% 38%)`, preposition `hsl(140 52% 28%)`, conjunction `hsl(30 45% 35%)`, adverb `hsl(330 62% 43%)`, other `hsl(30 10% 37%)`; verb and pronoun keep their light values.
+
+Every text token reaches WCAG AA contrast (4.5:1) against parchment and cream in its theme, and selected-option red text against its red wash. Several values are darker (dark mode: lighter) than the prototype's for that reason; only lightness changed, so each hue is the prototype's. The decorative Chi Rho mark is exempt. Links in running text are underlined as well as red, so colour is never their only cue.
+
+Sepia is a token swap, not a page filter: the red accents and the red Chi Rho stay red. The prototype's sepia screenshot (`10-menu-drawer-sepia`) shows a page-wide brown recolour and is not canonical.
 
 ### Named Rules
 **The Rubric Rule.** Rubric red is the only accent in the chrome. It marks state (active, selected, linked, focused), not decoration. Large red fills are limited to primary buttons and the 4px drawer bar.

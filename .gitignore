@@ -1,6 +1,10 @@
 .lat-build
 .mcp.json
-.codex
+/.codex/*
+!/.codex/AGENTS.md
+!/.codex/skills/
+/.codex/skills/*
+!/.codex/skills/openspec-*/
 .claude/skills/impeccable/
 .claude/agents/impeccable-*.md
 
@@ -64,3 +68,6 @@ next-env.d.ts
 # SQLite files anywhere, in case DATA_DIR points elsewhere in the repo
 *.sqlite
 *.sqlite-*
+
+# Local reader verification captures
+/.impeccable/review/

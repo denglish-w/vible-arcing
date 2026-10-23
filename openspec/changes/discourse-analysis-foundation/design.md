@@ -84,7 +84,7 @@ The cue table is keyed by language from the start. This is the only concession m
 
 ### 5. Corpus ingest is an offline build step, in Python
 
-A Python script in `scripts/ingest/` transforms MACULA Greek `SBLGNT/lowfat` XML into compact per-book JSON: words with stable ids, lemma, morphology, clause boundaries, conjunction classification. Output is committed or produced in CI and shipped as static assets under `public/corpus/`.
+A Python script in `scripts/ingest/` transforms MACULA Greek `SBLGNT/lowfat` XML into compact per-chapter format-v1 JSON (settled by `base44-look-and-reader`): words with stable ids, lemma, morphology, clause boundaries, conjunction classification. Output is committed or produced in CI and shipped as static assets under `public/corpus/`.
 
 *Alternatives considered.* Parsing XML at request time — rejected; there is no server, and it would be slow regardless. A database — rejected as premature; the corpus is read-only, versioned with the release, and small once transformed. Porting ingest to Node — viable, but Python with `lxml` handles 13 MB trees comfortably, and the script runs only at release time, so a second language in the repo costs little.
 
@@ -114,7 +114,7 @@ Next.js App Router with `output: 'export'`, deployable to any static host. The e
 - **State:** immutable containment tree held in a store (Zustand + Immer, or a reducer); undo/redo is a history of snapshots or patches.
 - **Persistence:** analyses in IndexedDB (Dexie) with export/import to a file — which is what the *Analysis portability* requirement actually asks for. `localStorage` is too small and too synchronous for this.
 - **Rendering:** SVG first for both arc and bracket views; hit-testing is straightforward and sufficient at expected passage sizes. Canvas only if profiling demands it.
-- **Corpus:** fetched as static JSON from `public/corpus/`, per book.
+- **Corpus:** fetched as static JSON from `public/corpus/v1/<BOOK>/<chapter>.json`, per chapter.
 - **Styling:** Tailwind CSS v4 for application chrome, wired through `@tailwindcss/turbopack`. Relationship colours and other renderer styling use CSS custom properties defined in `@theme`, so the arc and bracket renderers do not depend on utility classes.
 - **Config:** `next.config.ts` sets `output: 'export'`, `images.unoptimized` (the default image loader needs a server), and pins `turbopack.root`. The scaffold's `cacheComponents` and `partialPrefetching` options are removed; they are server caching features that a static export does not use.
 - **Linting and formatting:** oxlint lints (typescript, react, nextjs, jsx-a11y and vitest plugins, with `rules-of-hooks` and `exhaustive-deps` as errors) and Prettier formats. ESLint and `eslint-config-next` are not used.
@@ -157,4 +157,4 @@ Ordering that matters for the task breakdown: taxonomy JSON and its generated ty
 
 - **Undo/redo granularity** — per structural edit, or coalesced. Affects editor ergonomics only; the model is immutable-friendly either way and this can be settled when the editor is built.
 - **Whether extended relationships ship in v1's picker at all**, versus being data-present but UI-hidden. The taxonomy carries them regardless; this is a UI default.
-- **Transformed corpus format** — one JSON per book versus per chapter. Depends on measured size after ingest; does not affect the model or the specs.
+- **Transformed corpus format (settled)** — format v1 uses one JSON per chapter at `public/corpus/v1/<BOOK>/<chapter>.json`, with MACULA ids, words, punctuation and whitelisted morphology. The sample extractor and reader in `base44-look-and-reader` establish this contract; the full ingest extends it.

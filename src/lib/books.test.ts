@@ -1,5 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { BOOKS, chapterExists, getBook, isBookCode } from "./books.ts";
+import {
+  BOOKS,
+  GROUPS,
+  bookBySlug,
+  booksInGroup,
+  chapterExists,
+  getBook,
+  isBookCode,
+  nextChapter,
+  prevChapter,
+} from "./books.ts";
 
 describe("BOOKS", () => {
   it("lists the 27 books once each, Matthew to Revelation", () => {
@@ -47,5 +57,39 @@ describe("chapterExists", () => {
     expect(getBook("constructor")).toBeUndefined();
     expect(isBookCode("PHP")).toBe(true);
     expect(isBookCode("toString")).toBe(false);
+  });
+});
+
+describe("reader navigation", () => {
+  it("groups the books and finds them by URL slug", () => {
+    expect(GROUPS.map((group) => booksInGroup(group).length)).toEqual([
+      5, 21, 1,
+    ]);
+    expect(bookBySlug("php")?.name).toBe("Philippians");
+    expect(bookBySlug("1co")?.code).toBe("1CO");
+    expect(bookBySlug("PHP")).toBeUndefined();
+    expect(bookBySlug("__proto__")).toBeUndefined();
+  });
+
+  it("crosses book boundaries in both directions", () => {
+    expect(nextChapter("MAT", 28)).toEqual({
+      book: getBook("MRK"),
+      chapter: 1,
+    });
+    expect(prevChapter("MRK", 1)).toEqual({
+      book: getBook("MAT"),
+      chapter: 28,
+    });
+    expect(nextChapter("PHP", 1)?.chapter).toBe(2);
+    expect(prevChapter("PHP", 2)?.chapter).toBe(1);
+  });
+
+  it("omits navigation at the canon edges and rejects invalid passages", () => {
+    expect(prevChapter("MAT", 1)).toBeNull();
+    expect(nextChapter("REV", 22)).toBeNull();
+    for (const chapter of [0, -1, 1.5, 29, NaN])
+      expect(nextChapter("MAT", chapter)).toBeNull();
+    expect(prevChapter("nope", 1)).toBeNull();
+    expect(nextChapter("mat", 1)).toBeNull();
   });
 });

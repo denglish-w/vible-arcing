@@ -1,6 +1,6 @@
 # Architecture
 
-How the app is built and where code runs. The Next.js app is scaffolded, but the editor, proposition model and ingest are not built yet. The design is in `openspec/changes/discourse-analysis-foundation/design.md`.
+The static Next.js app provides a themed Greek reader and sample corpus. The editor and discourse model are still planned in `openspec/changes/discourse-analysis-foundation/design.md`.
 
 ## Static client-side app
 
@@ -46,4 +46,4 @@ Contiguity, arity, acyclicity and the Bilateral one-per-side constraint are enfo
 
 Python is used only for a release-time script that converts MACULA Greek XML into compact static JSON.
 
-The script in `scripts/ingest/` reads the `SBLGNT/lowfat` trees (about 13 MB per book) and writes per-book JSON to `public/corpus/`. Nothing in the request path parses XML. See [[corpus#Ingest pipeline]] for what the output contains and what is enforced at ingest.
+[[scripts/ingest/sample_chapter.py]] extracts a pinned Philippians 1 from `SBLGNT/lowfat` into versioned chapter JSON. Nothing in the request path parses XML. See [[corpus#Ingest pipeline]] and [[reader#Greek reader]] for the format and consumer.
