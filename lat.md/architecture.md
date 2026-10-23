@@ -16,6 +16,8 @@ Bun and pnpm were rejected because the app ships as static files, so there is no
 
 Storybook 10 (`@storybook/nextjs-vite`) is the component workshop. Its config is in `.storybook/`, stories sit next to their components as `*.stories.tsx` under `src/`, and `npm run build-storybook` runs in CI. Vite does not run the Turbopack CSS loader, so `.storybook/main.ts` adds `@tailwindcss/vite`. The a11y addon fails a story on axe violations to back the WCAG 2.2 AA requirement in `PRODUCT.md`.
 
+The Storybook Vitest addon makes every story a test: `vitest.config.mts` has a `unit` project in Node and a `storybook` project that renders each story in headless Chromium through Playwright, so `npm test` fails on a crashing story, a failed play function or an axe violation. CI installs Chromium before the tests. The MCP addon serves story metadata and preview URLs to coding agents at `/mcp` while `npm run storybook` runs.
+
 ## Container and CI
 
 A GitHub Actions workflow checks every push and pull request, then builds a Docker image that serves the static export with nginx.
