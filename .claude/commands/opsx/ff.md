@@ -77,7 +77,26 @@ Fast-forward through artifact creation - generate everything needed to start imp
       - Ask the user to clarify
       - Then continue with creation
 
-5. **Show final status**
+5. **Adversarial spec review**
+
+   Once every artifact is written, run `openspec validate "<name>" --strict` and fix what it reports. Then spawn one review agent with the Agent tool: `subagent_type: "general-purpose"`, `model: "opus"`. It is read-only; tell it not to edit files. Its job is to find what is wrong with the change, not to approve it. Brief it with:
+   - The paths of every artifact in the change, plus `CLAUDE.md`, `PRODUCT.md`, `openspec/specs/`, the other active changes under `openspec/changes/`, and the reference docs the change relies on. Give it paths, not your summary of the change.
+   - What to hunt for:
+     - contradictions between proposal, design, specs and tasks
+     - requirements that are vague, untestable, or missing scenarios
+     - missing edge cases and failure paths
+     - tasks that no requirement asks for, and requirements no task delivers
+     - conflicts with existing specs or other active changes
+     - breaches of the architecture constraints, the no-interpretation principle, licensing rules or prior-art rules in `CLAUDE.md`
+     - scope creep beyond the proposal, and assumptions stated as fact without a source
+   - To return findings, each with artifact file:line, severity (blocker / should-fix / nit), why it matters and a suggested fix, or "no findings"
+
+   Then:
+   - Weigh each finding yourself; the reviewer can be wrong. Revise the artifacts for blockers and should-fix findings you agree with, and note any you reject with a one-line reason.
+   - If a finding needs a product or design decision only the user can make, ask the user rather than deciding it.
+   - If revisions restructure the change, run the reviewer once more. No more than two rounds; report anything still open.
+
+6. **Show final status**
    ```bash
    openspec status --change "<name>"
    ```
@@ -87,6 +106,7 @@ Fast-forward through artifact creation - generate everything needed to start imp
 After completing all artifacts, summarize:
 - Change name and location
 - List of artifacts created with brief descriptions, plus any conditional artifact you skipped and why
+- Spec review summary: findings fixed, rejected (with reasons), and any still open
 - What's ready: "All artifacts needed for implementation are ready."
 - Prompt: "Run `/opsx:apply` to start implementing."
 
