@@ -22,7 +22,10 @@ export default function ContentsPage() {
                   key={book.code}
                 >
                   <span>{book.name}</span>
-                  <span>{book.chapters} chapters</span>
+                  <span>
+                    {book.chapters}{" "}
+                    {book.chapters === 1 ? "chapter" : "chapters"}
+                  </span>
                 </Link>
               ))}
             </div>

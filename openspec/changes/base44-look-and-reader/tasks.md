@@ -42,22 +42,22 @@
 ## 6. Verify and document
 
 - [x] 6.1 `npm run lint`, `npm run format:check`, `npm test` and `npm run build` pass; `out/` contains the 260 reader pages, the fonts and `corpus/v1/`
-- [ ] 6.2 Serve `out/` locally and walk by hand the spec scenarios a story cannot show: theme persistence with no flash on reload, keyboard word selection, Escape, a crossing chapter link (Matthew 28 → Mark 1), an unavailable chapter, broken localStorage, and the credits page
+- [x] 6.2 Serve `out/` locally and walk by hand the spec scenarios a story cannot show: theme persistence with no flash on reload, keyboard word selection, Escape, a crossing chapter link (Matthew 28 → Mark 1), an unavailable chapter, broken localStorage, and the credits page
 - [x] 6.3 Update `lat.md/` (new theme and reader sections; corpus format in `lat.md/corpus.md`) and run `lat check`
 - [x] 6.4 Update `CLAUDE.md` "Project state", and note in `discourse-analysis-foundation/design.md` that corpus granularity is settled as per-chapter format v1
-- [ ] 6.5 Design review against `DESIGN.md`: in light, dark and sepia, at desktop and phone widths, check every screen, and every story through the Storybook theme toolbar (section 7), for its named rules (tokens only, rubric red only for state, serif only, small-caps labels, warm shadows, two-cue part-of-speech colouring); run `/impeccable audit` on the reader and fix what it finds
+- [x] 6.5 Design review against `DESIGN.md`: in light, dark and sepia, at desktop and phone widths, check every screen, and every story through the Storybook theme toolbar (section 7), for its named rules (tokens only, rubric red only for state, serif only, small-caps labels, warm shadows, two-cue part-of-speech colouring); run `/impeccable audit` on the reader and fix what it finds
 
 ## 7. Storybook stories (design decisions 9 and 10)
 
-- [ ] 7.1 Move the four font definitions from `src/app/layout.tsx` into `src/app/fonts.ts`; the layout imports them unchanged
-- [ ] 7.2 Rename `.storybook/preview.ts` to `preview.tsx` (and widen the Prettier globs to `.storybook/*.{ts,tsx}`); apply the font variables from `src/app/fonts.ts`, and add a Light/Dark/Sepia toolbar global whose decorator sets the same `<html>` class as `ThemeSync`
-- [ ] 7.3 Export `ChapterNavigation`, `WordDetail` and the loading and unavailable states from `src/components/reading/reader.tsx` (or split them into their own files) so each can have stories; no behaviour change
-- [ ] 7.4 Stories for `ChiRho`, `Logo`, `SiteFooter`, `PageShell` and `LabelStrip`
-- [ ] 7.5 Stories for the `button`, `popover`, `switch` and `dropdown-menu` primitives in each variant and state (disabled, checked, open), with `play` functions for the switch toggling and the popover opening and closing by keyboard
-- [ ] 7.6 `ChapterNavigation` stories: a middle chapter, Matthew 1, Revelation 22, and the Matthew 28 → Mark 1 crossing
-- [ ] 7.7 `GreekText` stories from the `PHP/1.json` fixture with settings set in a decorator: colouring on and off, every category visible, verse numbers on and off, largest size with widest spacing, and each typeface
-- [ ] 7.8 Loading and "text not yet available" stories
-- [ ] 7.9 `WordDetail` stories for a verb, a participle and a noun; `play` functions on `GreekText` assert that Escape closes the popover and returns focus to the word, and that selecting another word moves it
-- [ ] 7.10 `DisplayMenu` stories with colouring on and off; a `play` function asserts that switching a category off removes it from the legend
-- [ ] 7.11 `npm test` (unit and storybook projects) and `npm run build-storybook` pass with every story free of axe violations; fix components rather than disabling rules, and record any rule that must stay off with its reason
-- [ ] 7.12 Update `lat.md/` (stories and the Storybook theme toolbar) and run `lat check`
+- [x] 7.1 Move the four font definitions from `src/app/layout.tsx` into `src/app/fonts.ts`; the layout imports them unchanged
+- [x] 7.2 Rename `.storybook/preview.ts` to `preview.tsx` (and widen the Prettier globs to `.storybook/*.{ts,tsx}`); apply the font variables from `src/app/fonts.ts`, and add a Light/Dark/Sepia toolbar global whose decorator sets the same `<html>` class as `ThemeSync`
+- [x] 7.3 Export `ChapterNavigation`, `WordDetail` and the loading and unavailable states from `src/components/reading/reader.tsx` (or split them into their own files) so each can have stories; no behaviour change
+- [x] 7.4 Stories for `ChiRho`, `Logo`, `SiteFooter`, `PageShell` and `LabelStrip`
+- [x] 7.5 Stories for the `button`, `popover`, `switch` and `dropdown-menu` primitives in each variant and state (disabled, checked, open), with `play` functions for the switch toggling and the popover opening and closing by keyboard
+- [x] 7.6 `ChapterNavigation` stories: a middle chapter, Matthew 1, Revelation 22, and the Matthew 28 → Mark 1 crossing
+- [x] 7.7 `GreekText` stories from the `PHP/1.json` fixture with settings set in a decorator: colouring on and off, every category visible, verse numbers on and off, largest size with widest spacing, and each typeface
+- [x] 7.8 Loading and "text not yet available" stories
+- [x] 7.9 `WordDetail` stories for a verb, a participle and a noun; `play` functions on `GreekText` assert that Escape closes the popover and returns focus to the word, and that selecting another word moves it
+- [x] 7.10 `DisplayMenu` stories with colouring on and off; a `play` function asserts that switching a category off removes it from the legend
+- [x] 7.11 `npm test` (unit and storybook projects) and `npm run build-storybook` pass with every story free of axe violations; fix components rather than disabling rules, and record any rule that must stay off with its reason
+- [x] 7.12 Update `lat.md/` (stories and the Storybook theme toolbar) and run `lat check`

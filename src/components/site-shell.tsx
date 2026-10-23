@@ -31,7 +31,7 @@ export function ChiRho() {
 }
 export function Logo() {
   return (
-    <Link href="/" aria-label="Home" className="logo">
+    <Link href="/" className="logo">
       <ChiRho />
       <span>[Product Name]</span>
     </Link>

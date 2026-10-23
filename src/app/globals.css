@@ -9,7 +9,7 @@
   --primary-foreground: hsl(40 36% 93%);
   --secondary: hsl(40 28% 88%);
   --muted: hsl(40 20% 86%);
-  --muted-foreground: hsl(38 14% 42%);
+  --muted-foreground: hsl(38 14% 40%);
   --border: hsl(38 22% 82%);
   --chi-rho-red: hsl(357 60% 49%);
   --rose-highlight: hsl(0 60% 90%);
@@ -17,16 +17,16 @@
   --amber-edge: hsl(38 45% 68%);
   --amber-ink: hsl(32 30% 25%);
   --pos-verb: hsl(0 62% 38%);
-  --pos-participle: hsl(28 80% 45%);
-  --pos-infinitive: hsl(43 75% 42%);
+  --pos-participle: hsl(28 80% 36%);
+  --pos-infinitive: hsl(43 75% 30%);
   --pos-noun: hsl(215 68% 42%);
-  --pos-adj: hsl(175 55% 38%);
+  --pos-adj: hsl(175 55% 30%);
   --pos-det: hsl(30 8% 42%);
   --pos-pron: hsl(270 48% 45%);
-  --pos-prep: hsl(140 52% 36%);
-  --pos-conj: hsl(30 45% 42%);
-  --pos-adv: hsl(330 62% 48%);
-  --pos-other: hsl(30 10% 45%);
+  --pos-prep: hsl(140 52% 31%);
+  --pos-conj: hsl(30 45% 38%);
+  --pos-adv: hsl(330 62% 46%);
+  --pos-other: hsl(30 10% 41%);
   --shadow-ink: 43 38 32;
   --shadow-tile:
     0 1px 2px rgb(var(--shadow-ink) / 0.05),
@@ -39,7 +39,7 @@
   --background: hsl(30 12% 12%);
   --foreground: hsl(40 20% 92%);
   --card: hsl(30 10% 16%);
-  --primary: hsl(0 55% 58%);
+  --primary: hsl(0 55% 70%);
   --primary-foreground: hsl(30 12% 12%);
   --secondary: hsl(30 8% 22%);
   --muted: hsl(30 8% 22%);
@@ -69,12 +69,21 @@
   --primary-foreground: hsl(36 40% 88%);
   --secondary: hsl(36 28% 82%);
   --muted: hsl(36 26% 82%);
-  --muted-foreground: hsl(30 18% 38%);
+  --muted-foreground: hsl(30 18% 37%);
   --border: hsl(34 24% 76%);
   --rose-highlight: hsl(0 60% 84%);
   --amber-wash: hsl(40 48% 78%);
   --amber-edge: hsl(38 42% 62%);
   --amber-ink: hsl(30 28% 24%);
+  --pos-participle: hsl(28 80% 32%);
+  --pos-infinitive: hsl(43 75% 27%);
+  --pos-noun: hsl(215 68% 40%);
+  --pos-adj: hsl(175 55% 27%);
+  --pos-det: hsl(30 8% 38%);
+  --pos-prep: hsl(140 52% 28%);
+  --pos-conj: hsl(30 45% 35%);
+  --pos-adv: hsl(330 62% 43%);
+  --pos-other: hsl(30 10% 37%);
 }
 @theme inline {
   --color-background: var(--background);
@@ -121,6 +130,8 @@ button {
 }
 a {
   color: var(--primary);
+  /* Tailwind's preflight removes it; links in running text need a non-colour cue. */
+  text-decoration: underline;
   text-underline-offset: 3px;
 }
 button:focus-visible,
@@ -603,8 +614,14 @@ h2 {
   }
 }
 @media (max-width: 639px) {
+  /* Visually hidden, but still the link's accessible name. */
   .logo span {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
   .content,
   .page-header {

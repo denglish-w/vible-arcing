@@ -35,8 +35,17 @@ const fs = require('node:fs');
     await menu();
     await page.getByRole('button', { name: 'Sepia', exact: true }).click();
     await page.keyboard.press('Escape');
+    // Record the <html> classes when <body> is first parsed, before any React code runs.
+    await page.addInitScript(() => {
+      new MutationObserver((_, observer) => {
+        if (!document.body) return;
+        window.__firstPaintClasses = document.documentElement.className;
+        observer.disconnect();
+      }).observe(document, { childList: true, subtree: true });
+    });
     await page.reload();
     await first.waitFor();
+    assert.match(await page.evaluate(() => window.__firstPaintClasses), /\bsepia\b/);
     assert(await page.locator('html').evaluate(el => el.classList.contains('sepia')));
     await capture('sepia-desktop');
     await menu();
@@ -46,6 +55,8 @@ const fs = require('node:fs');
     assert.equal(await page.locator('.legend span').count(), 11);
     await capture('dark-desktop');
     await page.setViewportSize({ width: 390, height: 844 });
+    // The wordmark is visually hidden on phones but must still name the logo link.
+    assert.equal(await page.getByRole('link', { name: '[Product Name]', exact: true }).count(), 1);
     await capture('mobile');
     await first.click();
     await capture('word-mobile');

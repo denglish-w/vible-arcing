@@ -1,29 +1,7 @@
 import type { Metadata } from "next";
-import { EB_Garamond, Gentium_Plus, Cardo, GFS_Didot } from "next/font/google";
 import { ThemeSync } from "@/components/theme-sync";
+import { cardo, didot, garamond, gentium } from "./fonts";
 import "./globals.css";
-const garamond = EB_Garamond({
-  variable: "--font-garamond",
-  subsets: ["latin", "greek", "greek-ext"],
-});
-const gentium = Gentium_Plus({
-  variable: "--font-gentium",
-  weight: ["400", "700"],
-  subsets: ["latin", "greek", "greek-ext"],
-  preload: false,
-});
-const cardo = Cardo({
-  variable: "--font-cardo",
-  weight: ["400", "700"],
-  subsets: ["latin", "greek", "greek-ext"],
-  preload: false,
-});
-const didot = GFS_Didot({
-  variable: "--font-didot",
-  weight: "400",
-  subsets: ["latin", "greek", "greek-ext"],
-  preload: false,
-});
 export const metadata: Metadata = {
   title: "The Greek New Testament",
   description:

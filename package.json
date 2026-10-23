@@ -10,8 +10,8 @@
     "build-storybook": "storybook build",
     "lint": "oxlint",
     "test": "vitest run --passWithNoTests",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \".storybook/*.ts\" \"*.{ts,json}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \".storybook/*.ts\" \"*.{ts,json}\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \".storybook/*.{ts,tsx}\" \"*.{ts,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \".storybook/*.{ts,tsx}\" \"*.{ts,json}\"",
     "prepare": "husky || true"
   },
   "dependencies": {
