@@ -6,7 +6,7 @@ The Greek text and linguistic data that analyses are built over, and the obligat
 
 The text is SBLGNT, with morphology and syntax trees from MACULA Greek `SBLGNT/lowfat`. Both are CC BY 4.0.
 
-MACULA supplies per-word lemma and morphology plus explicit clause nodes (`<wg class="cl">`), sentence boundaries, role labels and conjunction nodes. Clause nodes give candidate proposition boundaries directly, so auto-splitting is tractable, though the feature itself is later work. Verified licensing for every candidate dataset is in `docs/reference/data-sources.md`.
+MACULA supplies per-word lemma and morphology plus explicit clause nodes (`<wg class="cl">`), sentence boundaries, role labels and conjunction nodes. Clause and role data are never used to split a passage or shown to users, because the app does not interpret for them. Verified licensing for every candidate dataset is in `docs/reference/data-sources.md`.
 
 ## Ingest pipeline
 

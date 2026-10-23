@@ -24,7 +24,7 @@ Constraints that shape the approach:
 
 - Renderer internals — arc geometry, bracket layout, hit-testing. Consumers of this model, separate changes.
 - Persistence schema, accounts, sync. v1 is local-first (below); a server-side store is later work.
-- Relationship suggestion and proposition auto-splitting. The data they need is specified here; the engines are not.
+- Relationship suggestion and proposition auto-splitting. Not planned: the app never interprets for the user (product decision, 2026-10-22). See `PRODUCT.md`.
 - Grammatical diagramming. Separate model, separate change.
 
 ## Decisions
@@ -121,7 +121,7 @@ Next.js App Router with `output: 'export'`, deployable to any static host. The e
 - **CI and deployment:** GitHub Actions runs lint, format check, tests, the static build and `lat check`, then builds a Docker image. The image is a two-stage build (Node 26 builds the export, nginx serves `out/`). Publishing the image and choosing a deploy target are deferred until hosting cost is weighed; the project is only scaffolded so far. CI runs on GitHub Actions.
 - **Tooling:** npm as package manager, with `package-lock.json` committed. Node is pinned to the 26 line through `.node-version`, which fnm reads. Tests run on Vitest, including the shared valid/invalid analysis fixtures from decision 7.
 
-This keeps v1 free to run and the editor fully functional before any persistence decision. Persistence, accounts, and suggestion are additive; Next.js leaves a path to route handlers or a separate service without a rewrite.
+This keeps v1 free to run and the editor fully functional before any persistence decision. Persistence and accounts are additive; Next.js leaves a path to route handlers or a separate service without a rewrite.
 
 *Alternative considered.* A Vite SPA — lighter for a client-heavy tool. Next.js was chosen for shareable/indexable per-passage routes and the easier path to server features later.
 

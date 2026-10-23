@@ -4,6 +4,22 @@ Defines how a passage is segmented into propositions and how those propositions 
 
 ## ADDED Requirements
 
+### Requirement: The user does the analysis
+
+Every proposition boundary, connection and relationship label in an analysis SHALL be created by the user.
+
+The system SHALL NOT segment a passage into propositions, connect propositions, or assign relationships automatically, including from syntax or conjunction data.
+
+#### Scenario: New analysis starts unsegmented
+
+- **WHEN** a user starts an analysis of a passage
+- **THEN** the passage is presented with no proposition boundaries, connections or relationships
+
+#### Scenario: Syntax data does not produce an analysis
+
+- **WHEN** the source data marks clause boundaries in the passage
+- **THEN** no proposition boundaries are created from them
+
 ### Requirement: Proposition segmentation
 
 A discourse analysis SHALL be built over an ordered sequence of propositions derived from a passage.
