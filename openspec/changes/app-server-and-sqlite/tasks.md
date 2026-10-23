@@ -26,11 +26,11 @@
 
 ## 4. Saved-work storage
 
-- [ ] 4.1 `src/db/work.ts`: create, get, list (both kinds, newest first), save with a revision-checked update that increments `revision`, delete, for analyses and diagrams; typed results for conflict, unknown-word, not-found, too-large and corpus-missing
-- [ ] 4.2 Envelope checks: `doc` at most 512 KB, known `doc_version`, passage columns derived from the analysis `doc` (diagram: from the envelope), all referenced word ids present via `wordsExist`
-- [ ] 4.3 Tests: stale revision rejected and stored copy unchanged; overwrite against the current revision succeeds; delete removes; analyses and diagrams never cross; unknown word id refused; passage derived from content, not from the request; oversized and unknown-version documents refused; a corpus rebuild leaves `app.sqlite` byte-identical
-- [ ] 4.4 `src/lib/autosave.ts`: `createAutosave` controller per design decision 7 (no React or Zustand dependency), plus a thin `useAutosave` hook
-- [ ] 4.5 Controller tests with a fake source, fake save and fake unload target: edit applies immediately; single in-flight save; one follow-up save; retryable failure retries with backoff and clears "Not saved"; conflict stops retrying, keeps changes, and offers overwrite, save-as-copy and download; permanent failures (including unknown word and corpus missing) stop retrying with their reason; `beforeunload` guard only while unsaved; a test that no `"use client"` module imports `src/db/**` or `better-sqlite3`
+- [x] 4.1 `src/db/work.ts`: create, get, list (both kinds, newest first), save with a revision-checked update that increments `revision`, delete, for analyses and diagrams; typed results for conflict, unknown-word, not-found, too-large and corpus-missing
+- [x] 4.2 Envelope checks: `doc` at most 512 KB, known `doc_version`, passage columns derived from the analysis `doc` (diagram: from the envelope), all referenced word ids present via `wordsExist`
+- [x] 4.3 Tests: stale revision rejected and stored copy unchanged; overwrite against the current revision succeeds; delete removes; analyses and diagrams never cross; unknown word id refused; passage derived from content, not from the request; oversized and unknown-version documents refused; a corpus rebuild leaves `app.sqlite` byte-identical
+- [x] 4.4 `src/lib/autosave.ts`: `createAutosave` controller per design decision 7 (no React or Zustand dependency), plus a thin `useAutosave` hook
+- [x] 4.5 Controller tests with a fake source, fake save and fake unload target: edit applies immediately; single in-flight save; one follow-up save; retryable failure retries with backoff and clears "Not saved"; conflict stops retrying, keeps changes, and offers overwrite, save-as-copy and download; permanent failures (including unknown word and corpus missing) stop retrying with their reason; `beforeunload` guard only while unsaved; a test that no `"use client"` module imports `src/db/**` or `better-sqlite3`
 
 ## 5. Local-only server
 

@@ -157,6 +157,39 @@ export function wordsExist(db: CorpusDb, ids: Iterable<string>): boolean {
   return missingWords(db, ids).length === 0;
 }
 
+export type WordLocation = {
+  book: string;
+  chapter: number;
+  verse: number;
+  /** Book-wide reading order. */
+  seq: number;
+};
+
+/** Where each of `ids` is in the text; ids not in the corpus are absent. */
+export function locateWords(
+  db: CorpusDb,
+  ids: Iterable<string>,
+): Map<string, WordLocation> {
+  const wanted = [...new Set(ids)];
+  const found = new Map<string, WordLocation>();
+  for (let i = 0; i < wanted.length; i += LOOKUP_BATCH) {
+    for (const { id, ...location } of db
+      .select({
+        id: words.id,
+        book: words.book,
+        chapter: words.chapter,
+        verse: words.verse,
+        seq: words.seq,
+      })
+      .from(words)
+      .where(inArray(words.id, wanted.slice(i, i + LOOKUP_BATCH)))
+      .all()) {
+      found.set(id, location);
+    }
+  }
+  return found;
+}
+
 export type Attribution = typeof attribution.$inferSelect;
 
 /** The datasets to credit, in the order ingest listed them. */

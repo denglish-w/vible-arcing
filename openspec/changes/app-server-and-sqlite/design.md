@@ -104,7 +104,7 @@ App tables `analyses` and `diagrams` have the same shape and are kept separate o
 
 The server, not the client, fills `book`, `start_word_id`, `end_word_id` and `passage_label`:
 
-- For an analysis, they are derived from the words in `doc`, and every word id in `doc` must exist in the corpus store.
+- For an analysis, they are derived from the words in `doc`, and every word id in `doc` must exist in the corpus store. `src/db/work.ts` gets the ids from a function the analysis model supplies, so storage does not depend on the document's shape; all the words must be in one book.
 - For a diagram, the client sends the passage range in the envelope, and the server checks both ids exist in the corpus. The words inside `doc` cannot be checked until the diagram model exists.
 
 Limits on every write: `doc` at most 512 KB serialised, `doc_version` must be a version the server knows (1 for both kinds today), and `experimental.serverActions.bodySizeLimit` is set to `'1mb'` so the cap, not the framework, gives the error.
@@ -116,7 +116,7 @@ Limits on every write: `doc` at most 512 KB serialised, `doc_version` must be a 
 - The database core (`src/db/client.ts`, `src/db/corpus.ts`, `src/db/work.ts`) is plain TypeScript with no `server-only` import, so Vitest and the scripts can load it. Next-facing modules (`src/db/server.ts` re-exporting the queries, and the actions file) import `server-only`, and pages and actions import only those.
 - Writes are server actions in `src/app/(work)/actions.ts`: `createAnalysis`, `saveAnalysis(id, baseRevision, doc)`, `deleteAnalysis`, and the diagram equivalents. Every action parses its input with zod. `saveAnalysis` runs the foundation's validation module and rejects invalid trees. `saveDiagram` checks the envelope and the limits in decision 5.
 - Each action first calls `assertAllowedHost()` (decision 9).
-- Each save action returns a typed result rather than throwing for expected cases: `{ ok: true, revision }`, `{ ok: false, reason: 'conflict', current }` (with the stored revision and `updated_at`), `{ ok: false, reason: 'invalid' | 'unknown-word' | 'not-found' | 'too-large' | 'corpus-missing' }`. Anything else is an unexpected error.
+- Each save action returns a typed result rather than throwing for expected cases: `{ ok: true, revision }`, `{ ok: false, reason: 'conflict', current }` (with the stored revision and `updated_at`), `{ ok: false, reason: 'invalid' | 'unknown-word' | 'not-found' | 'too-large' | 'unknown-version' | 'corpus-missing' }`, where `unknown-word` names the missing ids. Anything else is an unexpected error.
 - Route handlers are used only for things a browser fetches on its own: `GET /api/analyses/[id]/export` downloads the portable file. It calls `assertAllowedHost()` (decision 9) and sends `Content-Disposition: attachment` and `X-Content-Type-Options: nosniff`.
 
 ### 7. Autosave controller and conflict handling
