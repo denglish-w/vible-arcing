@@ -2,11 +2,17 @@
 
 The static Next.js app provides a themed Greek reader and sample corpus. The editor and discourse model are still planned in `openspec/changes/discourse-analysis-foundation/design.md`.
 
-## Static client-side app
+## Node server
 
-A Next.js App Router app exported as static files, with no application server. The editor runs entirely in the browser.
+A Next.js App Router app built with standalone output and run as one Node process, which serves pages, reads the corpus store and keeps saved work.
 
-The build uses `output: 'export'` so it can be hosted on any static host, which keeps the project free to run, and writes the site to `out/`. Images use `images.unoptimized` because the default loader needs a server, and `cacheComponents` is left off. Server components and server actions are not relied on. If the framework becomes a burden, the app should remain portable to a plain SPA.
+[[next.config.ts]] sets `output: 'standalone'` and leaves `better-sqlite3` to Node. `npm start` runs [[scripts/start.sh]], which makes `DATA_DIR` absolute (standalone `server.js` runs from `.next/standalone`), migrates the saved-work database and refuses to start if that fails, copies `public/` and `.next/static` into the standalone output, and listens on `BIND_ADDRESS` or `127.0.0.1`. An inherited `HOSTNAME` is not honoured, because Docker and some shells set it to the machine name. `npm run dev` also binds `127.0.0.1`.
+
+## Local-only server
+
+Until accounts exist, anyone who can send a request can read and delete all saved work, so the server answers only requests addressed to this computer.
+
+[[src/lib/host.ts#isAllowedHost]] allows `localhost`, `127.0.0.1` and `[::1]` on any port, plus `ALLOWED_HOSTS` only when `ALLOW_UNAUTHENTICATED_NETWORK=1`, reading both from the environment on every call. Only the Host header counts; `X-Forwarded-Host` is ignored because a DNS-rebinding page can send it. [[src/proxy.ts#proxy]] has no matcher and returns 403 for any other host, including for static files and server actions. [[src/db/server.ts#appDb]] and [[src/db/server.ts#corpusDb]] check again before opening a database, and [[src/instrumentation.ts#register]] warns at startup when the opt-in is set. Pages on other local ports pass the Host check, so route handlers that touch saved work must also check `Origin`.
 
 ## Toolchain
 
@@ -26,9 +32,9 @@ The `check` job runs lint, the Prettier check, tests, the build, the Storybook b
 
 ## Editor state and persistence
 
-Editing is a rapid sequence of small structural edits, so every edit must resolve locally with no network round-trip.
+Editing is a rapid sequence of small structural edits, so every edit resolves locally and saving happens in the background.
 
-State is an immutable [[proposition-model#Containment tree]] held in a store (Zustand with Immer, or a reducer). Undo and redo are a history of snapshots or patches. Analyses persist in IndexedDB (Dexie) and are portable through file export and import. A server-side store, accounts and sync are deliberately later work.
+State is an immutable [[proposition-model#Containment tree]] held in a store (Zustand with Immer, or a reducer), with undo and redo as a history of snapshots or patches; the editors are not built yet. Saved work lives in `data/app.sqlite`, apart from the read-only corpus store. [[src/db/work.ts]] stores analyses and diagrams as documents with a revision counter: a save based on an older revision changes nothing and reports a conflict, and the server derives each record's passage from the words it refers to, which must all exist in the corpus. [[src/lib/autosave.ts#createAutosave]] is the editors' save loop: one save at a time after a short debounce, backoff for retryable failures, and a stop on conflicts or permanent refusals that waits for the user to overwrite, save a copy or download. It guards leaving the page while changes are unsaved.
 
 ## One renderer-neutral model
 

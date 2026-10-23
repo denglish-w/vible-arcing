@@ -34,9 +34,9 @@
 
 ## 5. Local-only server
 
-- [ ] 5.1 `src/lib/host.ts`: `isAllowedHost(host)` and `assertAllowedHost()`, reading `ALLOW_UNAUTHENTICATED_NETWORK` and `ALLOWED_HOSTS` from the environment per request (design decision 9)
-- [ ] 5.2 `src/proxy.ts` with no matcher, returning 403 for disallowed hosts; `assertAllowedHost()` also called in `src/db/server.ts` (and so every action and the export route); `src/instrumentation.ts` logs the opt-in warning at startup
-- [ ] 5.3 Tests: local hosts pass; a foreign host is rejected by the proxy and by `assertAllowedHost()` for an action and the export route; listed host without the opt-in is rejected; listed host with the opt-in passes when set at run time, not build time; the warning is logged only when opted in
+- [x] 5.1 `src/lib/host.ts`: `isAllowedHost(host)` and `assertAllowedHost()`, reading `ALLOW_UNAUTHENTICATED_NETWORK` and `ALLOWED_HOSTS` from the environment per request (design decision 9)
+- [x] 5.2 `src/proxy.ts` with no matcher, returning 403 for disallowed hosts; `assertAllowedHost()` also called in `src/db/server.ts` (and so every action and the export route); `src/instrumentation.ts` logs the opt-in warning at startup
+- [x] 5.3 Tests: local hosts pass; a foreign host is rejected by the proxy and by `assertAllowedHost()` for an action and the export route; listed host without the opt-in is rejected; listed host with the opt-in passes when set at run time, not build time; the warning is logged only when opted in
 
 ## 6. Saved-work actions and pages (needs the validation module, see design Migration Plan)
 
