@@ -10,10 +10,10 @@
 
 - [x] 2.1 `src/db/schema/corpus.ts` (`books`, `chapters`, `words`, `attribution`, `build`) and `src/db/schema/app.ts` (`analyses`, `diagrams`) per design decisions 4–5
 - [x] 2.2 Two drizzle-kit configs (corpus, app) writing to `drizzle/corpus/` and `drizzle/app/`; generate the initial migrations; `db:generate` runs both configs
-- [ ] 2.3 `src/db/client.ts`: lazily opened singletons with `fileMustExist`, corpus read-only with no journal pragma, app read-write with WAL, `busy_timeout` and `foreign_keys`; `quick_check` on opening the app database; clear "run `db:migrate`/`db:seed`" errors when a file is missing. No `server-only` here; `src/db/server.ts` is the `server-only` entry point for Next code
-- [ ] 2.4 `scripts/migrate-app.ts` (`db:migrate`) per design decision 10: create if missing, create `<DATA_DIR>/backups/` and `VACUUM INTO` an absolute backup path before pending migrations (keep five), migrate, `quick_check`, non-zero exit on failure
-- [ ] 2.5 Vitest helper that builds `:memory:` databases with migrations applied
-- [ ] 2.6 Tests: missing app or corpus file fails with the setup message and creates no file; a corrupt `app.sqlite` is refused and left unchanged; a write to the corpus connection fails; backup is written to `<DATA_DIR>/backups/` (created if missing) before a pending migration, whatever the working directory; a failing migration exits non-zero and leaves the backup
+- [x] 2.3 `src/db/client.ts`: lazily opened singletons with `fileMustExist`, corpus read-only with no journal pragma, app read-write with WAL, `busy_timeout` and `foreign_keys`; `quick_check` on opening the app database; clear "run `db:migrate`/`db:seed`" errors when a file is missing. No `server-only` here; `src/db/server.ts` is the `server-only` entry point for Next code
+- [x] 2.4 `scripts/migrate-app.ts` (`db:migrate`) per design decision 10: create if missing, create `<DATA_DIR>/backups/` and `VACUUM INTO` an absolute backup path before pending migrations (keep five), migrate, `quick_check`, non-zero exit on failure
+- [x] 2.5 Vitest helper that builds `:memory:` databases with migrations applied
+- [x] 2.6 Tests: missing app or corpus file fails with the setup message and creates no file; a corrupt `app.sqlite` is refused and left unchanged; a write to the corpus connection fails; backup is written to `<DATA_DIR>/backups/` (created if missing) before a pending migration, whatever the working directory; a failing migration exits non-zero and leaves the backup
 
 ## 3. Corpus store
 

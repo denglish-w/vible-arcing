@@ -12,3 +12,7 @@ The two SQLite databases (`corpus.sqlite`, read-only, and `app.sqlite`, users' s
 - Type-only imports written as `import type`, so stripping removes them.
 
 `tsconfig.json` sets `allowImportingTsExtensions`, `verbatimModuleSyntax` and `erasableSyntaxOnly`, so `tsc` reports non-erasable syntax and type imports written as value imports. `tsc` cannot see the other rules (the `@/` alias resolves, extensionless imports resolve under `bundler`, and `server-only` type-checks), so `script-imports.test.ts` checks every script-shared module for them.
+
+## Errors
+
+`DatabaseMissingError` and `DatabaseDamagedError` have path-free messages that are safe to show. The file path and SQLite detail are on `.file` and `.detail` for logs and the CLI only: never serialise these errors whole (`JSON.stringify`, spreading, returning them from an action) to a client.
