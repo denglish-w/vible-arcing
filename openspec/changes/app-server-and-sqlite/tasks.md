@@ -1,15 +1,15 @@
 ## 1. Server mode
 
-- [ ] 1.1 `next.config.ts`: remove `output: 'export'` and `images.unoptimized`; add `output: 'standalone'`, `serverExternalPackages: ['better-sqlite3']`, `outputFileTracingExcludes` for `data/**`, and `experimental.serverActions.bodySizeLimit: '1mb'`
-- [ ] 1.2 Add dependencies: `drizzle-orm`, `better-sqlite3`, `@types/better-sqlite3`, `zod`, `server-only`; dev `drizzle-kit`. Confirm the native module installs on Node 26 and record whether it used a prebuilt binary
+- [x] 1.1 `next.config.ts`: remove `output: 'export'` and `images.unoptimized`; add `output: 'standalone'`, `serverExternalPackages: ['better-sqlite3']`, `outputFileTracingExcludes` for `data/**`, and `experimental.serverActions.bodySizeLimit: '1mb'`
+- [x] 1.2 Add dependencies: `drizzle-orm`, `better-sqlite3`, `@types/better-sqlite3`, `zod`, `server-only`; dev `drizzle-kit`. Confirm the native module installs on Node 26 and record whether it used a prebuilt binary
 - [ ] 1.3 `scripts/start.sh` and npm scripts per design decision 1: `start` sets `DATA_DIR` if unset, runs `migrate-app.ts` and stops on failure, copies `public/` and `.next/static` into the standalone directory, and runs `server.js` on `127.0.0.1`; `dev` passes `-H 127.0.0.1`. Confirm `npm run dev` and `npm run build && npm start` serve the home page
-- [ ] 1.4 Git-ignore and Docker-ignore `data/`; `src/db/paths.ts` per design decision 3 (absolute `DATA_DIR`, default `<cwd>/data`, refuses to default inside `.next/standalone`), with tests run from the project root and from inside a `.next/standalone` directory
-- [ ] 1.5 `tsconfig.json`: add `allowImportingTsExtensions`, `verbatimModuleSyntax` and `erasableSyntaxOnly`; document the rule for script-shared modules (relative, explicit `.ts`, no `@/`, no `server-only`, erasable syntax only, `import type`) in `src/db/README.md`
+- [x] 1.4 Git-ignore and Docker-ignore `data/`; `src/db/paths.ts` per design decision 3 (absolute `DATA_DIR`, default `<cwd>/data`, refuses to default inside `.next/standalone`), with tests run from the project root and from inside a `.next/standalone` directory
+- [x] 1.5 `tsconfig.json`: add `allowImportingTsExtensions`, `verbatimModuleSyntax` and `erasableSyntaxOnly`; document the rule for script-shared modules (relative, explicit `.ts`, no `@/`, no `server-only`, erasable syntax only, `import type`) in `src/db/README.md`
 
 ## 2. Database layer
 
-- [ ] 2.1 `src/db/schema/corpus.ts` (`books`, `chapters`, `words`, `attribution`, `build`) and `src/db/schema/app.ts` (`analyses`, `diagrams`) per design decisions 4–5
-- [ ] 2.2 Two drizzle-kit configs (corpus, app) writing to `drizzle/corpus/` and `drizzle/app/`; generate the initial migrations; `db:generate` runs both configs
+- [x] 2.1 `src/db/schema/corpus.ts` (`books`, `chapters`, `words`, `attribution`, `build`) and `src/db/schema/app.ts` (`analyses`, `diagrams`) per design decisions 4–5
+- [x] 2.2 Two drizzle-kit configs (corpus, app) writing to `drizzle/corpus/` and `drizzle/app/`; generate the initial migrations; `db:generate` runs both configs
 - [ ] 2.3 `src/db/client.ts`: lazily opened singletons with `fileMustExist`, corpus read-only with no journal pragma, app read-write with WAL, `busy_timeout` and `foreign_keys`; `quick_check` on opening the app database; clear "run `db:migrate`/`db:seed`" errors when a file is missing. No `server-only` here; `src/db/server.ts` is the `server-only` entry point for Next code
 - [ ] 2.4 `scripts/migrate-app.ts` (`db:migrate`) per design decision 10: create if missing, create `<DATA_DIR>/backups/` and `VACUUM INTO` an absolute backup path before pending migrations (keep five), migrate, `quick_check`, non-zero exit on failure
 - [ ] 2.5 Vitest helper that builds `:memory:` databases with migrations applied
@@ -22,7 +22,7 @@
 - [ ] 3.3 `src/lib/corpus/format.ts`: v1 types and the single `parseChapter()`, which rejects unknown versions by name
 - [ ] 3.4 `scripts/seed-corpus.ts` (`db:seed`) per design decision 4: clean temp file, `journal_mode = DELETE`, migrations, books, one transaction per book, derived `seq`, `build` row with ingest hash, integrity check, close, remove stale `-wal`/`-shm`, rename; clean up on failure
 - [ ] 3.5 `src/db/corpus.ts`: `listBooks()`, `getChapter(book, chapter)` returning words in order, "unavailable" or "does not exist", `getWord(id)`, `wordsExist(ids)`, `getAttribution()`
-- [ ] 3.6 Tests: no committed `corpus/v1/**/*.json` has an `ln` or `domain` key; repeatable build gives identical rows in every table; unknown format refused with the old store intact; failure mid-build leaves the old store openable; no `ln`/`domain` columns; attribution has SBLGNT and MACULA; chapter ordering; "unavailable" vs "does not exist"
+- [ ] 3.6 Tests: no committed `corpus/v1/**/*.json` has an `ln` or `domain` key; repeatable build gives identical rows in every table; unknown format refused with the old store intact; failure mid-build leaves the old store openable; no `ln`/`domain` columns; attribution has SBLGNT and MACULA; chapter ordering; "unavailable" vs "does not exist"; every `chapters` row's `word_count` matches its words, and no words exist for a chapter without a row
 
 ## 4. Saved-work storage
 
@@ -30,7 +30,7 @@
 - [ ] 4.2 Envelope checks: `doc` at most 512 KB, known `doc_version`, passage columns derived from the analysis `doc` (diagram: from the envelope), all referenced word ids present via `wordsExist`
 - [ ] 4.3 Tests: stale revision rejected and stored copy unchanged; overwrite against the current revision succeeds; delete removes; analyses and diagrams never cross; unknown word id refused; passage derived from content, not from the request; oversized and unknown-version documents refused; a corpus rebuild leaves `app.sqlite` byte-identical
 - [ ] 4.4 `src/lib/autosave.ts`: `createAutosave` controller per design decision 7 (no React or Zustand dependency), plus a thin `useAutosave` hook
-- [ ] 4.5 Controller tests with a fake source, fake save and fake unload target: edit applies immediately; single in-flight save; one follow-up save; retryable failure retries with backoff and clears "Not saved"; conflict stops retrying, keeps changes, and offers overwrite, save-as-copy and download; permanent failures (including unknown word and corpus missing) stop retrying with their reason; `beforeunload` guard only while unsaved
+- [ ] 4.5 Controller tests with a fake source, fake save and fake unload target: edit applies immediately; single in-flight save; one follow-up save; retryable failure retries with backoff and clears "Not saved"; conflict stops retrying, keeps changes, and offers overwrite, save-as-copy and download; permanent failures (including unknown word and corpus missing) stop retrying with their reason; `beforeunload` guard only while unsaved; a test that no `"use client"` module imports `src/db/**` or `better-sqlite3`
 
 ## 5. Local-only server
 

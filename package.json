@@ -6,6 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "db:generate": "drizzle-kit generate --config drizzle.corpus.config.ts && drizzle-kit generate --config drizzle.app.config.ts",
+    "db:migrate": "node scripts/migrate-app.ts",
+    "db:seed": "node scripts/seed-corpus.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "oxlint",
@@ -15,9 +18,13 @@
     "prepare": "husky || true"
   },
   "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "drizzle-orm": "^0.45.4",
     "next": "16.4.2",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^10.6.3",
@@ -25,9 +32,11 @@
     "@storybook/nextjs-vite": "^10.6.3",
     "@tailwindcss/turbopack": "^4",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^26.6.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.11",
     "husky": "^9.1.7",
     "oxlint": "^1.89.0",
     "prettier": "^3.9.10",
