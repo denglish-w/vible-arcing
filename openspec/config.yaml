@@ -10,34 +10,55 @@ schema: spec-driven
 #     Domain: e-commerce platform
 context: |
   Domain: Bible arcing/bracketing, the discourse-analysis method developed by
-  Daniel Fuller and popularized by John Piper and Thomas Schreiner. No free,
-  open-source tool exists today; the only paid option is Biblearc.
+  Daniel Fuller and popularized by John Piper and Thomas Schreiner. The
+  product combines Greek reading, grammatical diagramming and discourse
+  analysis. Pricing, open-source status and the product name are undecided.
 
   Two data models, kept strictly separate — never conflate them in a spec:
   - Discourse analysis (arcing/bracketing): propositions (clauses) linked by
     the canonical 18 logical relationships (+4 extended), rendered as arcs or
     brackets — one model, two view layers, not two features.
   - Grammatical/sentence diagramming: word-level syntax (Reed-Kellogg style),
-    requires morphological tagging. Deferred — out of scope until morphology
-    data is sourced and licensed. See docs/reference/model-notes.md.
+    uses MACULA morphology. In scope for the product; its editor is a separate
+    change. See PRODUCT.md and docs/reference/model-notes.md.
 
   Source text: SBL Greek New Testament (SBLGNT), CC BY 4.0. Greek only for
-  v1; Hebrew is deferred pending an openly-licensed Leningrad Codex-based
-  text. Bundling SBLGNT requires retaining its copyright notice, license
-  link, CC BY 4.0 statement, and a note of any modifications — both in-repo
-  and in the shipped UI.
+  v1; Hebrew is deferred as a scope choice. MACULA Greek supplies morphology
+  and syntax under CC BY 4.0. Bundling SBLGNT requires retaining its
+  copyright notice, license link, CC BY 4.0 statement, and a note of any
+  modifications — both in-repo and in the shipped UI.
 
-  Tech stack: Next.js (App Router) + TypeScript as a single-user, local-only
-  standalone Node server (bound to 127.0.0.1, non-local Host refused), with
-  SQLite via Drizzle and better-sqlite3: a read-only corpus store and an
-  app database for saved work, written by server actions. The editor is
-  client-side (Zustand + Immer state, SVG rendering); edits apply locally
-  and autosave in the background. Python is used only for the offline
-  corpus-ingest script (scripts/ingest/), which emits versioned per-chapter
-  JSON to corpus/v1/, loaded into the corpus store by db:seed.
-  Validation is a single pure-TypeScript module shared by the editor and the
-  import path. The taxonomy and conjunction cue table are JSON in docs/data/,
-  with TypeScript types generated from them — never hand-transcribed.
+  Tech stack: Next.js App Router + React + TypeScript on Node 26, with
+  standalone Node server output. SQLite through Drizzle ORM and better-sqlite3, migrations
+  through drizzle-kit. Separate corpus.sqlite (read-only at runtime) and
+  app.sqlite (saved analyses and diagrams). Postgres is expected with accounts,
+  not used yet. No IndexedDB/Dexie for saved work.
+
+  Editing stays client-side with Zustand + Immer and SVG rendering; an edit
+  never waits for a save. Saves go to the server. Until accounts exist, the
+  app is single-user and local-only, with no public deployment.
+  Python stdlib scripts in scripts/ingest/ emit versioned per-chapter corpus
+  JSON under corpus/v1/; a TypeScript seed loads it into corpus.sqlite.
+  Corpus chapter reads and attribution come from the server-side store.
+  Word identity is always the MACULA id. Strip UBS ln/domain attributes.
+
+  Styling: Tailwind v4, CSS custom-property tokens from DESIGN.md, and Radix
+  UI primitives for the reader. Light, dark and sepia themes; serif-only type;
+  part-of-speech colour always paired with a non-colour cue. The app supplies
+  word facts, never automatic interpretation, segmentation or relationships.
+
+  Tooling: npm with package-lock.json, Node pinned in .node-version, oxlint
+  (no ESLint), Prettier, Vitest, Storybook 10 with Playwright browser tests
+  and axe accessibility checks. Validation is one pure-TypeScript module
+  shared by the editor, import path and server saves. Taxonomy and conjunction
+  data live in docs/data/, with generated TypeScript types.
+
+  Work isolation: implement every change in its own dedicated Git worktree
+  and branch. Check git worktree list first. Never use or modify an existing
+  worktree assigned to another person or agent, even if it is clean or named
+  for the same change; create a uniquely named worktree and branch instead.
+  Keep unrelated changes intact. Shared planning/configuration edits may be
+  made in the main checkout when explicitly requested.
 
   Structural note: Bilateral is the one relationship with arity > 2. It is
   modelled as a single ternary node (before, supporter, after) so the
@@ -74,9 +95,13 @@ context: |
 operations:
   apply:
     guidance:
+      - Before implementation, create a dedicated Git worktree and branch
+        for this change, or reuse one explicitly assigned to this session.
+        Leave other agents' and users' worktrees untouched.
       - After finishing each section of tasks (a `## N.` heading in tasks.md)
-        that changed code, run two read-only Sonnet agents in parallel (Agent
-        tool, general-purpose, model sonnet) on that section's diff, one for
-        code review against the tasks, specs and CLAUDE.md constraints, one
-        for security review. Fix the findings you agree with, at most two
+        that changed code, run two read-only reviewers in parallel on that
+        section's diff, one for code review against the tasks, specs and
+        CLAUDE.md constraints, one for security review. Claude uses Sonnet
+        via its Agent tool; Codex uses native subagents with inherited model
+        and reasoning defaults. Fix the findings you agree with, at most two
         review rounds per section, then run lint and tests.
