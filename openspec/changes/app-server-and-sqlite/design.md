@@ -32,7 +32,7 @@ See proposal.md for why. The current state:
 
 `next.config.ts` drops `output: 'export'` and `images.unoptimized`, adds `output: 'standalone'`, and lists `better-sqlite3` in `serverExternalPackages` so the bundler leaves the native module alone.
 
-`npm start` runs `scripts/start.sh`, which exports `DATA_DIR="$PWD/data"` unless the caller set it, runs `scripts/migrate-app.ts` and exits if it fails, copies `public/` and `.next/static` into `.next/standalone` (standalone output does not include them), and runs `node .next/standalone/server.js` with `HOSTNAME=127.0.0.1` unless the caller set it. `npm run dev` passes `-H 127.0.0.1` for the same reason (decision 9).
+`npm start` runs `scripts/start.sh`, which exports `DATA_DIR="$PWD/data"` unless the caller set it, runs `scripts/migrate-app.ts` and exits if it fails, copies `public/` and `.next/static` into `.next/standalone` (standalone output does not include them), and runs `node .next/standalone/server.js` with `HOSTNAME` set to `BIND_ADDRESS`, or `127.0.0.1` when that is unset. An inherited `HOSTNAME` is not honoured, because Docker and some shells export it as the machine name, which would bind a network address. `npm run dev` passes `-H 127.0.0.1` for the same reason (decision 9).
 
 Every route that reads either database is rendered per request: it calls `await connection()` before its first query. Without that, Next prerenders server components with no request-time API at build time, which would freeze `/work` at its build-time contents and make `next build` open databases that do not exist in CI. The build must succeed with no `data/` directory, and CI checks that. Actions that change saved work call `revalidatePath('/work')`.
 

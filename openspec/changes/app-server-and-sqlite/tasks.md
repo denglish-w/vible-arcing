@@ -2,7 +2,7 @@
 
 - [x] 1.1 `next.config.ts`: remove `output: 'export'` and `images.unoptimized`; add `output: 'standalone'`, `serverExternalPackages: ['better-sqlite3']`, `outputFileTracingExcludes` for `data/**`, and `experimental.serverActions.bodySizeLimit: '1mb'`
 - [x] 1.2 Add dependencies: `drizzle-orm`, `better-sqlite3`, `@types/better-sqlite3`, `zod`, `server-only`; dev `drizzle-kit`. Confirm the native module installs on Node 26 and record whether it used a prebuilt binary
-- [ ] 1.3 `scripts/start.sh` and npm scripts per design decision 1: `start` sets `DATA_DIR` if unset, runs `migrate-app.ts` and stops on failure, copies `public/` and `.next/static` into the standalone directory, and runs `server.js` on `127.0.0.1`; `dev` passes `-H 127.0.0.1`. Confirm `npm run dev` and `npm run build && npm start` serve the home page
+- [x] 1.3 `scripts/start.sh` and npm scripts per design decision 1: `start` sets `DATA_DIR` if unset, runs `migrate-app.ts` and stops on failure, copies `public/` and `.next/static` into the standalone directory, and runs `server.js` on `127.0.0.1`; `dev` passes `-H 127.0.0.1`. Confirm `npm run dev` and `npm run build && npm start` serve the home page
 - [x] 1.4 Git-ignore and Docker-ignore `data/`; `src/db/paths.ts` per design decision 3 (absolute `DATA_DIR`, default `<cwd>/data`, refuses to default inside `.next/standalone`), with tests run from the project root and from inside a `.next/standalone` directory
 - [x] 1.5 `tsconfig.json`: add `allowImportingTsExtensions`, `verbatimModuleSyntax` and `erasableSyntaxOnly`; document the rule for script-shared modules (relative, explicit `.ts`, no `@/`, no `server-only`, erasable syntax only, `import type`) in `src/db/README.md`
 

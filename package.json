@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 127.0.0.1",
     "build": "next build",
-    "start": "next start",
+    "start": "sh scripts/start.sh",
     "db:generate": "drizzle-kit generate --config drizzle.corpus.config.ts && drizzle-kit generate --config drizzle.app.config.ts",
     "db:migrate": "node scripts/migrate-app.ts",
     "db:seed": "node scripts/seed-corpus.ts",
