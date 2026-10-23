@@ -24,6 +24,8 @@ The product is a web app for studying the Greek New Testament: reading, grammati
 
 ## Workflow: OpenSpec
 
+Before changing project skills or slash commands, read and follow `lat.md/skill-maintenance.md`. Update matching Claude and Codex workflows together and compare them before finishing.
+
 Changes are planned with OpenSpec before code is written. Slash commands live in `.claude/commands/opsx/` (`/opsx:propose`, `/opsx:apply`, `/opsx:archive`, etc.). A change's `proposal.md`, `design.md` and `specs/` are the source of truth for what to build; `openspec/config.yaml` carries project context shown to the model when generating artifacts.
 
 ## Stack (see `design.md`)

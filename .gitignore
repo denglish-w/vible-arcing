@@ -1,6 +1,10 @@
 .lat-build
 .mcp.json
-.codex
+/.codex/*
+!/.codex/AGENTS.md
+!/.codex/skills/
+/.codex/skills/*
+!/.codex/skills/openspec-*/
 .claude/skills/impeccable/
 .claude/agents/impeccable-*.md
 
