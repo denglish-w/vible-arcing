@@ -50,3 +50,7 @@ next-env.d.ts
 
 # impeccable machine-local settings
 .impeccable/config.local.json
+
+# storybook
+/storybook-static/
+*storybook.log

@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "lint": "oxlint",
     "test": "vitest run --passWithNoTests",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"*.{ts,json}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"*.{ts,json}\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \".storybook/*.ts\" \"*.{ts,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \".storybook/*.ts\" \"*.{ts,json}\"",
     "prepare": "husky || true"
   },
   "dependencies": {
@@ -18,15 +20,21 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^10.6.3",
+    "@storybook/addon-docs": "^10.6.3",
+    "@storybook/nextjs-vite": "^10.6.3",
     "@tailwindcss/turbopack": "^4",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.6.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "husky": "^9.1.7",
     "oxlint": "^1.89.0",
     "prettier": "^3.9.10",
+    "storybook": "^10.6.3",
     "tailwindcss": "^4",
     "typescript": "^5",
+    "vite": "^8.3.5",
     "vitest": "^5.0.5"
   },
   "engines": {

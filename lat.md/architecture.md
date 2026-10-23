@@ -14,11 +14,13 @@ npm manages packages with a committed `package-lock.json`, Node is pinned to the
 
 Bun and pnpm were rejected because the app ships as static files, so there is no runtime to speed up and Next.js builds run on Node regardless. The shared valid and invalid analysis fixtures run under Vitest. Renderer colours come from CSS custom properties in the Tailwind theme rather than utility classes, so the SVG renderers stay independent of Tailwind. `@types/node` tracks the Node major so it satisfies Vitest's peer range. A Husky pre-push hook runs the lint and Prettier checks before code leaves the machine. ESLint is not used: oxlint's `.oxlintrc.json` enables the typescript, react, nextjs, jsx-a11y and vitest plugins, and the hook rules are set to error.
 
+Storybook 10 (`@storybook/nextjs-vite`) is the component workshop. Its config is in `.storybook/`, stories sit next to their components as `*.stories.tsx` under `src/`, and `npm run build-storybook` runs in CI. Vite does not run the Turbopack CSS loader, so `.storybook/main.ts` adds `@tailwindcss/vite`. The a11y addon fails a story on axe violations to back the WCAG 2.2 AA requirement in `PRODUCT.md`.
+
 ## Container and CI
 
 A GitHub Actions workflow checks every push and pull request, then builds a Docker image that serves the static export with nginx.
 
-The `check` job runs lint, the Prettier check, tests, the build and `lat check` on the Node version in `.node-version`. The `image` job runs only after it passes and builds the `Dockerfile` without pushing. The Dockerfile builds on `node:26-slim` and copies `out/` into `nginx:stable-alpine`, with `nginx.conf` resolving the export's `route.html` files and caching hashed assets. Where the image is published and deployed is undecided.
+The `check` job runs lint, the Prettier check, tests, the build, the Storybook build and `lat check` on the Node version in `.node-version`. The `image` job runs only after it passes and builds the `Dockerfile` without pushing. The Dockerfile builds on `node:26-slim` and copies `out/` into `nginx:stable-alpine`, with `nginx.conf` resolving the export's `route.html` files and caching hashed assets. Where the image is published and deployed is undecided.
 
 ## Editor state and persistence
 

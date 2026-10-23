@@ -26,6 +26,7 @@ jobs:
       - run: npm run format:check
       - run: npm test
       - run: npm run build
+      - run: npm run build-storybook
       - name: Check lat.md
         run: npx --yes lat.md@0.13.3 check
 

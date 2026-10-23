@@ -12,6 +12,7 @@ Use the pinned Node (`fnm use`, reads `.node-version`).
 
 - `npm run dev`: dev server. Next.js may append its own agent block to `AGENTS.md` when it runs.
 - `npm run build`: static export to `out/`.
+- `npm run storybook` / `npm run build-storybook`: Storybook on port 6006 / static build to `storybook-static/`. Stories go next to components as `*.stories.tsx`.
 - `npm run lint`: oxlint, configured in `.oxlintrc.json` (ignores `.claude/`, `.agents/`, `.venv/`). There is no ESLint.
 - `npm run format` / `npm run format:check`: Prettier over `src/` and root config files only, not docs.
 - `npm test`: Vitest, passes with no tests. One file: `npx vitest run path/to/file.test.ts`; one test: add `-t "name"`.
