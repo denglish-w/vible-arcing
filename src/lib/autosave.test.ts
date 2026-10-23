@@ -300,11 +300,30 @@ describe("createAutosave", () => {
     autosave.dispose();
     expect(source.listenerCount()).toBe(0);
     expect(unload.guarded()).toBe(false);
+    await flushPromises();
     expect(calls).toHaveLength(1);
     expect(calls[0]).toMatchObject({ snapshot: "v1", revision: 1 });
     calls[0].reject(new Error("offline"));
     await vi.advanceTimersByTimeAsync(DEBOUNCE_MS * 50);
     expect(save).toHaveBeenCalledOnce();
+  });
+
+  it("on dispose, sends edits made during a save after that save settles", async () => {
+    const { source, calls, autosave } = setup();
+    source.edit("v1");
+    await vi.advanceTimersByTimeAsync(DEBOUNCE_MS);
+    source.edit("v2");
+    autosave.dispose();
+    // The editor may already show another record by the time the save is sent.
+    source.edit("another record");
+    expect(calls).toHaveLength(1);
+    calls[0].resolve({ ok: true, revision: 2 });
+    await flushPromises();
+    expect(calls).toHaveLength(2);
+    expect(calls[1]).toMatchObject({ snapshot: "v2", revision: 2 });
+    calls[1].resolve({ ok: true, revision: 3 });
+    await flushPromises();
+    expect(autosave.hasUnsavedChanges()).toBe(false);
   });
 
   it("sends nothing on dispose when everything is saved or waiting on the user", async () => {

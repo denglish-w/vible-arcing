@@ -1,7 +1,8 @@
 "use client";
-// Thin React wrapper around createAutosave (design decision 7). Editors pass
-// their store's subscribe and getSnapshot; the controller is recreated only
-// when the record (its revision baseline) changes.
+// Thin React wrapper around createAutosave (design decision 7). The options are
+// bound to one record: they are read when the controller is created, and a new
+// `recordKey` creates a new controller, so a save can never reach another
+// record's content or id. Editors give functions that stay valid for the record.
 import { useEffect, useRef, useState } from "react";
 import {
   createAutosave,
@@ -16,23 +17,15 @@ export function useAutosave<T>(
 ): { status: AutosaveStatus; controls: Autosave | null } {
   const [status, setStatus] = useState<AutosaveStatus>({ state: "saved" });
   const [controls, setControls] = useState<Autosave | null>(null);
-  // Latest callbacks without recreating the controller on every render.
-  const latest = useRef(options);
+  // The options of the render that created the current record's controller.
+  const current = useRef(options);
   useEffect(() => {
-    latest.current = options;
+    current.current = options;
   });
 
   useEffect(() => {
     const autosave = createAutosave<T>({
-      subscribe: (listener) => latest.current.subscribe(listener),
-      getSnapshot: () => latest.current.getSnapshot(),
-      save: (snapshot, revision) => latest.current.save(snapshot, revision),
-      saveAsCopy: latest.current.saveAsCopy
-        ? (snapshot) => latest.current.saveAsCopy!(snapshot)
-        : undefined,
-      download: (snapshot) => latest.current.download?.(snapshot),
-      revision: latest.current.revision,
-      debounceMs: latest.current.debounceMs,
+      ...current.current,
       onStatus: setStatus,
       unloadTarget: window,
     });

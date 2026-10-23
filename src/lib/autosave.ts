@@ -101,7 +101,10 @@ export function createAutosave<T>(options: AutosaveOptions<T>): Autosave {
   // Edits counted so a save knows whether it captured the latest content.
   let edits = 0;
   let savedEdits = 0;
-  let inFlight = false;
+  let inFlight: Promise<unknown> | null = null;
+  // The content as of the last edit, so a final save on dispose sends this
+  // record's content even if the editor has already moved on.
+  let lastEdit: { snapshot: T } | null = null;
   let timer: ReturnType<typeof setTimeout> | undefined;
   let failures = 0;
   let guarded = false;
@@ -144,14 +147,15 @@ export function createAutosave<T>(options: AutosaveOptions<T>): Autosave {
   ) {
     timer = undefined;
     if (disposed || inFlight) return;
-    inFlight = true;
     const sentEdits = edits;
     setStatus({ state: "saving" });
     let result: SaveResult;
+    const request = send(options.getSnapshot());
+    inFlight = request.catch(() => {});
     try {
-      result = await send(options.getSnapshot());
+      result = await request;
     } catch {
-      inFlight = false;
+      inFlight = null;
       if (disposed) return;
       const delay = Math.min(
         BACKOFF_START_MS * 2 ** failures++,
@@ -162,12 +166,15 @@ export function createAutosave<T>(options: AutosaveOptions<T>): Autosave {
       schedule(delay, send);
       return;
     }
-    inFlight = false;
+    inFlight = null;
+    if (result.ok) {
+      // Kept even after dispose, for the final save.
+      revision = result.revision;
+      savedEdits = sentEdits;
+    }
     if (disposed) return;
     failures = 0;
     if (result.ok) {
-      revision = result.revision;
-      savedEdits = sentEdits;
       if (dirty()) {
         // Edits arrived during the save: one follow-up save covers them all.
         setStatus({ state: "pending" });
@@ -183,6 +190,7 @@ export function createAutosave<T>(options: AutosaveOptions<T>): Autosave {
   const unsubscribe = options.subscribe(() => {
     if (disposed) return;
     edits++;
+    lastEdit = { snapshot: options.getSnapshot() };
     // An edit may fix content the server refused, so it is sent again.
     if (status.state === "refused" && CONTENT_REASONS.has(status.reason)) {
       setStatus({ state: "pending" });
@@ -194,7 +202,7 @@ export function createAutosave<T>(options: AutosaveOptions<T>): Autosave {
       updateGuard();
       return;
     }
-    if (inFlight) {
+    if (inFlight !== null) {
       updateGuard();
       return;
     }
@@ -210,32 +218,44 @@ export function createAutosave<T>(options: AutosaveOptions<T>): Autosave {
   return {
     getStatus: () => status,
     overwrite() {
-      if (status.state !== "conflict" || inFlight) return;
+      if (status.state !== "conflict" || inFlight !== null) return;
       revision = status.current.revision;
       void flush();
     },
     saveAsCopy() {
       const copy = options.saveAsCopy;
-      if (!blocked() || inFlight || !copy) return;
+      if (!blocked() || inFlight !== null || !copy) return;
       void flush(copy);
     },
     download() {
       options.download?.(options.getSnapshot());
     },
     retry() {
-      if (status.state !== "refused" || inFlight) return;
+      if (status.state !== "refused" || inFlight !== null) return;
       void flush();
     },
     hasUnsavedChanges: dirty,
     dispose() {
       if (disposed) return;
-      const finalSave = dirty() && !blocked() && !inFlight;
+      const finalSave = dirty() && !blocked() && lastEdit !== null;
+      const pending = inFlight ?? Promise.resolve();
+      const editsAtDispose = edits;
       disposed = true;
       clearTimeout(timer);
       unsubscribe();
       updateGuard();
-      // Best effort: nothing is left to report the outcome to.
-      if (finalSave) void saveToRecord(options.getSnapshot()).catch(() => {});
+      if (!finalSave || !lastEdit) return;
+      const { snapshot } = lastEdit;
+      // Best effort, after any save already under way (whose new revision it
+      // uses); nothing is left to report the outcome to.
+      void pending
+        .then(() =>
+          savedEdits === editsAtDispose ? null : saveToRecord(snapshot),
+        )
+        .then((result) => {
+          if (result?.ok) savedEdits = editsAtDispose;
+        })
+        .catch(() => {});
     },
   };
 }
