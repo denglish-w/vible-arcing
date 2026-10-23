@@ -44,14 +44,13 @@ None — this is the first change in the project.
 
 ## Impact
 
-**Establishes, for the first time:** the project's domain vocabulary. Every later capability (editor, renderers, persistence, relationship suggestion) depends on the taxonomy and proposition model defined here.
+**Establishes, for the first time:** the project's domain vocabulary. Every later capability (editor, renderers, persistence) depends on the taxonomy and proposition model defined here.
 
 **Deliberately out of scope for this change:**
 - Arc and bracket **renderers** — they consume this model; they are separate changes.
 - **Grammatical/sentence diagramming** — a distinct data model. Its data dependency is now satisfied (MACULA Greek syntax trees, CC BY 4.0), so this is deferred on scope grounds rather than blocked. Its own change.
 - **Persistence, accounts, backend API** — no storage decisions made here.
-- **Relationship auto-suggestion** — the conjunction table is captured as data; the inference engine that consumes it is later work.
-- **Proposition auto-splitting** — MACULA clause nodes make this tractable, but the segmentation feature is later work.
+- **Relationship auto-suggestion and proposition auto-splitting** — not planned. Product decision (2026-10-22): the app never interprets for the user. The conjunction table is reference material a user can look up; MACULA clause data is never used to segment a passage.
 
 **Language scope:** Greek (SBLGNT) for v1.
 

@@ -1,29 +1,34 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeSync } from "@/components/theme-sync";
+import { cardo, didot, garamond, gentium } from "./fonts";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "Vible Arcing",
-  description: "Free, open-source Bible arcing and bracketing",
+  title: "The Greek New Testament",
+  description:
+    "Read the SBL Greek New Testament with word-level gloss and morphology.",
 };
-
-export default function RootLayout({ children }: LayoutProps<"/">) {
+const themeScript = `try{var s=JSON.parse(localStorage.getItem('vible.display')||'null');var t=s&&s.state&&s.state.settings&&s.state.settings.theme;if(t==='dark'||t==='sepia')document.documentElement.classList.add(t)}catch{}`;
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${garamond.variable} ${gentium.variable} ${cardo.variable} ${didot.variable}`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body>
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
+        <ThemeSync />
+        {children}
+      </body>
     </html>
   );
 }

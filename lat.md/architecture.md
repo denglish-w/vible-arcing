@@ -1,6 +1,6 @@
 # Architecture
 
-How the app is built and where code runs. The Next.js app is scaffolded, but the editor, proposition model and ingest are not built yet. The design is in `openspec/changes/discourse-analysis-foundation/design.md`.
+The static Next.js app provides a themed Greek reader and sample corpus. The editor and discourse model are still planned in `openspec/changes/discourse-analysis-foundation/design.md`.
 
 ## Static client-side app
 
@@ -14,11 +14,15 @@ npm manages packages with a committed `package-lock.json`, Node is pinned to the
 
 Bun and pnpm were rejected because the app ships as static files, so there is no runtime to speed up and Next.js builds run on Node regardless. The shared valid and invalid analysis fixtures run under Vitest. Renderer colours come from CSS custom properties in the Tailwind theme rather than utility classes, so the SVG renderers stay independent of Tailwind. `@types/node` tracks the Node major so it satisfies Vitest's peer range. A Husky pre-push hook runs the lint and Prettier checks before code leaves the machine. ESLint is not used: oxlint's `.oxlintrc.json` enables the typescript, react, nextjs, jsx-a11y and vitest plugins, and the hook rules are set to error.
 
+Storybook 10 (`@storybook/nextjs-vite`) is the component workshop. Its config is in `.storybook/`, stories sit next to their components as `*.stories.tsx` under `src/`, and `npm run build-storybook` runs in CI. Vite does not run the Turbopack CSS loader, so `.storybook/main.ts` adds `@tailwindcss/vite`. The a11y addon fails a story on axe violations to back the WCAG 2.2 AA requirement in `PRODUCT.md`.
+
+The Storybook Vitest addon makes every story a test: `vitest.config.mts` has a `unit` project in Node and a `storybook` project that renders each story in headless Chromium through Playwright, so `npm test` fails on a crashing story, a failed play function or an axe violation. CI installs Chromium before the tests. The MCP addon serves story metadata and preview URLs to coding agents at `/mcp` while `npm run storybook` runs.
+
 ## Container and CI
 
 A GitHub Actions workflow checks every push and pull request, then builds a Docker image that serves the static export with nginx.
 
-The `check` job runs lint, the Prettier check, tests, the build and `lat check` on the Node version in `.node-version`. The `image` job runs only after it passes and builds the `Dockerfile` without pushing. The Dockerfile builds on `node:26-slim` and copies `out/` into `nginx:stable-alpine`, with `nginx.conf` resolving the export's `route.html` files and caching hashed assets. Where the image is published and deployed is undecided.
+The `check` job runs lint, the Prettier check, tests, the build, the Storybook build and `lat check` on the Node version in `.node-version`. The `image` job runs only after it passes and builds the `Dockerfile` without pushing. The Dockerfile builds on `node:26-slim` and copies `out/` into `nginx:stable-alpine`, with `nginx.conf` resolving the export's `route.html` files and caching hashed assets. Where the image is published and deployed is undecided.
 
 ## Editor state and persistence
 
@@ -42,4 +46,4 @@ Contiguity, arity, acyclicity and the Bilateral one-per-side constraint are enfo
 
 Python is used only for a release-time script that converts MACULA Greek XML into compact static JSON.
 
-The script in `scripts/ingest/` reads the `SBLGNT/lowfat` trees (about 13 MB per book) and writes per-book JSON to `public/corpus/`. Nothing in the request path parses XML. See [[corpus#Ingest pipeline]] for what the output contains and what is enforced at ingest.
+[[scripts/ingest/sample_chapter.py]] extracts a pinned Philippians 1 from `SBLGNT/lowfat` into versioned chapter JSON. Nothing in the request path parses XML. See [[corpus#Ingest pipeline]] and [[reader#Greek reader]] for the format and consumer.

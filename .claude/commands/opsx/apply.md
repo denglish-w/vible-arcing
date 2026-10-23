@@ -90,8 +90,35 @@ Implement tasks from an OpenSpec change.
    - Show which task is being worked on
    - Make the code changes required
    - Keep changes minimal and focused
+   - **Review the task's changes with two Sonnet agents, code and security** (see below)
    - Mark task complete in the tasks file: `- [ ]` → `- [x]`
    - Continue to next task
+
+   **Review step (every task that changes code):**
+
+   Spawn two review agents in the same message so they run in parallel, both with the Agent tool, `subagent_type: "general-purpose"`, `model: "sonnet"`. Tasks that only touch docs or planning artifacts skip this step. Both reviewers are read-only; tell them not to edit files. Give each the same inputs (task text, artifact paths, the diff) and its own focus.
+
+   *Code reviewer.* Brief it with:
+   - The task text, and the paths of the change's proposal, design and specs (from `contextFiles`)
+   - The files changed for this task (`git diff` plus any new untracked files), not your own account of what you did
+   - What to check: correctness bugs and edge cases, whether the change does what the task and specs ask (no more, no less), the architecture constraints and licensing rules in `CLAUDE.md`, and missing or weak tests
+   - To return a short list of findings, each with file:line, severity (blocker / should-fix / nit) and a concrete failure scenario, or "no findings"
+
+   *Security reviewer.* Brief it with the same task text, artifact paths and diff, and tell it to look only for exploitable weaknesses, such as:
+   - untrusted input reaching the DOM or SVG unescaped (`dangerouslySetInnerHTML`, `innerHTML`, `href`/`xlink:href` with `javascript:` URLs, injected attributes)
+   - imported or saved analyses that bypass the validation module, or crash or hang it (prototype pollution, unbounded size or depth)
+   - unsafe XML parsing or file paths in the Python ingest (entity expansion, XXE, path traversal)
+   - secrets, tokens or personal data committed or shipped in the static export
+   - new or changed dependencies (lockfile churn, install scripts, unmaintained or typo-squatted packages)
+   - CI, Dockerfile and nginx changes (workflow permissions, untrusted input in `run:` steps, missing security headers or CSP)
+   - if the change adds a server or database: injection, missing authentication or authorisation, unsafe deserialisation
+   It returns findings in the same format, each with a concrete attack scenario, or "no findings". Theoretical issues with no realistic path to exploit in this app are nits at most.
+
+   Then:
+   - Weigh each finding yourself; the reviewer can be wrong. Fix blockers and should-fix findings you agree with, and note any you reject with a one-line reason.
+   - If fixes were substantial, run the reviewer(s) whose findings you fixed once more on the new diff. Do not loop more than twice per task; report anything still open.
+   - Run `npm run lint` and `npm test` before marking the task complete.
+   - In the task's output, show a one-line summary per reviewer (e.g. `Code review: 2 fixed, 1 rejected (reason)` / `Security review: no findings`).
 
    **Pause if:**
    - Task is unclear → ask for clarification

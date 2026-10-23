@@ -87,6 +87,8 @@ Continue working on a change by creating the next artifact.
    openspec status --change "<name>"
    ```
 
+   If the artifact you just created completed the change (`isComplete: true`), run the adversarial spec review before stopping: the same Opus review agent, briefing and follow-up as step 5 of `.claude/commands/opsx/propose.md`. Show its summary (fixed, rejected with reasons, still open).
+
 **Output**
 
 After each invocation, show:

@@ -8,6 +8,12 @@ Arcing is a discourse-analysis method developed by Daniel Fuller and popularised
 
 The only paid tool is Biblearc. The only open competitor, `SotS1689/DA-Tool`, has no licence, so its code must not be copied. The relationship taxonomy itself originates in scholarship and is independently implementable.
 
+## Clean design from prior art
+
+The project aims to respect Biblearc and build something better, so it learns from existing tools without copying their expression.
+
+Requirements are written as user needs in the project's own words, and screens are designed from the [[design-system]]. Biblearc's code, assets, help text, labels, reference-sheet wording, name and logo are never reused, and the product must not be confusable with it. Its screenshots are not committed. The method and taxonomy are implemented from the scholarly sources and credited.
+
 ## One model, two renderings
 
 Arcing and bracketing differ only in how the same analysis is drawn. They are never two features.
@@ -18,7 +24,7 @@ Biblearc's own material says the two methods "differ only in how they display th
 
 Discourse analysis links propositions by logical relationship; grammatical diagramming links words by syntactic role. They are separate models and must not be conflated.
 
-Discourse analysis works across sentences on bare text plus user segmentation. Grammatical diagramming works within a sentence, needs morphological tagging, and is rendered Reed-Kellogg style. Grammatical diagramming is deferred on scope grounds, not data: MACULA syntax trees already supply what it needs.
+Discourse analysis works across sentences on bare text plus user segmentation. Grammatical diagramming works within a sentence and is drawn in school-style Reed-Kellogg notation adapted for Greek, defined in `docs/reference/diagramming-notation.md`. It is in scope. The user places every word: MACULA supplies the text and each word's grammar, but its syntax trees are never used to draw or suggest a diagram.
 
 ## The 18 logical relationships
 
@@ -32,8 +38,8 @@ Ground and Inference share an identical definition and differ only in whether th
 
 Relationships are therefore data records with a direction field, not eighteen flat enum values. Ground is `{support, follows}` and Inference is `{support, precedes}`. Inverting a connection flips the direction and re-derives the identifier, so the connection survives. Coordinate relationships carry no direction and reject inversion.
 
-## Conjunction cues suggest, never decide
+## Conjunction cues are reference only
 
-A table maps 64 Greek conjunctions to 105 relationship associations, each with a scripture example. It supports suggestion only.
+A table maps 64 Greek conjunctions to 105 relationship associations, each with a scripture example. Users can look entries up; the app never suggests from it.
 
-Most conjunctions are ambiguous: `εἰ` maps to four relationships. A few are near-unambiguous, such as `καίπερ` mapping only to Concessive. Action-Result versus Action-Purpose cannot be separated lexically, since both surface as "so that". Situation-Response has no conjunction signal at all. The suggestion engine itself is later work.
+Most conjunctions are ambiguous: `εἰ` maps to four relationships. A few are near-unambiguous, such as `καίπερ` mapping only to Concessive. Action-Result versus Action-Purpose cannot be separated lexically, since both surface as "so that". Situation-Response has no conjunction signal at all. There is no suggestion engine: the app never proposes, preselects or ranks a relationship, because interpretation is the user's job (see `PRODUCT.md`).

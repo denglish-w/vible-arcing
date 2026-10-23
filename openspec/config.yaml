@@ -67,3 +67,13 @@ context: |
 #     archive:
 #       guidance:
 #         - Summarize the archive outcome before finishing
+
+operations:
+  apply:
+    guidance:
+      - After each task that changes code, and before ticking it off, run two
+        read-only Sonnet agents in parallel (Agent tool, general-purpose,
+        model sonnet) on that task's diff, one for code review against the
+        task, specs and CLAUDE.md constraints, one for security review. Fix
+        the findings you agree with, at most two review rounds per task, then
+        run lint and tests.

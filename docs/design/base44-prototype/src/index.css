@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700&family=EB+Garamond:wght@400;500;600;700&family=Cardo:ital,wght@0,400;0,700;1,400&family=GFS+Didot&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --parchment: 40 36% 93%;
+    --cream: 44 50% 96%;
+    --ink: 30 14% 15%;
+    --darkred: 0 62% 32%;
+    --darkred-foreground: 40 36% 93%;
+    --amber: 40 50% 88%;
+    --amber-border: 38 45% 68%;
+    --amber-foreground: 32 30% 25%;
+    --pinkhighlight: 0 60% 90%;
+
+    --pos-verb: 0 62% 38%;
+    --pos-participle: 28 80% 45%;
+    --pos-infinitive: 43 75% 42%;
+    --pos-noun: 215 68% 42%;
+    --pos-adj: 175 55% 38%;
+    --pos-det: 30 8% 42%;
+    --pos-pron: 270 48% 45%;
+    --pos-prep: 140 52% 36%;
+    --pos-conj: 30 45% 42%;
+    --pos-adv: 330 62% 48%;
+    --pos-other: 30 10% 45%;
+
+    --background: 40 36% 93%;
+    --foreground: 30 14% 15%;
+    --card: 44 50% 96%;
+    --card-foreground: 30 14% 15%;
+    --popover: 44 50% 96%;
+    --popover-foreground: 30 14% 15%;
+    --primary: 0 62% 32%;
+    --primary-foreground: 40 36% 93%;
+    --secondary: 40 28% 88%;
+    --secondary-foreground: 30 14% 15%;
+    --muted: 40 20% 86%;
+    --muted-foreground: 38 14% 42%;
+    --accent: 0 62% 32%;
+    --accent-foreground: 40 36% 93%;
+    --destructive: 0 62% 32%;
+    --destructive-foreground: 40 36% 93%;
+    --border: 38 22% 82%;
+    --input: 38 22% 82%;
+    --ring: 0 62% 32%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --font-heading: 'EB Garamond', serif;
+    --font-body: "EB Garamond", ui-serif, Georgia, serif;
+    --font-display: "Gentium Plus", "Cardo", ui-serif, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --sidebar-background: 40 36% 93%;
+    --sidebar-foreground: 30 14% 15%;
+    --sidebar-primary: 0 62% 32%;
+    --sidebar-primary-foreground: 40 36% 93%;
+    --sidebar-accent: 40 28% 88%;
+    --sidebar-accent-foreground: 30 14% 15%;
+    --sidebar-border: 38 22% 82%;
+    --sidebar-ring: 0 62% 32%;
+  }
+
+  .dark {
+    --parchment: 30 12% 12%;
+    --cream: 30 10% 16%;
+    --ink: 40 20% 92%;
+    --darkred: 0 55% 58%;
+    --darkred-foreground: 40 20% 92%;
+    --amber: 38 35% 20%;
+    --amber-border: 38 40% 45%;
+    --amber-foreground: 40 30% 85%;
+    --pinkhighlight: 0 40% 28%;
+
+    --pos-verb: 0 70% 68%;
+    --pos-participle: 30 85% 68%;
+    --pos-infinitive: 45 80% 66%;
+    --pos-noun: 210 70% 68%;
+    --pos-adj: 178 55% 62%;
+    --pos-det: 40 12% 70%;
+    --pos-pron: 275 55% 72%;
+    --pos-prep: 140 55% 60%;
+    --pos-conj: 32 50% 68%;
+    --pos-adv: 332 65% 72%;
+    --pos-other: 38 10% 70%;
+
+    --background: 30 12% 12%;
+    --foreground: 40 20% 92%;
+    --card: 30 10% 16%;
+    --card-foreground: 40 20% 92%;
+    --popover: 30 10% 16%;
+    --popover-foreground: 40 20% 92%;
+    --primary: 0 55% 58%;
+    --primary-foreground: 30 12% 12%;
+    --secondary: 30 8% 22%;
+    --secondary-foreground: 40 20% 92%;
+    --muted: 30 8% 22%;
+    --muted-foreground: 38 12% 65%;
+    --accent: 0 55% 58%;
+    --accent-foreground: 30 12% 12%;
+    --destructive: 0 55% 58%;
+    --destructive-foreground: 40 20% 92%;
+    --border: 30 8% 26%;
+    --input: 30 8% 26%;
+    --ring: 0 55% 58%;
+    --sidebar-background: 30 10% 16%;
+    --sidebar-foreground: 40 20% 92%;
+    --sidebar-primary: 0 55% 58%;
+    --sidebar-primary-foreground: 30 12% 12%;
+    --sidebar-accent: 30 8% 22%;
+    --sidebar-accent-foreground: 40 20% 92%;
+    --sidebar-border: 30 8% 26%;
+    --sidebar-ring: 0 55% 58%;
+  }
+
+  .sepia {
+    --parchment: 36 40% 86%;
+    --cream: 36 36% 89%;
+    --ink: 28 24% 20%;
+    --darkred: 0 52% 38%;
+    --darkred-foreground: 36 40% 88%;
+    --amber: 40 48% 78%;
+    --amber-border: 38 42% 62%;
+    --amber-foreground: 30 28% 24%;
+    --pinkhighlight: 36 55% 80%;
+    --background: 36 40% 86%;
+    --foreground: 28 24% 20%;
+    --card: 36 36% 89%;
+    --card-foreground: 28 24% 20%;
+    --popover: 36 36% 89%;
+    --popover-foreground: 28 24% 20%;
+    --primary: 0 52% 38%;
+    --primary-foreground: 36 40% 88%;
+    --secondary: 36 28% 82%;
+    --secondary-foreground: 28 24% 20%;
+    --muted: 36 26% 82%;
+    --muted-foreground: 30 18% 38%;
+    --accent: 0 52% 38%;
+    --accent-foreground: 36 40% 88%;
+    --destructive: 0 52% 38%;
+    --destructive-foreground: 36 40% 88%;
+    --border: 34 24% 76%;
+    --input: 34 24% 76%;
+    --ring: 0 52% 38%;
+    --sidebar-background: 36 40% 86%;
+    --sidebar-foreground: 28 24% 20%;
+    --sidebar-primary: 0 52% 38%;
+    --sidebar-primary-foreground: 36 40% 88%;
+    --sidebar-accent: 36 28% 82%;
+    --sidebar-accent-foreground: 28 24% 20%;
+    --sidebar-border: 34 24% 76%;
+    --sidebar-ring: 0 52% 38%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+  }
+}
+
+@layer components {
+  .small-caps {
+    @apply font-body text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground;
+  }
+  .card-soft {
+    @apply bg-card rounded-lg shadow-[0_1px_2px_rgba(43,38,32,0.05),0_12px_28px_-14px_rgba(43,38,32,0.18)];
+  }
+  .verse-numbers-off sup {
+    display: none !important;
+  }
+  .bubble-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+  .bubble-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .bubble-scroll::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 9999px;
+  }
+  .diagram-connectors { z-index: 5; }
+  .diagram-conn {
+    fill: none;
+    stroke: hsl(var(--darkred));
+    stroke-width: 1.6;
+    stroke-dasharray: 6 5;
+    filter: drop-shadow(0 0 2px rgba(139,41,40,0.25));
+    animation: diagram-flow 1.6s linear infinite;
+  }
+  .diagram-mod {
+    fill: none;
+    stroke: #a66c26;
+    stroke-width: 2;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 2px rgba(166,108,38,0.24));
+  }
+  @keyframes diagram-flow { to { stroke-dashoffset: -22; } }
+}

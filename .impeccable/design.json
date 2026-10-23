@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-22T00:00:00Z",
+  "title": "Design System: [Product Name]",
+  "extensions": {
+    "colorMeta": {
+      "rubric-red": { "role": "primary", "displayName": "Rubric Red", "canonical": "hsl(0 62% 32%)", "tonalRamp": ["#3e0f0f", "#671818", "#912222", "#ba2c2c", "#d65151", "#e28383", "#efb9b9", "#faeaea"] },
+      "chi-rho-red": { "role": "primary", "displayName": "Chi Rho Red", "canonical": "hsl(357 60% 49%)" },
+      "parchment": { "role": "neutral", "displayName": "Parchment", "canonical": "hsl(40 36% 93%)", "tonalRamp": ["#342b18", "#574729", "#796439", "#9c8149", "#baa16d", "#cebc97", "#e3d9c4", "#f7f4ee"] },
+      "cream": { "role": "neutral", "displayName": "Cream", "canonical": "hsl(44 50% 96%)" },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "hsl(30 14% 15%)", "tonalRamp": ["#2c2621", "#494037", "#66594d", "#837363", "#a39485", "#bdb2a8", "#dad4ce", "#f4f2f0"] },
+      "faded-ink": { "role": "neutral", "displayName": "Faded Ink", "canonical": "hsl(38 14% 40%)", "tonalRamp": ["#2c2821", "#494237", "#665d4d", "#837763", "#a39885", "#bdb5a8", "#dad5ce", "#f4f3f0"] },
+      "rule-line": { "role": "neutral", "displayName": "Rule Line", "canonical": "hsl(38 22% 82%)", "tonalRamp": ["#2f281e", "#4e4332", "#6d5e46", "#8c795a", "#ab9a7c", "#c3b7a2", "#ddd6ca", "#f5f3ef"] },
+      "amber-wash": { "role": "secondary", "displayName": "Amber Wash", "canonical": "hsl(40 50% 88%)", "tonalRamp": ["#392d13", "#604a20", "#86682d", "#ac8639", "#c9a65e", "#d9bf8c", "#e9dbbe", "#f9f4ec"] },
+      "rose-highlight": { "role": "secondary", "displayName": "Rose Highlight", "canonical": "hsl(0 60% 90%)" },
+      "workspace-paper": { "role": "neutral", "displayName": "Workspace Paper", "canonical": "hsl(42 48% 95%)", "tonalRamp": ["#392e14", "#5e4c21", "#846a2e", "#aa893c", "#c7a860", "#d7c18e", "#e8dcbf", "#f8f5ec"] },
+      "modifier-ochre": { "role": "tertiary", "displayName": "Modifier Ochre", "canonical": "hsl(33 63% 40%)", "tonalRamp": ["#3e290e", "#684418", "#915f21", "#bb7a2a", "#d79b50", "#e3b782", "#efd6b8", "#faf3ea"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Book title on a book's chapter page." },
+      "headline": { "displayName": "Headline", "purpose": "Page titles." },
+      "title": { "displayName": "Title", "purpose": "Word-bubble headword; prose section headings at regular weight." },
+      "greek-reading": { "displayName": "Greek Reading", "purpose": "Chapter text in the reader's chosen face; five sizes, three line spacings." },
+      "greek-workspace": { "displayName": "Greek Workspace", "purpose": "Greek on diagram baselines and in the workspace passage card." },
+      "body": { "displayName": "Body", "purpose": "Intro and prose paragraphs." },
+      "ui": { "displayName": "UI", "purpose": "Menu links, toggle labels, bubble text." },
+      "label": { "displayName": "Small-Caps Label", "purpose": "Names every section; uppercase, faded ink." },
+      "wordmark": { "displayName": "Wordmark", "purpose": "Product name beside the Chi Rho." }
+    },
+    "shadows": [
+      { "name": "soft-card", "value": "0 1px 2px rgba(43,38,32,0.05), 0 12px 28px -14px rgba(43,38,32,0.18)", "purpose": "Resting cards." },
+      { "name": "tile", "value": "0 1px 2px rgba(43,38,32,0.05), 0 6px 16px -10px rgba(43,38,32,0.18)", "purpose": "Chapter tiles." },
+      { "name": "workspace-canvas", "value": "0 12px 30px rgba(65,48,32,0.13)", "purpose": "The editing canvas." },
+      { "name": "workspace-card", "value": "0 10px 26px rgba(65,48,32,0.12)", "purpose": "Passage card under the canvas." },
+      { "name": "tool-palette", "value": "0 4px 14px rgba(65,48,32,0.12)", "purpose": "Floating diagram palette." },
+      { "name": "tool-hover", "value": "0 3px 9px rgba(68,48,31,0.13)", "purpose": "Workspace buttons on hover only." }
+    ],
+    "motion": [
+      { "name": "state-change", "value": "150ms ease (colors)", "purpose": "Hover and selection colour transitions." },
+      { "name": "popover-enter", "value": "fade + zoom from 95%, 150ms", "purpose": "Popovers and menus opening." },
+      { "name": "connector-flow", "value": "stroke-dashoffset to -22, 1.6s linear infinite", "purpose": "Live dashed connectors in diagrams." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action in a view.",
+      "html": "<button class=\"ds-btn-primary\">Save</button>",
+      "css": ".ds-btn-primary { background: var(--primary, hsl(0 62% 32%)); color: var(--primary-foreground, hsl(40 36% 93%)); font-family: 'EB Garamond', Georgia, serif; font-size: 14px; font-weight: 500; height: 36px; padding: 0 16px; border: none; border-radius: 6px; transition: background-color 150ms ease; cursor: pointer; } .ds-btn-primary:hover { background: hsl(0 62% 32% / 0.9); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 1px hsl(0 62% 32%); }"
+    },
+    {
+      "name": "Option Chips",
+      "kind": "chip",
+      "refersTo": "option-chip",
+      "description": "Theme, spacing and font choices in the Display menu.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip ds-chip-on\">Light</button><button class=\"ds-chip\">Dark</button><button class=\"ds-chip\">Sepia</button></div>",
+      "css": ".ds-chips { display: flex; gap: 6px; width: 260px; } .ds-chip { flex: 1; padding: 4px 8px; border: 1px solid hsl(38 22% 82%); border-radius: 6px; background: transparent; color: hsl(38 14% 40%); font-family: 'EB Garamond', Georgia, serif; font-size: 12px; transition: color 150ms ease; cursor: pointer; } .ds-chip:hover { color: hsl(30 14% 15%); } .ds-chip-on { border-color: hsl(0 62% 32%); background: hsl(0 62% 32% / 0.1); color: hsl(0 62% 32%); }"
+    },
+    {
+      "name": "Mode Control",
+      "kind": "nav",
+      "refersTo": "mode-segment-active",
+      "description": "Segmented switch between Reading, Diagramming and Arcing.",
+      "html": "<div class=\"ds-mode\"><button class=\"ds-seg ds-seg-on\">Reading</button><button class=\"ds-seg\">Diagramming</button><button class=\"ds-seg\">Arcing</button></div>",
+      "css": ".ds-mode { display: inline-flex; align-items: center; height: 36px; padding: 2px; border: 1px solid hsl(38 22% 82%); border-radius: 6px; background: hsl(40 20% 86% / 0.4); } .ds-seg { height: 32px; padding: 0 12px; border: none; border-radius: 5px; background: transparent; color: hsl(38 14% 40%); font-family: 'EB Garamond', Georgia, serif; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; transition: color 150ms ease; cursor: pointer; } .ds-seg:hover { color: hsl(30 14% 15%); } .ds-seg-on { background: hsl(40 36% 93%); color: hsl(0 62% 32%); box-shadow: 0 1px 2px rgba(43,38,32,0.08); }"
+    },
+    {
+      "name": "Small-Caps Label Strip",
+      "kind": "custom",
+      "description": "Hairline-ruled strip that opens every content page.",
+      "html": "<div class=\"ds-strip\"><span class=\"ds-label\">Contents</span><span class=\"ds-label\">SBLGNT</span></div>",
+      "css": ".ds-strip { display: flex; justify-content: space-between; width: 360px; padding-bottom: 12px; border-bottom: 1px solid hsl(38 22% 82%); } .ds-label { font-family: 'EB Garamond', Georgia, serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: hsl(38 14% 40%); }"
+    },
+    {
+      "name": "Chapter Tile",
+      "kind": "card",
+      "refersTo": "chapter-tile",
+      "description": "Square chapter link in a book's chapter grid.",
+      "html": "<a class=\"ds-tile\" href=\"#\">3</a>",
+      "css": ".ds-tile { display: flex; align-items: center; justify-content: center; width: 56px; aspect-ratio: 1; border-radius: 6px; background: hsl(44 50% 96%); color: hsl(30 14% 15%); font-family: 'EB Garamond', Georgia, serif; font-size: 18px; text-decoration: none; box-shadow: 0 1px 2px rgba(43,38,32,0.05), 0 6px 16px -10px rgba(43,38,32,0.18); transition: color 150ms ease; } .ds-tile:hover, .ds-tile:focus-visible { color: hsl(0 62% 32%); outline: none; }"
+    },
+    {
+      "name": "Greek Verse",
+      "kind": "custom",
+      "description": "Flowing Greek with verse number, hover and selected word, and part-of-speech colouring.",
+      "html": "<p class=\"ds-verse\"><sup class=\"ds-vn\">3</sup><span class=\"ds-w\">Εὐχαριστῶ</span> <span class=\"ds-w ds-w-sel\">τῷ</span> <span class=\"ds-w ds-noun\">θεῷ</span> <span class=\"ds-w\">μου</span></p>",
+      "css": ".ds-verse { font-family: 'EB Garamond', serif; font-size: 1.7rem; line-height: 2.1; color: hsl(30 14% 15%); margin: 0; } .ds-vn { margin-right: 6px; font-size: 11px; font-weight: 600; color: hsl(38 14% 40%); font-variant-numeric: tabular-nums; } .ds-w { padding: 0 1px; border-radius: 4px; cursor: pointer; transition: background-color 150ms ease, color 150ms ease; } .ds-w:hover { background: hsl(44 50% 96%); color: hsl(0 62% 32%); } .ds-w-sel { background: hsl(44 50% 96%); color: hsl(0 62% 32%); } .ds-noun { color: hsl(215 68% 42%); text-decoration: underline solid hsl(215 68% 42%); text-underline-offset: 3px; }"
+    },
+    {
+      "name": "Word Bubble",
+      "kind": "card",
+      "refersTo": "word-bubble",
+      "description": "Word detail popover anchored to the selected word.",
+      "html": "<div class=\"ds-bubble\"><div class=\"ds-head\"><span class=\"ds-hw\">θεός, οῦ, ὁ</span></div><div class=\"ds-parse\">noun · dative · singular · masculine</div><div class=\"ds-gloss\">to God</div></div>",
+      "css": ".ds-bubble { position: relative; width: 320px; padding: 12px 16px; border: 1px solid hsl(38 22% 82%); border-radius: 8px; background: hsl(44 50% 96%); color: hsl(30 14% 15%); font-family: 'EB Garamond', Georgia, serif; box-shadow: 0 10px 15px -3px rgba(43,38,32,0.12), 0 4px 6px -4px rgba(43,38,32,0.1); } .ds-hw { font-size: 20px; font-weight: 600; line-height: 1.25; } .ds-parse { margin-top: 6px; font-size: 14px; color: hsl(38 14% 40%); } .ds-gloss { margin-top: 8px; padding-top: 8px; border-top: 1px solid hsl(38 22% 82% / 0.6); font-size: 12px; font-style: italic; color: hsl(30 14% 15% / 0.8); }"
+    },
+    {
+      "name": "Workspace Tool Button",
+      "kind": "button",
+      "refersTo": "workspace-tool-button",
+      "description": "Undo, redo and delete in editor workspaces.",
+      "html": "<button class=\"ds-tool\" aria-label=\"Undo\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 14 4 9l5-5\"/><path d=\"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5 5.5 5.5 0 0 1-5.5 5.5H11\"/></svg></button>",
+      "css": ".ds-tool { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 34px; border: 1px solid hsl(38 24% 72%); border-radius: 8px; background: hsl(42 48% 95%); color: hsl(30 18% 28%); cursor: pointer; transition: background-color 150ms ease, box-shadow 150ms ease; } .ds-tool:hover { background: hsl(36 40% 86%); box-shadow: 0 3px 9px rgba(68,48,31,0.13); } .ds-tool:focus-visible { outline: 2px solid hsl(1 55% 35%); }"
+    },
+    {
+      "name": "Workspace Canvas",
+      "kind": "custom",
+      "refersTo": "workspace-canvas",
+      "description": "Raised drafting sheet for diagramming and arcing, with a baseline.",
+      "html": "<div class=\"ds-canvas\"><div class=\"ds-baseline\"><span>Παῦλος</span><span>γράφει</span></div></div>",
+      "css": ".ds-canvas { position: relative; width: 420px; height: 180px; border: 1.5px dashed hsl(34 24% 64%); border-radius: 14px; background: hsl(42 48% 95% / 0.88); box-shadow: 0 12px 30px rgba(65,48,32,0.13); } .ds-baseline { position: absolute; left: 60px; top: 70px; display: flex; gap: 8px; justify-content: center; min-width: 220px; padding-bottom: 2px; border-bottom: 2px solid hsl(30 14% 15%); font-family: 'Gentium Plus', Cardo, serif; font-size: 18px; line-height: 1; color: hsl(30 14% 15%); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Scholar's Desk",
+    "overview": "The app is a well-kept study desk: warm parchment paper, brown-black ink, and a single red pen. Everything serves sustained work with the Greek text. The interface is quiet and bookish, set entirely in serif type, with structure carried by hairline rules and small-caps labels rather than boxes and colour. Red is the scholar's rubric: it marks what is active, selected or linked, and almost nothing else.\n\nDensity is calm. Pages sit in a centred column with generous margins. Reading puts the Greek in a large serif with open line spacing, so a chapter reads like a printed edition. Controls are compact and kept to the edges: a slim top bar and a drawer that slides in from the left. Editing workspaces (diagramming, and arcing when built) are the one place the desk gets physical: a raised paper canvas with a dashed edge, sitting on the parchment, with the passage on a separate card beneath it.\n\nThe system is themeable by design. Light, dark and sepia are three readings of the same desk, swapped only through tokens.",
+    "keyCharacteristics": [
+      "Serif-only typography (EB Garamond for everything, Gentium Plus for Greek in workspaces).",
+      "One accent: rubric red. Other hues appear only as part-of-speech information.",
+      "Hairline borders and small-caps labels instead of heavy containers.",
+      "Soft, warm-brown shadows. Never grey or black.",
+      "Every colour is a token with light, dark and sepia values."
+    ],
+    "rules": [
+      { "name": "The Rubric Rule", "body": "Rubric red is the only accent in the chrome. It marks state (active, selected, linked, focused), not decoration. Large red fills are limited to primary buttons and the 4px drawer bar.", "section": "colors" },
+      { "name": "The Two-Cue Rule", "body": "Part-of-speech colour never carries meaning alone. Every category also has its own underline style (solid, double, dotted, dashed or wavy), applied with the colour.", "section": "colors" },
+      { "name": "The Tokens-Only Rule", "body": "No component may hard-code a colour. Every colour comes from a token with light, dark and sepia values. The prototype's diagramming screen broke this rule, and its colours are now the workspace tokens above.", "section": "colors" },
+      { "name": "The Serif-Only Rule", "body": "There is no sans-serif anywhere in the interface. The prototype loaded Inter but never used it, and it is not carried over.", "section": "typography" },
+      { "name": "The Small-Caps Label Rule", "body": "Sections are named with the 11px tracked uppercase label, not with bold headings. Headings are reserved for page titles.", "section": "typography" },
+      { "name": "The Paper-on-Desk Rule", "body": "Elevation means \"a sheet resting on the desk\". Shadows are warm, soft and long, and appear on floating or paper-like surfaces only. Chrome stays flat.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do take every colour from a token, and give each new token light, dark and sepia values (the Tokens-Only Rule).",
+      "Do name sections with the 11px tracked small-caps label, and keep bold headings for page titles.",
+      "Do keep rubric red for state: active, selected, linked, focused (the Rubric Rule).",
+      "Do pair every part-of-speech or relationship colour with a second cue such as an underline style or pattern (the Two-Cue Rule).",
+      "Do tint shadows with warm brown and keep them soft (the Paper-on-Desk Rule).",
+      "Do give editor workspaces the raised paper canvas with a dashed edge, the passage card below, and the floating palette.",
+      "Do set Greek in a serif with full polytonic coverage, at reading sizes of 1.25rem or larger."
+    ],
+    "donts": [
+      "Don't introduce a sans-serif typeface (the Serif-Only Rule).",
+      "Don't hard-code hex colours in components. The prototype's diagramming screen did, and those values became workspace tokens.",
+      "Don't use chi-rho red for anything except the brand mark, or recolour the mark per theme.",
+      "Don't add a second accent hue to the chrome. Other hues are only for part-of-speech (and later, relationship) information.",
+      "Don't use grey or black shadows, or put shadows on flat chrome such as the top bar or the drawer contents.",
+      "Don't load images from Base44's hosting. The prototype's diagram background photo lived there and is not carried over."
+    ]
+  }
+}

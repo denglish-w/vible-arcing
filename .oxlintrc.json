@@ -9,9 +9,11 @@
   "ignorePatterns": [
     ".next",
     "out",
+    "storybook-static",
     "node_modules",
     ".claude",
     ".agents",
-    ".venv"
+    ".venv",
+    "docs/design/base44-prototype"
   ]
 }

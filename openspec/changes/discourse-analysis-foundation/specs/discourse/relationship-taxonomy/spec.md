@@ -115,7 +115,7 @@ The system SHALL provide this mapping for Koine Greek, covering at least 64 conj
 
 A conjunction MAY map to more than one relationship. The system SHALL NOT treat a conjunction as determining a relationship.
 
-Where a conjunction maps to exactly one relationship, the system MAY present that suggestion with higher confidence than a conjunction mapping to several.
+The mapping is reference material shown only when the user asks to look up a conjunction. The system SHALL NOT propose, preselect or rank a relationship for a user's connection on the basis of the mapping.
 
 #### Scenario: Ambiguous conjunction yields multiple candidates
 
@@ -133,6 +133,12 @@ Where a conjunction maps to exactly one relationship, the system MAY present tha
 - **WHEN** any conjunction-to-relationship mapping is retrieved
 - **THEN** it includes a scripture reference exemplifying that pairing
 
+#### Scenario: No relationship proposed while editing
+
+- **WHEN** a user connects two propositions joined by `γάρ`
+- **THEN** no relationship is preselected or suggested
+- **AND** the user can open the reference entry for `γάρ` if they choose
+
 #### Scenario: Unmapped conjunction
 
 - **WHEN** a conjunction absent from the mapping is looked up
@@ -141,7 +147,7 @@ Where a conjunction maps to exactly one relationship, the system MAY present tha
 #### Scenario: Relationships with no lexical cue
 
 - **WHEN** candidates are requested for Situation-Response
-- **THEN** the system reports that this relationship has no conjunction cue and cannot be suggested lexically
+- **THEN** the system reports that this relationship has no conjunction cue
 
 ### Requirement: Language-agnostic taxonomy
 
