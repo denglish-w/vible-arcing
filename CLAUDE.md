@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-Early. The Next.js app is scaffolded (a placeholder home page only) and builds as a static export. The editor, proposition model, validation module and ingest script are not written yet. Research lives in `docs/`; the planned design is one OpenSpec change (`openspec/changes/discourse-analysis-foundation/`).
+The static Next.js app has themed contents, book and chapter pages, a Greek reader with word morphology and persisted display settings, and metadata-driven credits. Philippians 1 is shipped from a pinned MACULA extraction; other chapters retain navigation with an unavailable state. The editor, proposition model and analysis validation remain unimplemented. Research and plans live in `docs/` and `openspec/changes/`.
 
 ## Commands
 
@@ -31,7 +31,7 @@ Changes are planned with OpenSpec before code is written. Slash commands live in
 ## Stack (see `design.md`)
 
 - Next.js (App Router) + TypeScript, static export (`output: 'export'`), no application server. The editor will be client-side (Zustand + Immer, IndexedDB via Dexie, SVG rendering), styled with Tailwind v4 for app chrome and CSS custom properties for renderer colours.
-- Python is used only for the offline corpus-ingest script (`scripts/ingest/`), which turns MACULA Greek `SBLGNT/lowfat` XML into per-book JSON under `public/corpus/`. `.venv/` is the local Python environment.
+- Python is used only for the offline corpus-ingest script (`scripts/ingest/`), which turns MACULA Greek `SBLGNT/lowfat` XML into versioned per-chapter JSON under `public/corpus/v1/`. `.venv/` is the local Python environment.
 - Tooling: npm with a committed `package-lock.json`, Node pinned to 26 via `.node-version` (use `fnm use`), Vitest for tests, oxlint for linting, Prettier for formatting.
 - Validation is one pure-TypeScript module shared by the editor and the import path.
 - Taxonomy and conjunction cue data are JSON in `docs/data/`; TypeScript types are generated from it, never hand-written.

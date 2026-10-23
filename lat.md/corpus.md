@@ -10,9 +10,15 @@ MACULA supplies per-word lemma and morphology plus explicit clause nodes (`<wg c
 
 ## Ingest pipeline
 
-A Python build script produces compact per-book JSON as static assets: words with stable ids, lemma, morphology, clause boundaries and conjunction classification.
+A standard-library Python extractor publishes Philippians 1 as versioned chapter JSON, with MACULA identity and only the reader's required fields.
 
-It is a build step, never a request path. A database was rejected as premature because the corpus is read-only and versioned with each release. Per-book splitting limits asset size, and ingest keeps only fields the specs require. A transformed corpus beyond a few MB per book should prompt revisiting the format.
+[[scripts/ingest/sample_chapter.py#extract_chapter]] restores canonical order using source references, while preserving each XML word id. The CLI verifies the pinned source checksum before extraction. [[scripts/ingest/README.md]] records the source commit and reproducible command. The full NT ingest remains unimplemented.
+
+## Chapter format
+
+Format v1 uses one static file per chapter, with passage identity, source provenance and whitelisted word morphology.
+
+[[public/corpus/v1/PHP/1.json]] contains 501 words across 30 verses. Each word has id, verse, text, following punctuation, lemma, gloss, part of speech and applicable morphology. The source's following punctuation is preserved verbatim; the reader supplies inter-word spacing after punctuation. A missing gloss remains empty rather than invented. [[src/lib/corpus/parse.ts#parseChapter]] validates passage identity, required fields, unique MACULA ids, verse order and morphology, returning only supported fields.
 
 ## Stable word identifiers
 
