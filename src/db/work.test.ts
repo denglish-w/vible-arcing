@@ -93,6 +93,7 @@ beforeEach(() => {
     app,
     corpus: () => corpus,
     analysisWordIds,
+    analysisProblems: () => [],
     now: () => new Date((clock += 1000)),
   };
 });
@@ -176,7 +177,7 @@ describe("saving analyses", () => {
 
   it("takes the passage from the words in the document", () => {
     const request = {
-      ...analysis(["n50001004001", "n50001003002"]),
+      ...analysis(["n50001003002", "n50001004001"]),
       // Not part of the input type; a request may still carry it.
       book: "MAT",
       passageLabel: "Matthew 1:1",
@@ -189,7 +190,17 @@ describe("saving analyses", () => {
       passageLabel: "Philippians 1:3–4",
       edition: "SBLGNT",
     });
-    saveAnalysis(deps, id, 1, analysis(["n50001003001", "n50002001001"]));
+    saveAnalysis(
+      deps,
+      id,
+      1,
+      analysis([
+        "n50001003001",
+        "n50001003002",
+        "n50001004001",
+        "n50002001001",
+      ]),
+    );
     expect(getWork(app, "analysis", id)?.passageLabel).toBe(
       "Philippians 1:3–2:1",
     );
@@ -214,6 +225,49 @@ describe("saving analyses", () => {
         analysis(["n50001003001", "n40001001001", "n50002001001"]),
       ),
     ).toMatchObject({ ok: false, reason: "invalid" });
+  });
+
+  it("refuses words that are out of order or leave a gap, changing nothing", () => {
+    const { id } = created(createAnalysis(deps, analysis(["n50001003001"])));
+    const before = getWork(app, "analysis", id);
+    const outOfOrder = analysis(["n50001003002", "n50001003001"]);
+    const gap = analysis(["n50001003001", "n50001004001"]);
+    const repeat = analysis(["n50001003001", "n50001003001"]);
+    for (const input of [outOfOrder, gap, repeat]) {
+      expect(saveAnalysis(deps, id, 1, input)).toMatchObject({
+        ok: false,
+        reason: "invalid",
+      });
+      expect(createAnalysis(deps, input)).toMatchObject({
+        ok: false,
+        reason: "invalid",
+      });
+    }
+    expect(getWork(app, "analysis", id)).toEqual(before);
+    expect(listWork(app)).toHaveLength(1);
+  });
+
+  it("reports a conflict or missing record before content problems", () => {
+    const { id } = created(createAnalysis(deps, analysis(["n50001003001"])));
+    saveAnalysis(deps, id, 1, analysis(["n50001003001"], "other tab"));
+    const before = getWork(app, "analysis", id);
+    const invalid = { ...analysis(["n50001003001"]), title: "t".repeat(999) };
+    expect(saveAnalysis(deps, id, 1, invalid)).toMatchObject({
+      ok: false,
+      reason: "conflict",
+      current: { revision: 2 },
+    });
+    expect(getWork(app, "analysis", id)).toEqual(before);
+    // Still refused on content once the revision is current.
+    expect(saveAnalysis(deps, id, 2, invalid)).toMatchObject({
+      ok: false,
+      reason: "invalid",
+    });
+    deleteWork(app, "analysis", id);
+    expect(saveAnalysis(deps, id, 2, invalid)).toEqual({
+      ok: false,
+      reason: "not-found",
+    });
   });
 
   it("refuses over-long titles and documents that cannot be serialised", () => {

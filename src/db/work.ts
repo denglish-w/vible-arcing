@@ -4,6 +4,7 @@
 // Shared with scripts and tests (see src/db/README.md).
 import { randomUUID } from "node:crypto";
 import { and, eq } from "drizzle-orm";
+import { ANALYSIS_DOC_VERSION } from "../lib/analysis/model.ts";
 import { getBook } from "../lib/books.ts";
 import { DatabaseMissingError, type AppDb, type CorpusDb } from "./client.ts";
 import { locateWords, type WordLocation } from "./corpus.ts";
@@ -19,7 +20,7 @@ export const MAX_TITLE_LENGTH = 200;
 
 /** Document versions the server can store, per kind. */
 export const DOC_VERSIONS: Record<WorkKind, readonly number[]> = {
-  analysis: [1],
+  analysis: [ANALYSIS_DOC_VERSION],
   diagram: [1],
 };
 
@@ -35,6 +36,12 @@ export type WorkDeps = {
    * this module does not depend on its shape.
    */
   analysisWordIds: (doc: unknown) => readonly string[] | null;
+  /**
+   * What makes an analysis document structurally invalid, as sentences for the
+   * user; empty when it is valid. Supplied by the validation module, which the
+   * editor runs too, so the server refuses exactly what the editor would.
+   */
+  analysisProblems: (doc: unknown) => readonly string[];
   now?: () => Date;
 };
 
@@ -118,10 +125,14 @@ function openCorpus(deps: WorkDeps): CorpusDb | Refusal {
   }
 }
 
-/** The passage spanned by `ids`, which must all exist and lie in one book. */
+/**
+ * The passage spanned by `ids`, which must all exist and lie in one book. With
+ * `asRun`, `ids` must also be a gap-free run of the corpus in reading order.
+ */
 function passageOf(
   corpus: CorpusDb,
   ids: readonly string[],
+  asRun = false,
 ): Passage | Refusal {
   if (ids.length === 0)
     return {
@@ -143,6 +154,16 @@ function passageOf(
       reason: "invalid",
       detail: "The words are not all in one book.",
     };
+  if (asRun) {
+    // seq is consecutive within a book, so a run has no gaps or repeats.
+    const seqs = ids.map((id) => found.get(id)!.seq);
+    if (seqs.some((seq, i) => i > 0 && seq !== seqs[i - 1] + 1))
+      return {
+        ok: false,
+        reason: "invalid",
+        detail: "The words are not a continuous run of the text in order.",
+      };
+  }
   located.sort(([, a], [, b]) => a.seq - b.seq);
   const [startWordId, first] = located[0];
   const [endWordId, last] = located[located.length - 1];
@@ -191,6 +212,9 @@ function checkAnalysis(
 ): Checked | Refusal {
   const envelope = checkEnvelope("analysis", input);
   if (isRefusal(envelope)) return envelope;
+  const problems = deps.analysisProblems(input.doc);
+  if (problems.length > 0)
+    return { ok: false, reason: "invalid", detail: problems.join(" ") };
   const ids = deps.analysisWordIds(input.doc);
   if (ids === null)
     return {
@@ -201,7 +225,7 @@ function checkAnalysis(
   const corpus = openCorpus(deps);
   if (isRefusal(corpus)) return corpus;
   // The passage comes from the words in the document, never from the request.
-  const passage = passageOf(corpus, ids);
+  const passage = passageOf(corpus, ids, true);
   if (isRefusal(passage)) return passage;
   return { doc: envelope.doc, docVersion: input.docVersion, passage };
 }
@@ -270,6 +294,18 @@ function save(
   input: AnalysisInput | DiagramInput,
 ): Saved | Conflict | Refusal {
   const table = tableFor(kind);
+  // A stale or missing record is reported before content problems, so the
+  // editor offers the right recovery. The guarded UPDATE below is the real
+  // check; this one only orders the answers.
+  const existing = deps.app
+    .select({ revision: table.revision, updatedAt: table.updatedAt })
+    .from(table)
+    .where(eq(table.id, id))
+    .get();
+  if (!existing) return { ok: false, reason: "not-found" };
+  if (existing.revision !== baseRevision)
+    return { ok: false, reason: "conflict", current: existing };
+
   const checked = check(kind, deps, input);
   if (isRefusal(checked)) return checked;
   const updated = deps.app

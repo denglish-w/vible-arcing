@@ -12,6 +12,7 @@ const NEXT_ONLY = new Set([path.join(srcDir, "db", "server.ts")]);
 const SHARED_ROOTS = [
   path.join(srcDir, "db"),
   path.join(srcDir, "lib", "corpus"),
+  path.join(srcDir, "lib", "analysis"),
   path.join(srcDir, "lib", "books.ts"),
 ];
 

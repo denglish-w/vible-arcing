@@ -257,16 +257,21 @@ describe("corpus store contents", () => {
     expect(columns.filter((c) => /^(ln|domain)$/i.test(c))).toEqual([]);
   });
 
-  it("credits SBLGNT and MACULA with their licence and modification notes", () => {
+  it("credits SBLGNT, MACULA and Berean with their licence and modification notes", () => {
     const credits = getAttribution(db);
     expect(credits.map((c) => c.name)).toEqual([
       "SBL Greek New Testament",
       "MACULA Greek Linguistic Datasets",
+      "Berean Interlinear Bible",
     ]);
     for (const c of credits) {
-      expect(c).toMatchObject({ license: "CC BY 4.0", modified: true });
+      expect(c.modified).toBe(true);
       expect(c.modifications.length).toBeGreaterThan(0);
     }
+    expect(credits.slice(0, 2).map((c) => c.license)).toEqual([
+      "CC BY 4.0",
+      "CC BY 4.0",
+    ]);
   });
 
   it("returns a chapter's words once each, in reading order", () => {
