@@ -34,7 +34,7 @@ Changes are planned with OpenSpec before code is written. Slash commands live in
 
 ## Stack (see `design.md`)
 
-- Next.js (App Router) + TypeScript as a standalone Node server bound to `127.0.0.1` (see `app-server-and-sqlite/design.md`). SQLite through Drizzle and `better-sqlite3`: a read-only `corpus.sqlite` and a read-write `app.sqlite` for saved work, written by server actions. Edits apply locally first and autosave in the background (`src/lib/autosave.ts`). The editor will be client-side (Zustand + Immer, SVG rendering), styled with Tailwind v4 for app chrome and CSS custom properties for renderer colours.
+- Next.js (App Router) + TypeScript as a standalone Node server bound to `127.0.0.1` (see `openspec/changes/archive/2026-10-24-app-server-and-sqlite/design.md`). SQLite through Drizzle and `better-sqlite3`: a read-only `corpus.sqlite` and a read-write `app.sqlite` for saved work, written by server actions. Edits apply locally first and autosave in the background (`src/lib/autosave.ts`). The editor will be client-side (Zustand + Immer, SVG rendering), styled with Tailwind v4 for app chrome and CSS custom properties for renderer colours.
 - Python is used only for the offline corpus-ingest script (`scripts/ingest/`), which turns MACULA Greek `SBLGNT/lowfat` XML into versioned per-chapter JSON under `corpus/v1/`, which `db:seed` loads into `corpus.sqlite`. `.venv/` is the local Python environment.
 - Tooling: npm with a committed `package-lock.json`, Node pinned to 26 via `.node-version` (use `fnm use`), Vitest for tests, oxlint for linting, Prettier for formatting.
 - Validation is one pure-TypeScript module shared by the editor, the import path and the save action.

@@ -1,6 +1,6 @@
 # Corpus ingest
 
-Turns MACULA Greek (`SBLGNT/lowfat` XML) into corpus format v1 under `corpus/v1/`, which `npm run db:seed` loads into `data/corpus.sqlite`. The format is specified in `openspec/changes/app-server-and-sqlite/specs/text/corpus-store/spec.md` and design decision 4.
+Turns MACULA Greek (`SBLGNT/lowfat` XML) into corpus format v1 under `corpus/v1/`, which `npm run db:seed` loads into `data/corpus.sqlite`. The format is specified in `openspec/specs/text/corpus-store/spec.md` and design decision 4 of `openspec/changes/archive/2026-10-24-app-server-and-sqlite/design.md`.
 
 ## Sample chapter
 
