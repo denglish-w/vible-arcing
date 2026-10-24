@@ -1,10 +1,12 @@
 ## Context
 
+> **Superseded by `app-server-and-sqlite` (Context, Goals, decisions 4, 5, 7 and 8, and two risks):** the app is now a Node server with SQLite stores for the corpus and for saved work, not a static export. Each affected passage below carries a note; the text is kept as the record of what was first decided.
+
 See `proposal.md` — Why. This design covers how the three capabilities are represented and where they execute.
 
 Constraints that shape the approach:
 
-- **Stack is fixed:** Next.js (App Router) + TypeScript, deployed as a static export. There is no application server. Python is used only for the offline corpus-ingest script.
+- **Stack is fixed:** Next.js (App Router) + TypeScript, deployed as a static export. There is no application server. *(Superseded by `app-server-and-sqlite`: a Node server with standalone output and SQLite stores.)* Python is used only for the offline corpus-ingest script.
 - **Source data is large and XML.** MACULA Greek lowfat trees are ~13 MB per book. Nothing in the request path should parse them.
 - **Licence obligations are structural, not cosmetic.** Attribution must survive into the repo and the shipped UI; UBS semantic-domain attributes must be stripped at ingest.
 - **Editing is interactive.** Building an analysis is a rapid sequence of small structural edits — connect, label, split, merge, undo. Anything on the edit path that requires a network round-trip degrades the core interaction.
@@ -18,7 +20,7 @@ Constraints that shape the approach:
 - A representation where Bilateral is expressible without weakening the structural guarantees the rest of the model relies on.
 - Taxonomy and cue data as **data** in one JSON source, with TypeScript types generated from it — never transcribed by hand.
 - One validation implementation, in TypeScript, shared by the editor and the import path.
-- A corpus format cheap enough to serve from static hosting, so "free forever" stays credible.
+- A corpus format cheap enough to serve from static hosting, so "free forever" stays credible. *(Superseded by `app-server-and-sqlite`: the corpus is a read-only SQLite file read by the server. Format v1 still keeps it small, but static hosting is no longer a goal.)*
 
 **Non-Goals:**
 
@@ -80,13 +82,17 @@ Relationships are data records, not an enum. Subordinate relationships carry `{r
 
 *Alternative considered.* Defining the taxonomy in code and exposing it over an endpoint. Rejected — the relationship picker needs the taxonomy before any network call, and an endpoint makes it a runtime dependency for something that never changes between releases.
 
+> **Superseded by `app-server-and-sqlite` (network rationale):** the "no network" reason no longer holds, since a server exists. The decision stands for a different reason: the taxonomy is bundled with the app so the picker needs no round trip, and one JSON source feeds the app, the generated types and the ingest.
+
 The cue table is keyed by language from the start. This is the only concession made to a language the v1 scope excludes, and it costs one map key.
 
 ### 5. Corpus ingest is an offline build step, in Python
 
 A Python script in `scripts/ingest/` transforms MACULA Greek `SBLGNT/lowfat` XML into compact per-chapter format-v1 JSON (settled by `base44-look-and-reader`): words with stable ids, lemma, morphology, clause boundaries, conjunction classification. Output is committed or produced in CI and shipped as static assets under `public/corpus/`.
 
-*Alternatives considered.* Parsing XML at request time — rejected; there is no server, and it would be slow regardless. A database — rejected as premature; the corpus is read-only, versioned with the release, and small once transformed. Porting ingest to Node — viable, but Python with `lxml` handles 13 MB trees comfortably, and the script runs only at release time, so a second language in the repo costs little.
+> **Superseded by `app-server-and-sqlite`:** output is committed under `corpus/v1/`, is loaded into `data/corpus.sqlite` by `npm run db:seed`, and is read by the server; nothing is shipped as static assets or fetched by the browser.
+
+*Alternatives considered.* Parsing XML at request time — rejected; there is no server, and it would be slow regardless. A database — rejected as premature; the corpus is read-only, versioned with the release, and small once transformed *(superseded: the store is now SQLite, built by the seed from the committed ingest output; see `app-server-and-sqlite`)*. Porting ingest to Node — viable, but Python with `lxml` handles 13 MB trees comfortably, and the script runs only at release time, so a second language in the repo costs little.
 
 Two things are enforced **at ingest, not by convention**:
 
@@ -101,13 +107,15 @@ The spec requires word identifiers stable across releases. MACULA and OSHB alrea
 
 Structural rules — contiguity, arity, acyclicity, Bilateral's one-per-side constraint — are enforced in one TypeScript module. The editor calls it on every edit so invalid edits are refused instantly. The import path calls the same module, so an imported analysis is checked exactly as an edited one is.
 
-Because there is no server, there is no second trust boundary to duplicate rules across. If a save/share endpoint is added later, it will need server-side validation; that is the point to revisit this, and the module is pure TS with no browser dependencies so it can run in Node.
+Because there is no server, there is no second trust boundary to duplicate rules across. *(Superseded by `app-server-and-sqlite`: the save action is a second trust boundary and runs this same module on the server, so a client cannot store an invalid tree. The module stays one pure TypeScript implementation.)* If a save/share endpoint is added later, it will need server-side validation; that is the point to revisit this, and the module is pure TS with no browser dependencies so it can run in Node.
 
 *Alternative considered.* Python validation behind an API — rejected; it would reintroduce a round-trip per edit and a second implementation to keep in sync, for no v1 benefit.
 
 Rules are driven by the shared JSON taxonomy rather than hand-written branches, and a fixture set of valid and invalid analyses is run by the unit tests.
 
 ### 8. v1 is a static, local-first Next.js app
+
+> **Superseded by `app-server-and-sqlite`:** v1 is a Node server. Persistence moves from IndexedDB to `data/app.sqlite` through server actions with an autosave controller, and file export stays (the import half comes with the arcing editor). The rendering and state bullets below stand. Original text follows.
 
 Next.js App Router with `output: 'export'`, deployable to any static host. The editor is a client component tree. Server components and server actions are not relied on.
 
@@ -133,9 +141,9 @@ This keeps v1 free to run and the editor fully functional before any persistence
 
 **Spec wording for Bilateral describes structure, not behaviour** → Reword *Multiple support participation* behaviourally before archive. All its scenarios already pass under this design; the risk is a reader treating the current wording as mandating a two-parent representation.
 
-**No server-side validation if sharing is added later** → Validation is a pure TS module runnable in Node, so a future endpoint reuses it. Revisit when any save/share feature is scoped.
+**No server-side validation if sharing is added later** *(superseded: saved work is validated on the server by `app-server-and-sqlite`; sharing and accounts remain later changes)* → Validation is a pure TS module runnable in Node, so a future endpoint reuses it. Revisit when any save/share feature is scoped.
 
-**Next.js is more framework than a client-only editor strictly needs** → Constrain to static export and client components; avoid server-only features so the app stays portable to a plain SPA if the framework becomes a burden.
+**Next.js is more framework than a client-only editor strictly needs** *(superseded: the server is now used on purpose, for the corpus store and saved work)* → Constrain to static export and client components; avoid server-only features so the app stays portable to a plain SPA if the framework becomes a burden.
 
 **Ternary Bilateral node means consumers handle a 3-member shape** → Contained by making it the *only* non-binary subordinate form and asserting that in the type. Cheaper than every traversal handling multi-parent nodes.
 

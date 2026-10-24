@@ -27,11 +27,14 @@ context: |
   link, CC BY 4.0 statement, and a note of any modifications — both in-repo
   and in the shipped UI.
 
-  Tech stack: Next.js (App Router) + TypeScript, deployed as a static export
-  (output: 'export') — no application server. The editor is client-side:
-  Zustand + Immer state, IndexedDB (Dexie) for local-first persistence, SVG
-  rendering. Python is used only for the offline corpus-ingest script
-  (scripts/ingest/), which emits static per-book JSON to public/corpus/.
+  Tech stack: Next.js (App Router) + TypeScript as a single-user, local-only
+  standalone Node server (bound to 127.0.0.1, non-local Host refused), with
+  SQLite via Drizzle and better-sqlite3: a read-only corpus store and an
+  app database for saved work, written by server actions. The editor is
+  client-side (Zustand + Immer state, SVG rendering); edits apply locally
+  and autosave in the background. Python is used only for the offline
+  corpus-ingest script (scripts/ingest/), which emits versioned per-chapter
+  JSON to corpus/v1/, loaded into the corpus store by db:seed.
   Validation is a single pure-TypeScript module shared by the editor and the
   import path. The taxonomy and conjunction cue table are JSON in docs/data/,
   with TypeScript types generated from them — never hand-transcribed.

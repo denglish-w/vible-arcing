@@ -30,9 +30,17 @@ node scripts/migrate-app.ts
 
 export HOSTNAME="${BIND_ADDRESS:-127.0.0.1}"
 
+case "$HOSTNAME" in
+  127.0.0.1 | localhost | ::1 | "[::1]") ;;
+  *)
+    echo "WARNING: listening on $HOSTNAME, not loopback. Saved work has no authentication: anyone who can reach this port can read, change and delete it." >&2
+    ;;
+esac
+
 # Standalone output does not include these.
 rm -rf .next/standalone/public .next/standalone/.next/static
-cp -R public .next/standalone/public
+# public/ may not exist: git does not keep an empty directory.
+if [ -d public ]; then cp -R public .next/standalone/public; fi
 cp -R .next/static .next/standalone/.next/static
 
 exec node .next/standalone/server.js

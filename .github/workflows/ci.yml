@@ -22,10 +22,28 @@ jobs:
           node-version-file: .node-version
           cache: npm
       - run: npm ci
+      - name: Check migrations are up to date
+        # drizzle-kit exits 0 even when it cannot continue without a prompt (a
+        # column rename it cannot tell from drop-and-add) and prints an error
+        # instead, so the output is checked as well as the exit code. Stdin is
+        # closed and a timeout bounds it so CI cannot hang on a prompt.
+        run: |
+          set -o pipefail
+          timeout 120 npm run db:generate < /dev/null 2>&1 | tee "$RUNNER_TEMP/db-generate.log"
+          if grep -q "Interactive prompts require a TTY" "$RUNNER_TEMP/db-generate.log"; then
+            echo "::error::drizzle-kit needs an interactive answer (a rename?). Run npm run db:generate locally and commit drizzle/."
+            exit 1
+          fi
+          if [ -n "$(git status --porcelain drizzle/)" ]; then
+            echo "::error::Schema changed without a committed migration. Run npm run db:generate and commit drizzle/."
+            git status --porcelain drizzle/
+            exit 1
+          fi
       - run: npm run lint
       - run: npm run format:check
       - run: npx playwright install --with-deps chromium
       - run: npm test
+      # No data/ directory exists in CI: the build must not open a database.
       - run: npm run build
       - run: npm run build-storybook
       - name: Check lat.md
@@ -42,5 +60,21 @@ jobs:
         with:
           context: .
           push: false
+          load: true
+          tags: vible-arcing:ci
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      - name: Smoke test the image
+        run: |
+          data="$(mktemp -d)"
+          docker run -d --name smoke -p 127.0.0.1:3000:3000 -v "$data:/app/data" vible-arcing:ci
+          fail() { echo "$1"; docker logs smoke; exit 1; }
+          ready=
+          for _ in $(seq 1 60); do
+            if curl -fsS -o /dev/null http://127.0.0.1:3000/credits; then ready=1; break; fi
+            sleep 2
+          done
+          [ -n "$ready" ] || fail "server did not become ready"
+          curl -fsS http://127.0.0.1:3000/credits | grep -q SBLGNT || fail "credits page lacks SBLGNT"
+          code="$(curl -s -o /dev/null -w '%{http_code}' -H 'Host: evil.example' http://127.0.0.1:3000/credits)"
+          [ "$code" = 403 ] || fail "foreign Host returned $code, expected 403"
