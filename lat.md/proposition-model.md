@@ -6,7 +6,7 @@ How an analysis is represented in memory. This is the single structure both rend
 
 An analysis is an ordered list of propositions plus a forest of connection nodes, each covering a contiguous range of proposition indices.
 
-Members of a connection are propositions or other connections, mirroring a constituency tree over the proposition sequence. Contiguity plus containment is exactly what both renderers need. A flat edge list was rejected because arcs span groups, not pairs, and a general graph would admit crossing arcs and cycles.
+The stored document ([[src/lib/analysis/model.ts]]) holds the passage's MACULA word ids, propositions that name their first and last word, and connections. Members of a connection are propositions or other connections, mirroring a constituency tree over the proposition sequence. Contiguity plus containment is exactly what both renderers need. A flat edge list was rejected because arcs span groups, not pairs, and a general graph would admit crossing arcs and cycles.
 
 ## Bilateral as a ternary node
 
@@ -26,7 +26,7 @@ A user can split a proposition or merge two adjacent ones; non-adjacent merges a
 
 Structural rules are enforced at all times, but completeness is only reported, never required.
 
-Contiguity, arity and acyclicity are always enforced. An analysis is complete when every proposition is reachable from a single outermost connection. Incomplete analyses can be saved, resumed and rendered. Coordinate connections relate two or more equal members; subordinate connections relate exactly one supporter to its supported member or members.
+Contiguity, arity and acyclicity are always enforced. An analysis is complete when a single outermost connection covers all its propositions, or when it has exactly one proposition and so nothing to connect. An analysis with no propositions is incomplete. Incomplete analyses can be saved, resumed and rendered. Coordinate connections relate two or more equal members; subordinate connections relate exactly one supporter to its supported member or members.
 
 ## Portability
 

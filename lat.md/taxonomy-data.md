@@ -6,6 +6,8 @@ Where the relationship taxonomy and conjunction cues live, and how both runtimes
 
 Taxonomy and cue data are language-neutral JSON in `docs/data/`, with TypeScript types generated from them rather than hand-written.
 
+The relationship taxonomy is `docs/data/relationships.json`: shapes (coordinate, binary, bilateral), the four categories, and the 18 core and 4 extended relationships with their arity, supporter and direction rules and definitions written in our own words. Ground and Inference are one `support` relation that differs only by direction. `npm run taxonomy:generate` ([[scripts/generate-taxonomy.ts]]) checks the data and writes `src/lib/analysis/taxonomy.generated.ts`, which is committed; a unit test fails when it no longer matches the JSON, and another checks that every cue in the conjunction table names a known relationship.
+
 The relationship picker needs the taxonomy before any network call, so it is bundled rather than served by an endpoint. The Python ingest script reads the same cue table to classify conjunctions, keeping one source across both languages. The conjunction table is `docs/data/greek-conjunctions.json`.
 
 ## Language scope
