@@ -18,21 +18,21 @@ export function ChapterNavigation({
       {previous && (
         <Link
           className="button"
-          href={`/read/${previous.book.code}/${previous.chapter}`}
+          href={`/read/${previous.book.slug}/${previous.chapter}`}
           aria-label={`Previous chapter: ${previous.book.name} ${previous.chapter}`}
         >
           <ChevronLeft size={16} />
         </Link>
       )}
       <span>
-        <Link href={`/book/${book.code}`}>
+        <Link href={`/book/${book.slug}`}>
           {book.name} {chapter}
         </Link>
       </span>
       {next && (
         <Link
           className="button"
-          href={`/read/${next.book.code}/${next.chapter}`}
+          href={`/read/${next.book.slug}/${next.chapter}`}
           aria-label={`Next chapter: ${next.book.name} ${next.chapter}`}
         >
           <ChevronRight size={16} />

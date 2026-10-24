@@ -35,7 +35,7 @@ None in `openspec/specs/` (nothing is archived yet). This change supersedes part
 ## Impact
 
 - **Config and build:** `next.config.ts` (drop `output: 'export'` and `images.unoptimized`, add `output: 'standalone'` and mark `better-sqlite3` as a server external package). `npm run build` produces `.next/standalone` instead of `out/`.
-- **Dependencies:** adds `drizzle-orm`, `better-sqlite3` (a native module; whether it ships a prebuilt binary for Node 26 is unverified, and task 1.2 confirms it installs) and its types, `zod`, `server-only`, and `drizzle-kit` (dev).
+- **Dependencies:** adds `drizzle-orm`, `better-sqlite3` (a native module that bundles prebuilt binaries, so nothing compiles on install) and its types, `zod`, `server-only`, and `drizzle-kit` (dev).
 - **New code:** `src/db/` (schemas, clients for the two databases, migrations), `src/lib/books.ts` (the canonical book and chapter list), `src/proxy.ts` (host check), `scripts/seed-corpus.ts` and `scripts/migrate-app.ts`, and npm scripts `db:migrate`, `db:seed` and `db:generate`.
 - **Container and CI:** the `Dockerfile` is rewritten for a Node runtime. CI adds a check that migrations are up to date with the schema, and a test run against an in-memory database.
 - **Process:** `data/*.sqlite` is git-ignored. Developers run `npm run db:migrate && npm run db:seed` after cloning.

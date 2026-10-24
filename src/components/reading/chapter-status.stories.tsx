@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { ChapterLoading, ChapterUnavailable } from "./chapter-status";
+import { ChapterNotInstalled, ChapterUnavailable } from "./chapter-status";
 
 const meta = {
   title: "Reading/Chapter status",
@@ -8,5 +8,5 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Loading: Story = { render: () => <ChapterLoading /> };
 export const Unavailable: Story = {};
+export const NotInstalled: Story = { render: () => <ChapterNotInstalled /> };

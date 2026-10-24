@@ -1,106 +1,170 @@
-"""Extract the pinned Philippians 1 reader sample from MACULA lowfat XML."""
+"""Emit one chapter of MACULA Greek (SBLGNT lowfat) in corpus format v1.
+
+Run with the standard library only, in isolated mode:
+
+    python3 -I scripts/ingest/sample_chapter.py \
+        --xml <path to 11-philippians.xml> --commit <MACULA commit SHA> \
+        --chapter 1 --out corpus/v1
+
+It writes <out>/<BOOK>/<chapter>.json and <out>/attribution.json. Fields are
+copied from an explicit whitelist, so Louw-Nida and UBS semantic-domain
+attributes (`ln`, `domain`) and anything else MACULA adds never reach the
+output. The full ingest extends this script rather than replacing it.
+"""
+
+from __future__ import annotations
 
 import argparse
-import hashlib
 import json
-from pathlib import Path
 import re
+import sys
 import xml.etree.ElementTree as ET
+from pathlib import Path
 
-SOURCE_COMMIT = "8423afe47b9e8f24b7772e808af45c7159a6fe7e"
-SOURCE_SHA256 = "59d5843599152524b66b43ece2364b91b8155c92fadd832860086e71066f5daa"
-MORPHOLOGY_FIELDS = (
-    "person", "number", "gender", "case", "tense", "voice", "mood", "degree"
-)
+FORMAT = 1
+EDITION = "SBLGNT"
+DATASET = "macula-greek"
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
-WORD_REFERENCE = re.compile(r"([A-Z0-9]+) (\d+):(\d+)!(\d+)")
+
+# Morphology attributes kept under "m", in this order, only when present.
+MORPHOLOGY = ("person", "number", "gender", "case", "tense", "voice", "mood", "degree")
+
+# Shape checks only (used with fullmatch); src/lib/books.ts holds the 27 codes.
+BOOK_CODE = re.compile(r"[1-3]?[A-Z]{2,3}")
+REF = re.compile(r"(?P<book>[1-3]?[A-Z]{2,3}) (?P<chapter>\d+):(?P<verse>\d+)!(?P<word>\d+)")
+COMMIT = re.compile(r"[0-9a-f]{40}")
+# Characters that would be markup if a page ever rendered corpus text as HTML.
+MARKUP = re.compile(r"[<>&]")
+
+ATTRIBUTION = [
+    {
+        "name": "SBL Greek New Testament",
+        "creator": "Society of Biblical Literature and Logos Bible Software",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "statement": "Copyright 2010 by the Society of Biblical Literature and Logos Bible Software.",
+        "modified": True,
+        "modifications": (
+            "The text is taken from the MACULA Greek syntax trees and stored as one file "
+            "per chapter, with each word kept separately alongside the punctuation and "
+            "space that follow it (elision marks are stored with that punctuation). "
+            "The wording is not changed."
+        ),
+        "url": "https://sblgnt.com/",
+    },
+    {
+        "name": "MACULA Greek Linguistic Datasets",
+        "creator": "Clear Bible",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "statement": "MACULA Greek Linguistic Datasets, available at https://github.com/Clear-Bible/macula-greek/",
+        "modified": True,
+        "modifications": (
+            "Converted from the SBLGNT lowfat XML to JSON. Only each word's text, "
+            "following punctuation, verse, lemma, gloss, part of speech and morphology "
+            "are kept; Louw-Nida and UBS semantic-domain data and the syntax trees are removed."
+        ),
+        "url": "https://github.com/Clear-Bible/macula-greek/",
+    },
+    {
+        "name": "Berean Interlinear Bible",
+        "creator": "Berean Bible",
+        "license": "Public domain",
+        "licenseUrl": "https://berean.bible/licensing.htm",
+        "statement": (
+            "English word glosses from the Berean Interlinear Bible, supplied through "
+            "MACULA Greek. The Berean Bible texts were placed in the public domain on "
+            "April 30, 2023."
+        ),
+        "modified": True,
+        "modifications": "Only the English gloss of each word is kept, stored with the word it glosses.",
+        "url": "https://interlinearbible.com/",
+    },
+]
 
 
-def extract_chapter(xml: bytes, book: str, chapter: int) -> dict:
-    """Whitelist reader fields and restore text order from MACULA references."""
-    # ElementTree does not fetch external entities; reject declarations as well
-    # so even local, entity-expanding XML is outside this extractor's input.
-    if b"<!DOCTYPE" in xml.upper() or b"<!ENTITY" in xml.upper():
-        raise ValueError("XML document and entity declarations are not supported")
-    root = ET.fromstring(xml)
-    if root.tag != "book" or root.get("id") != book or chapter < 1:
-        raise ValueError("Expected the requested MACULA book and a positive chapter")
-    ordered = []
-    ids = set()
-    positions = set()
-    for element in root.iter("w"):
-        reference = WORD_REFERENCE.fullmatch(element.get("ref", ""))
-        if reference is None or reference[1] != book:
-            raise ValueError("Word has an invalid MACULA reference")
-        source_chapter, verse, position = map(int, reference.groups()[1:])
-        if source_chapter != chapter:
-            continue
-        identifier = element.get(XML_ID)
-        if not identifier or identifier in ids or (verse, position) in positions:
-            raise ValueError("Word identities and positions must be present and unique")
-        if verse < 1 or position < 1:
-            raise ValueError("Verse and word positions must be positive")
-        text = element.text
-        if not text or not all(field in element.attrib for field in ("after", "lemma", "class")):
-            raise ValueError("Word is missing a required reader field")
-        ids.add(identifier)
-        positions.add((verse, position))
-        word = {
-            "id": identifier,
-            "v": verse,
-            "text": text,
-            "after": element.attrib["after"],
-            "lemma": element.attrib["lemma"],
-            "gloss": element.get("gloss", ""),
-            "pos": element.attrib["class"],
-            "m": {field: element.attrib[field] for field in MORPHOLOGY_FIELDS if element.get(field)},
-        }
-        ordered.append(((verse, position), word))
-    if not ordered:
-        raise ValueError("The requested chapter contains no words")
-    ordered.sort(key=lambda entry: entry[0])
-    return {
-        "format": 1,
-        "edition": "SBLGNT",
-        "source": {"dataset": "macula-greek", "commit": SOURCE_COMMIT},
-        "book": book,
-        "chapter": chapter,
-        "words": [word for _, word in ordered],
+class IngestError(Exception):
+    pass
+
+
+def parse_book(xml_path: Path) -> ET.Element:
+    data = xml_path.read_bytes()
+    # The lowfat files are UTF-8 without a BOM and declare no DTD. Requiring that,
+    # and checking the decoded text, means no other encoding can hide a DTD.
+    # (expat also limits entity expansion and ElementTree never fetches external
+    # entities; this check keeps DTDs out entirely.)
+    if data.startswith((b"\xef\xbb\xbf", b"\xfe\xff", b"\xff\xfe")) or b"\x00" in data:
+        raise IngestError(f"{xml_path} is not plain UTF-8; refusing to parse it")
+    try:
+        text = data.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise IngestError(f"{xml_path} is not valid UTF-8: {error}") from None
+    if "<!DOCTYPE" in text.upper() or "<!ENTITY" in text.upper():
+        raise IngestError(f"{xml_path} declares a DTD or entities; refusing to parse it")
+    return ET.fromstring(data)
+
+
+def following(w: ET.Element) -> str:
+    """Everything between this word and the next, so the words join back into the text.
+
+    MACULA's `after` holds the punctuation alone (",", "·", "’"); SBLGNT puts a
+    space after it, so one is added. A plain space stays as it is.
+    """
+    after = w.get("after", "")
+    return after if after == "" or after[-1].isspace() else after + " "
+
+
+def word_record(w: ET.Element, ref: re.Match[str]) -> dict:
+    word_id = w.get(XML_ID)
+    if not word_id:
+        raise IngestError(f"word {w.get('ref')} has no xml:id")
+    text = w.text or ""
+    if not text:
+        raise IngestError(f"word {word_id} has no text")
+    record: dict = {
+        "id": word_id,
+        "v": int(ref["verse"]),
+        "text": text,
+        "after": following(w),
+        "lemma": w.get("lemma") or "",
     }
+    gloss = w.get("gloss")
+    if gloss:
+        record["gloss"] = gloss
+    record["pos"] = w.get("class") or ""
+    morphology = {k: w.get(k) for k in MORPHOLOGY if w.get(k)}
+    if morphology:
+        record["m"] = morphology
+    if not record["lemma"] or not record["pos"]:
+        raise IngestError(f"word {word_id} is missing a lemma or part of speech")
+    for field in ("text", "after", "lemma", "gloss"):
+        if field in record and MARKUP.search(record[field]):
+            raise IngestError(f"word {word_id} has markup characters in {field}")
+    return record
 
 
-def attribution() -> list[dict]:
-    """Publish the notices for every incorporated dataset, including glosses."""
-    license_url = "https://creativecommons.org/licenses/by/4.0/"
-    return [
-        {
-            "name": "SBL Greek New Testament",
-            "creator": "Society of Biblical Literature and Logos Bible Software",
-            "license": "CC BY 4.0",
-            "licenseUrl": license_url,
-            "statement": "SBL Greek New Testament. Copyright 2010 by the Society of Biblical Literature and Logos Bible Software. Licensed under CC BY 4.0. Modified: extracted chapter text and converted to reader JSON.",
-            "modified": True,
-            "url": "https://sblgnt.com/",
-        },
-        {
-            "name": "MACULA Greek Linguistic Datasets",
-            "creator": "Biblica, Inc.",
-            "license": "CC BY 4.0",
-            "licenseUrl": license_url,
-            "statement": "MACULA Greek Linguistic Datasets, available at https://github.com/Clear-Bible/macula-greek/ © 2022–2024 by Biblica, Inc. Licensed under CC BY 4.0. Modified: selected reader fields, omitted semantic-domain and syntax data, restored canonical word order, and converted to chapter JSON.",
-            "modified": True,
-            "url": "https://github.com/Clear-Bible/macula-greek/",
-        },
-        {
-            "name": "Berean Interlinear Bible",
-            "creator": "Berean Bible",
-            "license": "Public domain",
-            "licenseUrl": "https://berean.bible/licensing.htm",
-            "statement": "English word glosses from the Berean Interlinear Bible, via MACULA Greek. The Berean Bible texts were placed in the public domain on April 30, 2023. Modified: extracted glosses for the sample chapter.",
-            "modified": True,
-            "url": "https://interlinearbible.com/",
-        },
-    ]
+def chapter_words(root: ET.Element, book: str, chapter: int) -> list[dict]:
+    found = []
+    for w in root.iter("w"):
+        ref = REF.fullmatch(w.get("ref", ""))
+        if not ref:
+            raise IngestError(f"unrecognised word reference {w.get('ref')!r}")
+        if ref["book"] != book or int(ref["chapter"]) != chapter:
+            continue
+        key = (int(ref["verse"]), int(ref["word"]))
+        found.append((key, word_record(w, ref)))
+    if not found:
+        raise IngestError(f"no words found for {book} {chapter}")
+
+    # The XML is in syntax-tree order; reading order comes from the reference.
+    found.sort(key=lambda item: item[0])
+    keys = [k for k, _ in found]
+    if len(set(keys)) != len(keys):
+        raise IngestError(f"duplicate word references in {book} {chapter}")
+    ids = [r["id"] for _, r in found]
+    if len(set(ids)) != len(ids):
+        raise IngestError(f"duplicate word ids in {book} {chapter}")
+    return [record for _, record in found]
 
 
 def write_json(path: Path, value: object) -> None:
@@ -108,19 +172,42 @@ def write_json(path: Path, value: object) -> None:
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("source", type=Path, help="Pinned SBLGNT/lowfat/11-philippians.xml")
-    parser.add_argument("--output", type=Path, default=Path("public/corpus/v1"))
-    args = parser.parse_args()
-    xml = args.source.read_bytes()
-    if hashlib.sha256(xml).hexdigest() != SOURCE_SHA256:
-        parser.error("Source does not match the pinned MACULA Philippians file")
-    chapter = extract_chapter(xml, "PHP", 1)
-    write_json(args.output / "PHP" / "1.json", chapter)
-    write_json(args.output / "attribution.json", attribution())
-    print(f"Wrote {len(chapter['words'])} words from MACULA {SOURCE_COMMIT}")
+def main(argv: list[str]) -> int:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--xml", type=Path, required=True, help="MACULA SBLGNT lowfat book file")
+    parser.add_argument("--commit", required=True, help="MACULA Greek commit SHA the file came from")
+    parser.add_argument("--chapter", type=int, required=True)
+    parser.add_argument("--out", type=Path, required=True, help="output root, e.g. corpus/v1")
+    args = parser.parse_args(argv)
+
+    if not COMMIT.fullmatch(args.commit):
+        parser.error("--commit must be a full 40-character lower-case SHA")
+    if args.chapter < 1:
+        parser.error("--chapter must be 1 or more")
+
+    try:
+        root = parse_book(args.xml)
+        book = root.get("id", "")
+        if root.tag != "book" or not BOOK_CODE.fullmatch(book):
+            raise IngestError(f"{args.xml} is not a MACULA lowfat book file")
+        words = chapter_words(root, book, args.chapter)
+    except (IngestError, ET.ParseError, OSError) as error:
+        print(f"error: {error}", file=sys.stderr)
+        return 1
+
+    chapter = {
+        "format": FORMAT,
+        "edition": EDITION,
+        "source": {"dataset": DATASET, "commit": args.commit},
+        "book": book,
+        "chapter": args.chapter,
+        "words": words,
+    }
+    write_json(args.out / book / f"{args.chapter}.json", chapter)
+    write_json(args.out / "attribution.json", {"format": FORMAT, "datasets": ATTRIBUTION})
+    print(f"wrote {book} {args.chapter}: {len(words)} words")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main(sys.argv[1:]))

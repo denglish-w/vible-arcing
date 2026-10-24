@@ -127,7 +127,7 @@ A connection labelled with a subordinate relationship SHALL relate exactly one s
 
 The system SHALL be able to report whether an analysis is complete.
 
-An analysis SHALL be complete when every proposition is reachable from a single outermost connection.
+An analysis SHALL be complete when every proposition is reachable from a single outermost connection, or when it has exactly one proposition and so nothing to connect.
 
 The system SHALL permit an incomplete analysis to be saved and resumed, and SHALL NOT require completeness in order to render.
 
@@ -141,6 +141,11 @@ The system SHALL permit an incomplete analysis to be saved and resumed, and SHAL
 
 - **WHEN** a user requests the status of an analysis
 - **THEN** the system reports whether every proposition is reachable from a single outermost connection
+
+#### Scenario: Single proposition is complete
+
+- **WHEN** an analysis has exactly one proposition and no connections
+- **THEN** the system reports it as complete
 
 #### Scenario: Cyclic structure rejected
 

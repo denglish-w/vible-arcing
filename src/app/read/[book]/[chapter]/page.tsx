@@ -1,22 +1,20 @@
 import { notFound } from "next/navigation";
-import { BOOKS, getBook } from "@/lib/books";
-import { Reader } from "@/components/reading/reader";
-export const dynamicParams = false;
-export function generateStaticParams() {
-  return BOOKS.flatMap((book) =>
-    Array.from({ length: book.chapters }, (_, i) => ({
-      book: book.code,
-      chapter: String(i + 1),
-    })),
-  );
-}
+import { connection } from "next/server";
+import { bookBySlug } from "@/lib/books";
+import { Reader, type ReaderContent } from "@/components/reading/reader";
+import { getChapter } from "@/db/corpus";
+import { readCorpus } from "@/app/corpus-store";
+import type { ChapterText } from "@/components/reading/greek-text";
+
+// Read per request, so chapters ingested after the build appear.
 export default async function ReaderPage({
   params,
 }: {
   params: Promise<{ book: string; chapter: string }>;
 }) {
+  await connection();
   const route = await params;
-  const book = getBook(route.book);
+  const book = bookBySlug(route.book);
   const chapter = Number(route.chapter);
   if (
     !book ||
@@ -26,7 +24,26 @@ export default async function ReaderPage({
     String(chapter) !== route.chapter
   )
     notFound();
-  return (
-    <Reader key={`${book.code}/${chapter}`} book={book} chapter={chapter} />
-  );
+  const result = await readCorpus((db) => getChapter(db, book.code, chapter));
+  if (result?.status === "does-not-exist") notFound();
+  let content: ReaderContent;
+  if (!result) content = { status: "not-installed" };
+  else if (result.status === "ok") {
+    const data: ChapterText = {
+      book: result.book,
+      chapter: result.chapter,
+      words: result.words.map((word) => ({
+        id: word.id,
+        v: word.verse,
+        text: word.text,
+        after: word.after,
+        lemma: word.lemma,
+        gloss: word.gloss ?? undefined,
+        pos: word.pos,
+        m: word.morphology,
+      })),
+    };
+    content = { status: "ok", data };
+  } else content = { status: "unavailable" };
+  return <Reader book={book} chapter={chapter} content={content} />;
 }

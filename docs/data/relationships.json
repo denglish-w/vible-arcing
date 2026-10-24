@@ -1,0 +1,302 @@
+{
+  "source": "The logical relationships of the arcing and bracketing method developed by Daniel Fuller and taught by John Piper and Thomas Schreiner. Definitions are written for this project in its own words; see docs/reference/logical-relationships.md for the sources.",
+  "credit": "Relationship taxonomy after Daniel Fuller, John Piper and Thomas Schreiner (Schreiner, Interpreting the Pauline Epistles, 2nd ed., 2011, ch. \"Tracing the Argument\").",
+  "note": "TypeScript is generated from this file by `npm run taxonomy:generate` into src/lib/analysis/taxonomy.generated.ts. Edit this file, never the generated one.",
+  "shapes": [
+    {
+      "id": "coordinate",
+      "description": "Two or more equal members; none supports another.",
+      "minMembers": 2,
+      "maxMembers": null,
+      "supporter": "none"
+    },
+    {
+      "id": "binary",
+      "description": "One supporting member and one supported member.",
+      "minMembers": 2,
+      "maxMembers": 2,
+      "supporter": "chosen"
+    },
+    {
+      "id": "bilateral",
+      "description": "A supported member before, the supporting member, and a supported member after.",
+      "minMembers": 3,
+      "maxMembers": 3,
+      "supporter": "middle"
+    }
+  ],
+  "categories": [
+    {
+      "id": "coordinate",
+      "name": "Coordinate",
+      "subordinate": false,
+      "description": "Each member stands on its own and contributes to the whole."
+    },
+    {
+      "id": "restatement",
+      "name": "Support by Restatement",
+      "subordinate": true,
+      "description": "The supporting member says the supported one again in another way."
+    },
+    {
+      "id": "distinct",
+      "name": "Support by Distinct Statement",
+      "subordinate": true,
+      "description": "The supporting member adds something new that bears on the supported one."
+    },
+    {
+      "id": "contrary",
+      "name": "Support by Contrary Statement",
+      "subordinate": true,
+      "description": "The supporting member pulls against the supported one, which stands anyway."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "series",
+      "name": "Series",
+      "abbreviation": "S",
+      "category": "coordinate",
+      "tier": "core",
+      "shape": "coordinate",
+      "relation": "series",
+      "direction": null,
+      "definition": "Two or more statements, each adding its own independent point to a larger whole."
+    },
+    {
+      "id": "progression",
+      "name": "Progression",
+      "abbreviation": "P",
+      "category": "coordinate",
+      "tier": "core",
+      "shape": "coordinate",
+      "relation": "progression",
+      "direction": null,
+      "definition": "Statements that each add a point, where every step carries the thought further toward a high point."
+    },
+    {
+      "id": "alternative",
+      "name": "Alternative",
+      "abbreviation": "A",
+      "category": "coordinate",
+      "tier": "core",
+      "shape": "coordinate",
+      "relation": "alternative",
+      "direction": null,
+      "definition": "Statements that set out different possibilities open in one situation."
+    },
+    {
+      "id": "action-manner",
+      "name": "Action-Manner",
+      "abbreviation": "Ac/Mn",
+      "category": "restatement",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "action-manner",
+      "direction": "either",
+      "definition": "An action, and a statement of how it is carried out or by what means."
+    },
+    {
+      "id": "comparison",
+      "name": "Comparison",
+      "abbreviation": "Cf",
+      "category": "restatement",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "comparison",
+      "direction": "either",
+      "definition": "An action, and a statement that makes it clearer by saying what it resembles."
+    },
+    {
+      "id": "negative-positive",
+      "name": "Negative-Positive",
+      "abbreviation": "-/+",
+      "category": "restatement",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "negative-positive",
+      "direction": "either",
+      "definition": "A statement that is denied and one that is affirmed, the denial sharpening the affirmation. Plain contrasts belong here too."
+    },
+    {
+      "id": "idea-explanation",
+      "name": "Idea-Explanation",
+      "abbreviation": "Id/Exp",
+      "category": "restatement",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "idea-explanation",
+      "direction": "either",
+      "definition": "A statement, and another that makes its meaning plainer, whether of one word in it or of the whole."
+    },
+    {
+      "id": "question-answer",
+      "name": "Question-Answer",
+      "abbreviation": "Q/A",
+      "category": "restatement",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "question-answer",
+      "direction": "either",
+      "definition": "A question, and the reply given to it."
+    },
+    {
+      "id": "ground",
+      "name": "Ground",
+      "abbreviation": "G",
+      "category": "distinct",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "support",
+      "direction": "follows",
+      "definition": "A claim, and the reason or argument for it, which comes after the claim."
+    },
+    {
+      "id": "inference",
+      "name": "Inference",
+      "abbreviation": "∴",
+      "category": "distinct",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "support",
+      "direction": "precedes",
+      "definition": "A claim, and the reason or argument for it, which comes before the claim. The same relation as Ground with the order reversed."
+    },
+    {
+      "id": "bilateral",
+      "name": "Bilateral",
+      "abbreviation": "BL",
+      "category": "distinct",
+      "tier": "core",
+      "shape": "bilateral",
+      "relation": "bilateral",
+      "direction": "either",
+      "equivalentTo": [
+        { "relationship": "ground", "toward": "before" },
+        { "relationship": "inference", "toward": "after" }
+      ],
+      "definition": "One statement that supports both the statement before it and the statement after it: a Ground for the first and the basis of an Inference for the second."
+    },
+    {
+      "id": "action-result",
+      "name": "Action-Result",
+      "abbreviation": "Ac/Res",
+      "category": "distinct",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "action-result",
+      "direction": "either",
+      "definition": "An action, and an outcome that comes about from it."
+    },
+    {
+      "id": "action-purpose",
+      "name": "Action-Purpose",
+      "abbreviation": "Ac/Pur",
+      "category": "distinct",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "action-purpose",
+      "direction": "either",
+      "definition": "An action, and the outcome it is meant to achieve."
+    },
+    {
+      "id": "conditional",
+      "name": "Conditional",
+      "abbreviation": "If/Th",
+      "category": "distinct",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "conditional",
+      "direction": "either",
+      "definition": "A possible action and the outcome that depends on it. Like Action-Result, except that the action may not happen."
+    },
+    {
+      "id": "temporal",
+      "name": "Temporal",
+      "abbreviation": "T",
+      "category": "distinct",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "temporal",
+      "direction": "either",
+      "definition": "A statement, and the time or occasion at which it holds or happens."
+    },
+    {
+      "id": "locative",
+      "name": "Locative",
+      "abbreviation": "L",
+      "category": "distinct",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "locative",
+      "direction": "either",
+      "definition": "A statement, and the place where it holds or happens."
+    },
+    {
+      "id": "concessive",
+      "name": "Concessive",
+      "abbreviation": "Csv",
+      "category": "contrary",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "concessive",
+      "direction": "either",
+      "definition": "A main statement that holds even though another statement seems to count against it."
+    },
+    {
+      "id": "situation-response",
+      "name": "Situation-Response",
+      "abbreviation": "Sit/R",
+      "category": "contrary",
+      "tier": "core",
+      "shape": "binary",
+      "relation": "situation-response",
+      "direction": "either",
+      "definition": "A situation, and a response to it that runs against what the situation would lead one to expect."
+    },
+    {
+      "id": "both-and",
+      "name": "Both-And",
+      "abbreviation": null,
+      "category": "coordinate",
+      "tier": "extended",
+      "shape": "coordinate",
+      "relation": "both-and",
+      "direction": null,
+      "definition": "Statements stressed as true together, or as false together."
+    },
+    {
+      "id": "general-specific",
+      "name": "General-Specific",
+      "abbreviation": null,
+      "category": "restatement",
+      "tier": "extended",
+      "shape": "binary",
+      "relation": "general-specific",
+      "direction": "either",
+      "definition": "A statement about a whole, and another about one or more of its parts."
+    },
+    {
+      "id": "fact-interpretation",
+      "name": "Fact-Interpretation",
+      "abbreviation": null,
+      "category": "restatement",
+      "tier": "extended",
+      "shape": "binary",
+      "relation": "fact-interpretation",
+      "direction": "either",
+      "definition": "A statement of what is so or what happened, and a statement of what it means."
+    },
+    {
+      "id": "anticipation-fulfillment",
+      "name": "Anticipation-Fulfillment",
+      "abbreviation": null,
+      "category": "distinct",
+      "tier": "extended",
+      "shape": "binary",
+      "relation": "anticipation-fulfillment",
+      "direction": "either",
+      "definition": "A promise or expectation, and the event that fulfils it."
+    }
+  ]
+}

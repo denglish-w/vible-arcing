@@ -1,6 +1,6 @@
 ## Purpose
 
-Lets a user browse the Greek New Testament by book and chapter, read a chapter's Greek text, inspect any word's lemma, gloss and parsing, and adjust how the text is displayed.
+Lets a user browse the Greek New Testament by book and chapter, read a chapter's Greek text, inspect any word's lemma, gloss and parsing, and adjust how the text is displayed. The chapter data format is specified in `text/corpus-store` (`app-server-and-sqlite`), not here.
 
 ## ADDED Requirements
 
@@ -10,7 +10,7 @@ The contents page SHALL list all 27 New Testament books in canonical order, grou
 
 Each book SHALL have a page listing its chapters, each linking to that chapter's reading screen.
 
-Every book and chapter page SHALL be a static page in the exported build.
+Every book and chapter page SHALL be rendered by the application's server from the corpus store, so a chapter ingested after the build appears without rebuilding.
 
 #### Scenario: Book list complete
 
@@ -52,11 +52,11 @@ The reading screen SHALL provide links to the previous and next chapter, crossin
 
 ### Requirement: Unavailable chapter data
 
-When the corpus data for a chapter cannot be loaded, because it has not been ingested yet or because a request failed, the reading screen SHALL say the text is not available and SHALL keep the chapter navigation working.
+When the corpus data for a chapter is not available, because it has not been ingested yet or because the corpus store cannot be read, the reading screen SHALL say the text is not available and SHALL keep the chapter navigation working.
 
 #### Scenario: Chapter not yet ingested
 
-- **WHEN** a user opens a chapter for which no corpus data has been published
+- **WHEN** a user opens a chapter that exists but has not been ingested into the corpus store
 - **THEN** the screen states the text is not yet available
 - **AND** the previous and next chapter links still work
 
@@ -128,29 +128,11 @@ If stored settings are missing, unreadable, or lack a field added in a later rel
 - **WHEN** browser storage throws on access
 - **THEN** the reading screen renders with default settings
 
-### Requirement: Corpus chapter format
-
-The reader SHALL consume chapter data in a published, versioned static format in which every word carries its MACULA word identifier, surface form, following punctuation, verse number, lemma, gloss, part of speech and applicable morphology fields.
-
-Words SHALL be identified in the reader by their MACULA identifier, never by their position in the chapter or verse.
-
-The chapter data SHALL NOT contain UBS semantic-domain attributes.
-
-#### Scenario: Word identity is the MACULA id
-
-- **WHEN** the reader refers to a word, such as to open its detail popover
-- **THEN** it refers to it by the word's MACULA identifier
-
-#### Scenario: No UBS attributes
-
-- **WHEN** any published chapter file is inspected
-- **THEN** it contains no Louw-Nida or UBS semantic-domain fields
-
 ### Requirement: Credits page
 
-The application SHALL have a credits page that names every work whose text or data the application ships, with its licence, a link to the licence, its required attribution statement, and whether it has been modified.
+The `/credits` page (created by the `app-server-and-sqlite` change) SHALL be presented in the application's theme with the shared page shell, and SHALL name every work whose text or data the application ships, with its licence, a link to the licence, its required attribution statement, and whether it has been modified.
 
-The credits page SHALL build its list from the attribution metadata published alongside the corpus, so a dataset added to the corpus appears on the credits page without a separate hand edit.
+The credits page SHALL build its list from the attribution held in the corpus store, so a dataset added to the corpus appears on the credits page without a separate hand edit.
 
 The credits page SHALL state that the application is not affiliated with or endorsed by the publishers of any source.
 
@@ -161,5 +143,5 @@ The credits page SHALL state that the application is not affiliated with or endo
 
 #### Scenario: Credits follow the metadata
 
-- **WHEN** the corpus attribution metadata lists a dataset
+- **WHEN** the corpus store's attribution lists a dataset
 - **THEN** that dataset appears on the credits page

@@ -59,5 +59,15 @@ next-env.d.ts
 /storybook-static/
 *storybook.log
 
+# local databases (users' saved work) and their backups
+/data/
+
+# git worktrees made by Claude Code sessions
+/.claude/worktrees/
+
+# SQLite files anywhere, in case DATA_DIR points elsewhere in the repo
+*.sqlite
+*.sqlite-*
+
 # Local reader verification captures
 /.impeccable/review/

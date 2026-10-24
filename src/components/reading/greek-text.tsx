@@ -7,11 +7,14 @@ import {
   PopoverArrow,
 } from "@/components/ui/popover";
 import { WordDetail } from "./word-detail";
-import type { CorpusChapter, CorpusWord } from "@/lib/corpus/types";
+import type { CorpusChapter, CorpusWord } from "@/lib/corpus/format";
 import { wordCategory, categoryStyle } from "@/lib/pos";
 import { SIZE_SCALE, SPACING, useSettingsStore } from "@/lib/settings";
 
-export function GreekText({ data }: { data: CorpusChapter }) {
+/** The part of a chapter the reader shows; fixtures and the store both supply it. */
+export type ChapterText = Pick<CorpusChapter, "book" | "chapter" | "words">;
+
+export function GreekText({ data }: { data: ChapterText }) {
   const settings = useSettingsStore((state) => state.settings);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const verses = new Map<number, CorpusWord[]>();
@@ -37,7 +40,7 @@ export function GreekText({ data }: { data: CorpusChapter }) {
               <sup className="verse-number">{verse}</sup>
             )}
             {words.map((word) => {
-              const category = wordCategory(word.pos, word.m.mood);
+              const category = wordCategory(word.pos, word.m?.mood);
               const colored =
                 settings.posColor.enabled &&
                 settings.posColor.categories[category];

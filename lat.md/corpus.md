@@ -10,15 +10,9 @@ MACULA supplies per-word lemma and morphology plus explicit clause nodes (`<wg c
 
 ## Ingest pipeline
 
-A standard-library Python extractor publishes Philippians 1 as versioned chapter JSON, with MACULA identity and only the reader's required fields.
+A stdlib Python script turns MACULA XML into versioned per-chapter JSON under `corpus/v1/`, and `npm run db:seed` loads that into a read-only SQLite store.
 
-[[scripts/ingest/sample_chapter.py#extract_chapter]] restores canonical order using source references, while preserving each XML word id. The CLI verifies the pinned source checksum before extraction. [[scripts/ingest/README.md]] records the source commit and reproducible command. The full NT ingest remains unimplemented.
-
-## Chapter format
-
-Format v1 uses one static file per chapter, with passage identity, source provenance and whitelisted word morphology.
-
-[[public/corpus/v1/PHP/1.json]] contains 501 words across 30 verses. Each word has id, verse, text, following punctuation, lemma, gloss, part of speech and applicable morphology. The source's following punctuation is preserved verbatim; the reader supplies inter-word spacing after punctuation. A missing gloss remains empty rather than invented. [[src/lib/corpus/parse.ts#parseChapter]] validates passage identity, required fields, unique MACULA ids, verse order and morphology, returning only supported fields.
+Ingest is a build step, never a request path. Its output (corpus format v1) is committed, so the seed has real input; for now it holds Philippians 1, made by `scripts/ingest/sample_chapter.py` from a pinned MACULA commit. Joining each word's `text` and `after` reproduces the SBLGNT text. The seed (`src/db/seed.ts`) checks every file with the one parser in `src/lib/corpus/format.ts`, builds `data/corpus.sqlite` in a temp file and renames it into place, so a failed build leaves the old store. The store is kept apart from users' saved work, so a rebuild cannot touch it. Clause and conjunction data arrive with the full ingest as reference data only.
 
 ## Stable word identifiers
 
@@ -42,4 +36,4 @@ Westminster morphology or syntax obtained directly from the Groves Center is CC 
 
 Each incorporated work is named with its licence and a link, and any modification is disclosed, both in the repository and in the shipped UI.
 
-The exact required strings are listed in `docs/reference/data-sources.md`. The relationship taxonomy and conjunction cue data are also attributed to their sources in user-visible documentation.
+The exact required strings are listed in `docs/reference/data-sources.md`. `/credits` renders the attribution the corpus store holds, with the non-affiliation statement, plus a Method credit for the relationship taxonomy taken from the generated taxonomy module; if the store has not been seeded it says so. The conjunction cue data is attributed in user-visible documentation.

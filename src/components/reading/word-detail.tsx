@@ -3,8 +3,19 @@ import { Fragment } from "react";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PopoverClose } from "@/components/ui/popover";
-import { MORPHOLOGY_FIELDS, type CorpusWord } from "@/lib/corpus/types";
+import type { CorpusWord } from "@/lib/corpus/format";
 import { POS_CATEGORIES, wordCategory } from "@/lib/pos";
+
+const MORPHOLOGY_FIELDS = [
+  "person",
+  "number",
+  "gender",
+  "case",
+  "tense",
+  "voice",
+  "mood",
+  "degree",
+] as const;
 
 export function WordDetail({ word }: { word: CorpusWord }) {
   return (
@@ -31,14 +42,14 @@ export function WordDetail({ word }: { word: CorpusWord }) {
           {
             POS_CATEGORIES.find(
               (category) =>
-                category.key === wordCategory(word.pos, word.m.mood),
+                category.key === wordCategory(word.pos, word.m?.mood),
             )?.label
           }
         </dd>
-        {MORPHOLOGY_FIELDS.filter((field) => word.m[field]).map((field) => (
+        {MORPHOLOGY_FIELDS.filter((field) => word.m?.[field]).map((field) => (
           <Fragment key={field}>
             <dt>{field}</dt>
-            <dd>{word.m[field]}</dd>
+            <dd>{word.m?.[field]}</dd>
           </Fragment>
         ))}
       </dl>

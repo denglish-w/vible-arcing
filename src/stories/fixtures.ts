@@ -1,9 +1,8 @@
-import php1 from "../../public/corpus/v1/PHP/1.json";
-import { parseChapter } from "@/lib/corpus/parse";
-import type { CorpusWord } from "@/lib/corpus/types";
+import php1 from "../../corpus/v1/PHP/1.json";
+import { parseChapter, type CorpusWord } from "@/lib/corpus/format";
 
-/** The committed Philippians 1 sample, so no story fetches. */
-export const philippians1 = parseChapter(php1);
+/** The committed Philippians 1 sample, so no story needs the database. */
+export const philippians1 = parseChapter(php1, "corpus/v1/PHP/1.json");
 
 export function fixtureWord(id: string): CorpusWord {
   const word = philippians1.words.find((candidate) => candidate.id === id);

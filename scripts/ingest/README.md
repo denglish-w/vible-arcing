@@ -1,21 +1,33 @@
-# Sample corpus ingest
+# Corpus ingest
 
-`sample_chapter.py` is the standard-library-only seed of the full corpus ingest. It extracts Philippians 1 from MACULA Greek `SBLGNT/lowfat`, preserving MACULA word ids, surface text and following punctuation. Lowfat tree traversal is not text order: the extractor sorts by the verse and word positions in `@ref`, without using those positions as identity.
+Turns MACULA Greek (`SBLGNT/lowfat` XML) into corpus format v1 under `corpus/v1/`, which `npm run db:seed` loads into `data/corpus.sqlite`. The format is specified in `openspec/changes/app-server-and-sqlite/specs/text/corpus-store/spec.md` and design decision 4.
 
-The source is pinned to MACULA commit `8423afe47b9e8f24b7772e808af45c7159a6fe7e`. The script checks the downloaded book's SHA-256 (`59d5843599152524b66b43ece2364b91b8155c92fadd832860086e71066f5daa`) before writing data, so a different source cannot silently inherit that provenance.
+## Sample chapter
 
-From the repository root, with the project's Python virtual environment available as `.venv/`:
+Until the full ingest exists, `corpus/v1/` holds one chapter, Philippians 1, made by `sample_chapter.py`.
+
+- MACULA Greek commit: `8423afe47b9e8f24b7772e808af45c7159a6fe7e` (2026-07-07)
+- Source file: `SBLGNT/lowfat/11-philippians.xml` at that commit
+
+Download the source outside the repo, then run the script with the standard library only, in isolated mode:
 
 ```sh
-curl -fL https://raw.githubusercontent.com/Clear-Bible/macula-greek/8423afe47b9e8f24b7772e808af45c7159a6fe7e/SBLGNT/lowfat/11-philippians.xml -o /tmp/macula-philippians.xml
-.venv/bin/python -I scripts/ingest/sample_chapter.py /tmp/macula-philippians.xml
-.venv/bin/python -I -B -m unittest discover -s scripts/ingest -p 'test_*.py'
+curl -sSfL -o /tmp/11-philippians.xml \
+  https://raw.githubusercontent.com/Clear-Bible/macula-greek/8423afe47b9e8f24b7772e808af45c7159a6fe7e/SBLGNT/lowfat/11-philippians.xml
+python3 -I scripts/ingest/sample_chapter.py \
+  --xml /tmp/11-philippians.xml \
+  --commit 8423afe47b9e8f24b7772e808af45c7159a6fe7e \
+  --chapter 1 --out corpus/v1
 ```
 
-Outputs are `public/corpus/v1/PHP/1.json` (501 words, 30 verses) and `public/corpus/v1/attribution.json`. Use `--output <directory>` for a reproducibility check in a scratch directory. Keep downloaded XML outside the repository. In a worktree, use the primary checkout's `.venv/bin/python` if the worktree has no virtual environment.
+It writes `corpus/v1/PHP/1.json` and `corpus/v1/attribution.json`. Running it again with the same inputs gives identical files.
 
-Only explicitly listed reader fields and applicable morphology are emitted. UBS `ln` and `domain`, syntax roles, and other source attributes are omitted. Attribution retains the SBLGNT copyright and MACULA notice from their upstream licences, identifies the Berean Interlinear source of `@gloss`, and discloses the conversion. `@english` (Cherith glosses) is not incorporated.
+## What is kept
 
-The source omits `@gloss` for Philippians 1:24's `ἐν` (`n50001024004`); the output preserves that absence as an empty gloss rather than inventing one or substituting `@english`.
+Each word keeps only its MACULA `xml:id`, verse, text, following punctuation, lemma, gloss (when MACULA has one), part of speech (`class`) and the morphology attributes person, number, gender, case, tense, voice, mood and degree. Every other attribute is dropped, including Louw-Nida `ln` and UBS `domain`, whose redistribution is not permitted (see `docs/reference/data-sources.md`). Words are written in reading order, taken from each word's `ref`, not in the XML's syntax-tree order.
 
-The foundation change's full ingest extends this script to the remaining books and chapters and adds its required clause and conjunction data; it retains this versioned, per-chapter reader contract.
+`after` is everything between a word and the next: MACULA's punctuation (including elision marks such as ’) plus the space SBLGNT puts after it. Joining every word's `text + after` reproduces the chapter's text exactly, apart from a trailing space after the last word.
+
+The script accepts only plain UTF-8 input and refuses a file that declares a DTD or entities, and it stops if a word's text, following punctuation, lemma or gloss contains `<`, `>` or `&`.
+
+The full ingest extends this script to every book and adds clause and conjunction data as reference data. That data is never used to split passages or suggest relationships.

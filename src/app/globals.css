@@ -316,6 +316,75 @@ h2 {
   opacity: 0.4;
   cursor: default;
 }
+/* The one main action in a view (DESIGN.md, Buttons). */
+.button-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+}
+.button-primary:hover {
+  background: color-mix(in srgb, var(--primary) 90%, var(--background));
+  color: var(--primary-foreground);
+}
+.work-list {
+  list-style: none;
+  margin: 32px 0 0;
+  padding: 0;
+}
+.work-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.work-summary {
+  flex: 1 1 20rem;
+  min-width: 0;
+}
+.work-title {
+  font-size: 18px;
+  color: var(--foreground);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.work-title:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.work-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.work-empty {
+  margin: 32px 0;
+  color: var(--muted-foreground);
+}
+.delete-confirm {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px 12px;
+  font-size: 14px;
+}
+.work-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
 .popover {
   z-index: 30;
   width: 320px;

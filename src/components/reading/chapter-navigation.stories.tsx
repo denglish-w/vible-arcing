@@ -11,10 +11,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const MiddleChapter: Story = {
-  args: { book: getBook("php")!, chapter: 2 },
+  args: { book: getBook("PHP")!, chapter: 2 },
 };
 export const Matthew1: Story = {
-  args: { book: getBook("mat")!, chapter: 1 },
+  args: { book: getBook("MAT")!, chapter: 1 },
   play: async ({ canvasElement }) => {
     const nav = within(canvasElement);
     await expect(
@@ -26,7 +26,7 @@ export const Matthew1: Story = {
   },
 };
 export const Revelation22: Story = {
-  args: { book: getBook("rev")!, chapter: 22 },
+  args: { book: getBook("REV")!, chapter: 22 },
   play: async ({ canvasElement }) => {
     await expect(
       within(canvasElement).queryByRole("link", { name: /^Next chapter/ }),
@@ -34,7 +34,7 @@ export const Revelation22: Story = {
   },
 };
 export const Matthew28ToMark1: Story = {
-  args: { book: getBook("mat")!, chapter: 28 },
+  args: { book: getBook("MAT")!, chapter: 28 },
   play: async ({ canvasElement }) => {
     await expect(
       within(canvasElement).getByRole("link", { name: "Next chapter: Mark 1" }),
