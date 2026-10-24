@@ -1,6 +1,6 @@
 # src/db
 
-The two SQLite databases (`corpus.sqlite`, read-only, and `app.sqlite`, users' saved work), their schemas, clients and queries. See `openspec/changes/app-server-and-sqlite/design.md`.
+The two SQLite databases (`corpus.sqlite`, read-only, and `app.sqlite`, users' saved work), their schemas, clients and queries. See `openspec/changes/archive/2026-10-24-app-server-and-sqlite/design.md`.
 
 ## Modules shared with scripts
 
