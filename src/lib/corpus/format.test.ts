@@ -103,9 +103,13 @@ describe("parseAttribution", () => {
     expect(datasets.map((d) => d.name)).toEqual([
       "SBL Greek New Testament",
       "MACULA Greek Linguistic Datasets",
+      "Berean Interlinear Bible",
+    ]);
+    expect(datasets.slice(0, 2).map((d) => d.license)).toEqual([
+      "CC BY 4.0",
+      "CC BY 4.0",
     ]);
     for (const d of datasets) {
-      expect(d.license).toBe("CC BY 4.0");
       expect(d.modified).toBe(true);
       expect(d.modifications.length).toBeGreaterThan(0);
     }

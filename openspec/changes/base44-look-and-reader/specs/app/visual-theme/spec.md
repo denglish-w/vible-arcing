@@ -75,7 +75,7 @@ Typefaces SHALL be served with the application and SHALL NOT be fetched from a t
 
 #### Scenario: Fonts available offline from third parties
 
-- **WHEN** the application is loaded from its static host with all third-party hosts unreachable
+- **WHEN** the application is loaded from its own server with all third-party hosts unreachable
 - **THEN** Greek text renders in the selected typeface
 
 ### Requirement: Shared page chrome

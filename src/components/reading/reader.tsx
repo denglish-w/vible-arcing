@@ -1,28 +1,27 @@
-"use client";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Logo, SiteFooter } from "@/components/site-shell";
 import { ChapterNavigation } from "./chapter-navigation";
-import { ChapterLoading, ChapterUnavailable } from "./chapter-status";
+import { ChapterNotInstalled, ChapterUnavailable } from "./chapter-status";
 import { DisplayMenu } from "./display-menu";
-import { GreekText } from "./greek-text";
+import { GreekText, type ChapterText } from "./greek-text";
 import { PosLegend } from "./pos-legend";
 import type { Book } from "@/lib/books";
-import { loadChapter } from "@/lib/corpus/load";
-import type { CorpusChapter } from "@/lib/corpus/types";
 
-export function Reader({ book, chapter }: { book: Book; chapter: number }) {
-  const [data, setData] = useState<CorpusChapter | null | undefined>(undefined);
-  useEffect(() => {
-    let active = true;
-    void loadChapter(book.code, chapter).then((result) => {
-      if (active)
-        setData(result.status === "available" ? result.chapter : null);
-    });
-    return () => {
-      active = false;
-    };
-  }, [book.code, chapter]);
+export type ReaderContent =
+  | { status: "ok"; data: ChapterText }
+  | { status: "unavailable" }
+  | { status: "not-installed" };
+
+/** Props only, so stories need no database; the page supplies the chapter. */
+export function Reader({
+  book,
+  chapter,
+  content,
+}: {
+  book: Book;
+  chapter: number;
+  content: ReaderContent;
+}) {
   return (
     <div className="page-shell">
       <header className="reader-bar">
@@ -54,12 +53,15 @@ export function Reader({ book, chapter }: { book: Book; chapter: number }) {
           </span>
         </div>
         <PosLegend />
-        {data === undefined ? (
-          <ChapterLoading />
-        ) : data === null ? (
+        {content.status === "ok" ? (
+          <GreekText
+            key={`${content.data.book}/${content.data.chapter}`}
+            data={content.data}
+          />
+        ) : content.status === "unavailable" ? (
           <ChapterUnavailable />
         ) : (
-          <GreekText key={`${data.book}/${data.chapter}`} data={data} />
+          <ChapterNotInstalled />
         )}
       </main>
       <SiteFooter />

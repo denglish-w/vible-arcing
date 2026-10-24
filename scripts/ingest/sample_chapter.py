@@ -66,6 +66,20 @@ ATTRIBUTION = [
         ),
         "url": "https://github.com/Clear-Bible/macula-greek/",
     },
+    {
+        "name": "Berean Interlinear Bible",
+        "creator": "Berean Bible",
+        "license": "Public domain",
+        "licenseUrl": "https://berean.bible/licensing.htm",
+        "statement": (
+            "English word glosses from the Berean Interlinear Bible, supplied through "
+            "MACULA Greek. The Berean Bible texts were placed in the public domain on "
+            "April 30, 2023."
+        ),
+        "modified": True,
+        "modifications": "Only the English gloss of each word is kept, stored with the word it glosses.",
+        "url": "https://interlinearbible.com/",
+    },
 ]
 
 

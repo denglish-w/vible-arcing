@@ -1,11 +1,13 @@
 ## Context
 
+> **Superseded in part by `app-server-and-sqlite`:** the static-export rules below, decisions 5, 6 and 7, and the "260 static reader pages" risk describe how this change was first built. The app is now a Node server (decision 1 there), pages are server components reading the corpus store, and the corpus format and sample extractor are owned by that change. Each affected decision carries its own note. Decisions 1 to 4 and 8 to 10 stand.
+
 See proposal.md for why. The current state:
 
 - **This repo:** Next.js 16 App Router with `output: 'export'`, TypeScript, Tailwind v4 through `@tailwindcss/turbopack`, oxlint, Prettier and Vitest, plus Storybook 10 (`@storybook/nextjs-vite`) whose Vitest `storybook` project renders every story in headless Chromium and fails on axe violations. `src/app/` has only the scaffold's layout and page. There is no corpus yet: the ingest in `discourse-analysis-foundation` is unwritten, and its design leaves the corpus file granularity (per book or per chapter) open.
 - **The design system** is `DESIGN.md` at the repo root ("The Scholar's Desk"). It is normative for every visual decision in this change: tokens, type roles, shadows, component treatments and the named rules.
 - **The prototype** (`docs/design/base44-prototype/`): TanStack Start in plain JSX with Tailwind v3. Tokens are HSL triples in `src/index.css` (`--background: 40 36% 93%`), consumed as `hsl(var(--x))`, with `.dark` and `.sepia` class overrides. The reader is `src/routes/read.$bookId.$chapter.jsx` plus `src/components/reading/*`, and display settings live in `src/lib/study-defaults.js` and `src/lib/pos.js`. Settings and annotations sync to the Base44 backend when signed in, and fall back to localStorage otherwise.
-- **Static export rules** (from `node_modules/next/dist/docs/01-app/02-guides/static-exports.md`): dynamic routes need `generateStaticParams()` and `dynamicParams: false`. There are no server actions, cookies or runtime request handling.
+- **Static export rules (superseded: the app is a Node server, see `app-server-and-sqlite`)** (from `node_modules/next/dist/docs/01-app/02-guides/static-exports.md`): dynamic routes need `generateStaticParams()` and `dynamicParams: false`. There are no server actions, cookies or runtime request handling.
 
 ## Goals / Non-Goals
 
@@ -13,7 +15,7 @@ See proposal.md for why. The current state:
 
 - Port by rewriting: read each prototype file and re-express it in TSX against this repo's stack. Do not copy files across and patch them.
 - Fix the corpus chapter format now so the ingest has a concrete output contract and the reader never depends on prototype data.
-- Keep everything the reader needs on the client. No new build-time server work beyond static page generation.
+- Keep display settings and word selection on the client. Chapter text comes from the server's corpus store (as first built: everything on the client, with a static export).
 
 **Non-Goals:**
 
@@ -57,6 +59,8 @@ A Zustand store holds the display settings. The `persist` middleware writes them
 
 ### 5. Routes: lowercase MACULA book codes, all pages pre-rendered
 
+> **Superseded by `app-server-and-sqlite`:** the pages are server components rendered per request, not pre-rendered. There is no `generateStaticParams`, no `dynamicParams = false`, and no static host; an unknown book or chapter is answered by the server with `not-found`, using the store to tell "does not exist" from "not yet ingested". `/credits` is created by that change and restyled here. The route shapes and lowercase codes below stand. Original text follows.
+
 - `/`: contents (server component, static).
 - `/book/[book]`: chapter list. `generateStaticParams` returns the 27 codes, and `dynamicParams = false`.
 - `/read/[book]/[chapter]`: the page is a static shell with `generateStaticParams` over all 260 book–chapter pairs. It renders a client `Reader` that fetches the chapter JSON.
@@ -66,6 +70,8 @@ A Zustand store holds the display settings. The `persist` middleware writes them
 Book segments use the lowercase MACULA code (`/read/php/1`). It is the same key as the corpus path, which avoids a second id scheme. The prototype's slugs (`philippians`) are not kept. A `books.ts` table (code, name, Greek title, chapter count, group) is ported from the prototype's `books.js` and drives both `generateStaticParams` and prev/next navigation.
 
 ### 6. Corpus chapter format v1: one JSON file per chapter
+
+> **Superseded by `app-server-and-sqlite` decision 4:** the format moved to `text/corpus-store` and `src/lib/corpus/format.ts`; ingest output is committed under `corpus/v1/`, not `public/corpus/v1/`, and is read by the seed, not fetched by the browser. That change also refines `after`, `gloss` and the attribution fields. `src/lib/corpus/types.ts` and this change's `parseChapter` are replaced by `format.ts`, and `loadChapter` by the store's `getChapter`. Original text follows.
 
 This settles the foundation design's open question on file granularity for the reader's needs: one file per chapter at `public/corpus/v1/<BOOK>/<chapter>.json`. Matthew is about 2 MB as a single book file, but a few tens of KB per chapter, and the reader only ever needs one chapter.
 
@@ -101,6 +107,8 @@ Types for this format are hand-written in `src/lib/corpus/types.ts`. The "genera
 
 ### 7. The sample chapter comes from a minimal Python extractor in `scripts/ingest/`
 
+> **Moved to `app-server-and-sqlite` (task 3.1):** the extractor, its pinned commit and `scripts/ingest/README.md` belong to that change, which writes to `corpus/v1/`. What was built here is kept as history. Original text follows.
+
 `scripts/ingest/sample_chapter.py` reads one MACULA `SBLGNT/lowfat` book file at a pinned commit and writes one chapter in format v1, plus `attribution.json`. It uses only the standard library (`xml.etree`) and is run with `.venv/bin/python -I`. Its output for Philippians 1 is committed. It is deliberately the seed of the foundation change's ingest: the full ingest generalises it to every book and adds clause and conjunction data, rather than starting over.
 
 *Why Philippians 1:* it has a long, varied Pauline argument (1:3–11 and 1:27–30 are standard arcing passages), so it is a useful demo surface for the editor later, and it has every part-of-speech category.
@@ -119,7 +127,7 @@ The `unit` Vitest project covers `wordCategory`, the settings validator and merg
 
 Every component ships with a `*.stories.tsx` beside it, covering its states rather than one happy path. The `storybook` Vitest project renders each story in headless Chromium, so a story that throws or has an axe violation fails `npm test`. Behaviour that the specs describe as keyboard or pointer interaction (Escape closes the word popover and returns focus to the word, reselecting a word, the display menu's switches) is asserted in `play` functions with `storybook/test`, which ships with Storybook and needs no new dependency. Stories feed components through props or through the settings store set in a decorator, and Greek text stories use the committed `PHP/1.json` fixture, so no story fetches.
 
-The theme flash on reload, static routing and the exported build cannot be seen from a story and are still checked by hand (task 6.2). jsdom and Testing Library are not added.
+The theme flash on reload, routing and the production build cannot be seen from a story and are still checked by hand (task 6.2). jsdom and Testing Library are not added.
 
 *Alternative:* check component behaviour only by hand, as first planned. Rejected because the Storybook tests now exist, and they make the accessibility half of the design review (task 6.5) repeatable.
 
@@ -130,7 +138,7 @@ The font definitions move from `layout.tsx` into a shared `src/app/fonts.ts` tha
 ## Risks / Trade-offs
 
 - **The fixture format may not survive the real ingest** → It is versioned (`format: 1`, path `v1/`), and the parser rejects unknown versions. If the ingest needs clause data, it adds fields (compatible) or bumps to v2 alongside a reader update in the same change.
-- **260 static reader pages, nearly all showing "not yet available"** → They are tiny shells, and generating them now means the ingest only adds JSON files with no route changes. The contents page could mark unavailable chapters, but that needs an availability index, so it waits for the ingest.
+- **260 static reader pages, nearly all showing "not yet available"** (superseded: pages are rendered by the server, so no empty shells are generated) → They are tiny shells, and generating them now means the ingest only adds JSON files with no route changes. The contents page could mark unavailable chapters, but that needs an availability index, so it waits for the ingest.
 - **The Google Fonts download at build could fail in CI** → Next's font loader fails the build loudly rather than shipping without fonts. Retry, or vendor the files with `next/font/local` if it becomes flaky.
 - **Base44 prototype licence** → The prototype is the user's own design work, so porting it raises no third-party licence question. Its bundled Bible data is not used (see proposal).
 - **The theme script runs before React** → It is kept tiny, uses only `localStorage` and `classList`, and is wrapped in try/catch so a failure leaves the light theme in place.

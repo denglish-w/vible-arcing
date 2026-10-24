@@ -36,4 +36,4 @@ Westminster morphology or syntax obtained directly from the Groves Center is CC 
 
 Each incorporated work is named with its licence and a link, and any modification is disclosed, both in the repository and in the shipped UI.
 
-The exact required strings are listed in `docs/reference/data-sources.md`. The relationship taxonomy and conjunction cue data are also attributed to their sources in user-visible documentation.
+The exact required strings are listed in `docs/reference/data-sources.md`. `/credits` renders the attribution the corpus store holds, with the non-affiliation statement, plus a Method credit for the relationship taxonomy taken from the generated taxonomy module; if the store has not been seeded it says so. The conjunction cue data is attributed in user-visible documentation.

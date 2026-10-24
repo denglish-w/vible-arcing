@@ -1,4 +1,4 @@
-// Run against the static export served at READER_URL (default http://127.0.0.1:4321).
+// Run against the app served by `npm start` at READER_URL (default http://127.0.0.1:4321; start it with PORT=4321).
 const { chromium } = require('playwright');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
