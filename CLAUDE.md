@@ -29,7 +29,7 @@ The product is a web app for studying the Greek New Testament: reading, grammati
 
 ## Workflow: OpenSpec
 
-Before changing project skills or slash commands, read and follow `lat.md/skill-maintenance.md`. When working in a worktree alongside other agents, follow the claim and check protocol in `lat.md/agent-coordination.md`. Update matching Claude and Codex workflows together and compare them before finishing.
+Before changing project skills or slash commands, read and follow `lat.md/skill-maintenance.md`. Create new worktrees at `.worktrees/<branch>` inside this repo (`git worktree add .worktrees/<branch> -b <branch>`), not under `.claude/worktrees/`. When working in a worktree alongside other agents, follow the claim and check protocol in `lat.md/agent-coordination.md`. Update matching Claude and Codex workflows together and compare them before finishing.
 
 Changes are planned with OpenSpec before code is written. Slash commands live in `.claude/commands/opsx/` (`/opsx:propose`, `/opsx:apply`, `/opsx:archive`, etc.). A change's `proposal.md`, `design.md` and `specs/` are the source of truth for what to build; `openspec/config.yaml` carries project context shown to the model when generating artifacts.
 
