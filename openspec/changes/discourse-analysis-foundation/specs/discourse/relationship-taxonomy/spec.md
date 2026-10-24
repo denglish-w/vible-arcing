@@ -12,19 +12,19 @@ The 18 core relationships SHALL be: Series, Progression, Alternative, Action-Man
 
 The system SHALL additionally provide 4 extended relationships: Both-And, General-Specific, Fact-Interpretation, Anticipation-Fulfillment.
 
-Extended relationships SHALL be excluded from relationship selection by default and available only when the user explicitly opts in.
+The relationship choices the system provides SHALL exclude extended relationships by default and include them only when the user has opted in.
 
-#### Scenario: Core relationships available by default
+#### Scenario: Core relationships offered by default
 
-- **WHEN** a user selects a relationship to label a connection between propositions
-- **THEN** all 18 core relationships are offered
-- **AND** the 4 extended relationships are not offered
+- **WHEN** relationship choices are requested without the extended opt-in
+- **THEN** all 18 core relationships are returned
+- **AND** the 4 extended relationships are not returned
 
 #### Scenario: Extended relationships opted in
 
-- **WHEN** a user enables extended relationships
-- **THEN** all 22 relationships are offered
-- **AND** extended relationships are visually distinguished from core relationships
+- **WHEN** relationship choices are requested with the extended opt-in
+- **THEN** all 22 relationships are returned
+- **AND** each extended relationship is marked as extended
 
 #### Scenario: Every relationship carries its reference data
 
@@ -35,30 +35,30 @@ Extended relationships SHALL be excluded from relationship selection by default 
 
 Each relationship SHALL belong to exactly one category. Categories SHALL be: Coordinate, Support by Restatement, Support by Distinct Statement, Support by Contrary Statement.
 
-Coordinate SHALL contain exactly 3 relationships: Series, Progression, Alternative.
+Coordinate SHALL contain exactly 3 core relationships: Series, Progression, Alternative.
 
-Support by Restatement SHALL contain exactly 5: Action-Manner, Comparison, Negative-Positive, Idea-Explanation, Question-Answer.
+Support by Restatement SHALL contain exactly 5 core relationships: Action-Manner, Comparison, Negative-Positive, Idea-Explanation, Question-Answer.
 
-Support by Distinct Statement SHALL contain exactly 8: Ground, Inference, Bilateral, Action-Result, Action-Purpose, Conditional, Temporal, Locative.
+Support by Distinct Statement SHALL contain exactly 8 core relationships: Ground, Inference, Bilateral, Action-Result, Action-Purpose, Conditional, Temporal, Locative.
 
-Support by Contrary Statement SHALL contain exactly 2: Concessive, Situation-Response.
+Support by Contrary Statement SHALL contain exactly 2 core relationships: Concessive, Situation-Response.
 
 The system SHALL classify every non-Coordinate relationship as subordinate.
 
 #### Scenario: Category counts hold
 
-- **WHEN** relationships are grouped by category
+- **WHEN** core relationships are grouped by category
 - **THEN** Coordinate contains 3, Support by Restatement contains 5, Support by Distinct Statement contains 8, and Support by Contrary Statement contains 2
 
 #### Scenario: Coordinate and subordinate partition the set
 
-- **WHEN** relationships are partitioned into coordinate and subordinate
+- **WHEN** core relationships are partitioned into coordinate and subordinate
 - **THEN** exactly 3 are coordinate and exactly 15 are subordinate
 
-#### Scenario: Selection is presented by category
+#### Scenario: Choices are grouped by category
 
-- **WHEN** a user is offered relationships to choose from
-- **THEN** the relationships are grouped under their category names
+- **WHEN** relationship choices are requested
+- **THEN** they are grouped under their category names, with Bilateral under Support by Distinct Statement
 
 ### Requirement: Relationship directionality
 
@@ -81,20 +81,20 @@ The system SHALL treat Ground and Inference as the same underlying relation diff
 - **WHEN** a user attempts to invert a connection labelled Series, Progression, or Alternative
 - **THEN** the system rejects the operation and reports that coordinate relationships have no support direction
 
+#### Scenario: Bilateral cannot be inverted
+
+- **WHEN** a user attempts to invert a connection labelled Bilateral
+- **THEN** the system rejects the operation, because Bilateral already supports in both directions
+
 ### Requirement: Bilateral relationship
 
-Bilateral SHALL be a first-class, user-selectable relationship, presented alongside the other 17 core relationships.
+Bilateral SHALL be a first-class core relationship, available alongside the other 17.
 
 A Bilateral connection SHALL relate one supporting proposition to exactly two supported propositions: one preceding the supporter and one following it.
 
 The system SHALL record that Bilateral is semantically equivalent to a Ground toward the preceding proposition combined with an Inference toward the following proposition.
 
-The system SHALL treat a Bilateral connection as a single named connection for the purposes of selection, labelling, and display, not as two independent connections the user must manage separately.
-
-#### Scenario: Bilateral is selectable by name
-
-- **WHEN** a user chooses a relationship to label a connection
-- **THEN** Bilateral appears in the list under Support by Distinct Statement
+The system SHALL treat a Bilateral connection as a single named connection for the purposes of labelling and editing, not as two independent connections the user must manage separately.
 
 #### Scenario: Bilateral requires two supported propositions
 
@@ -109,9 +109,9 @@ The system SHALL treat a Bilateral connection as a single named connection for t
 
 ### Requirement: Conjunction cues
 
-The system SHALL maintain a mapping from conjunctions to the relationships they may signal, keyed by language, where each mapping entry carries a scripture reference exemplifying that pairing.
+The system SHALL maintain a mapping from conjunctions to the relationships they may signal, keyed by language, where each mapping entry carries a scripture reference exemplifying that pairing and the scholarly source for it.
 
-The system SHALL provide this mapping for Koine Greek, covering at least 64 conjunctions.
+The mapping SHALL be compiled by the project from scholarly sources and SHALL NOT reproduce a third party's conjunction table.
 
 A conjunction MAY map to more than one relationship. The system SHALL NOT treat a conjunction as determining a relationship.
 
@@ -119,25 +119,19 @@ The mapping is reference material shown only when the user asks to look up a con
 
 #### Scenario: Ambiguous conjunction yields multiple candidates
 
-- **WHEN** the conjunction `εἰ` is looked up
-- **THEN** the system returns Question-Answer, Idea-Explanation, Conditional, and Concessive as candidates
+- **WHEN** a conjunction mapped to several relationships is looked up
+- **THEN** the system returns every mapped relationship as a candidate
 - **AND** does not designate any one of them as the relationship
 
-#### Scenario: Unambiguous conjunction yields a single candidate
-
-- **WHEN** the conjunction `καίπερ` is looked up
-- **THEN** the system returns Concessive as the only candidate
-
-#### Scenario: Cue entries carry examples
+#### Scenario: Cue entries carry examples and sources
 
 - **WHEN** any conjunction-to-relationship mapping is retrieved
-- **THEN** it includes a scripture reference exemplifying that pairing
+- **THEN** it includes a scripture reference exemplifying that pairing and the source it was compiled from
 
-#### Scenario: No relationship proposed while editing
+#### Scenario: Cue data never labels a connection
 
-- **WHEN** a user connects two propositions joined by `γάρ`
-- **THEN** no relationship is preselected or suggested
-- **AND** the user can open the reference entry for `γάρ` if they choose
+- **WHEN** a user connects two propositions joined by a mapped conjunction
+- **THEN** the connection's relationship comes only from the user's choice
 
 #### Scenario: Unmapped conjunction
 
@@ -166,13 +160,13 @@ Adding support for an additional language SHALL require only new cue data, and S
 
 - **WHEN** conjunction cues are requested for a language with no cue data
 - **THEN** the system returns no cues
-- **AND** relationship selection remains fully available
+- **AND** relationship choices remain fully available
 
 ### Requirement: Attribution of taxonomy sources
 
-The system SHALL attribute the relationship taxonomy and conjunction cue data to their sources in user-visible documentation.
+The system SHALL attribute the relationship taxonomy and conjunction cue data to their scholarly sources in user-visible documentation.
 
 #### Scenario: Attribution is reachable
 
-- **WHEN** a user views information about the relationship taxonomy
-- **THEN** the origin of the taxonomy and the conjunction cue data is stated
+- **WHEN** a user views the application's credits
+- **THEN** the scholarly origin of the taxonomy and of the conjunction cue data is stated

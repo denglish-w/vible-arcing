@@ -53,7 +53,7 @@ Where the source data marks a word as a conjunction, the system SHALL expose tha
 
 #### Scenario: Morphology available per word
 
-- **WHEN** a user inspects a word in the source text
+- **WHEN** the data for a word in the source text is requested
 - **THEN** the system returns its lemma and morphological parsing
 
 #### Scenario: Clause boundaries available
@@ -123,8 +123,3 @@ The system SHALL identify which text edition an analysis was built over.
 
 - **WHEN** an analysis is created
 - **THEN** the text edition it was built over is recorded with it
-
-#### Scenario: Edition shown to the user
-
-- **WHEN** a user views an analysis
-- **THEN** the text edition it was built over is identifiable

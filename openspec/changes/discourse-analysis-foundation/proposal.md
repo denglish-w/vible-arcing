@@ -10,7 +10,7 @@ This change establishes the domain foundation — the relationship taxonomy and 
 
 This is a **foundation-only** change. It defines domain models and captures architectural decisions; it does not build the editor, backend, or persistence layer.
 
-- Encode the canonical **18 logical relationships** (plus 4 extended relationships) as a first-class domain taxonomy, sourced from the [canonical Biblearc reference sheet](https://s3.amazonaws.com/cdn.gospelpaths.com/tenants/5/1598617223758-The18LogicalRelationshipsEng.pdf) and cross-checked against the [Biblearc bracketing course](https://equip.biblearc.com/course/bracketing/123266).
+- Encode the canonical **18 logical relationships** (plus 4 extended relationships) as a first-class domain taxonomy. The method comes from the scholarship of Fuller, Piper and Schreiner and is implemented from those sources. Biblearc's reference sheet and course were consulted for research only.
 - Establish the **two-data-model split**: discourse analysis (proposition-level) and grammatical analysis (word-level) are separate models, not variations of one.
 - Establish that **arcing and bracketing are two renderings of one model**, not two features.
 - Define the **passage/proposition source model** over SBLGNT, including attribution requirements imposed by CC BY 4.0.
@@ -24,23 +24,29 @@ This is a **foundation-only** change. It defines domain models and captures arch
 
 **3. Ground and Inference are one relationship with opposite direction.** Both are defined as "a statement and the argument or reason for that statement" — differing only in whether the supporting proposition follows (Ground) or precedes (Inference). Modeling all 18 as a flat enum duplicates logic that a direction field expresses once.
 
-**4. Bilateral may not need to break the tree.** Bilateral (`BL`) is "a proposition that supports two other propositions, one preceding and one following" — a node with two parents, not expressible in a strict tree. But the [Greek conjunctions sheet](https://s3.amazonaws.com/cdn.gospelpaths.com/tenants/5/1741980881175-Greekconjunctionsbracketingsheetsheetnewlogo.pdf) states directly that `BL` "in essence is the combination of two other relationships, Ground (G) and Inference (∴)." Modeling it as a *composite of two binary edges* keeps every edge binary and the structure a tree, making `BL` a presentation concern rather than a structural exception. This remains the highest-leverage structural decision in the change; the composite reading is the leading candidate.
+**4. Bilateral does not need to break the tree.** Bilateral (`BL`) is "a proposition that supports two other propositions, one preceding and one following", which reads like a node with two parents. It is modelled instead as one ternary connection (before, supporter, after), so the structure stays a tree; its equivalence to a Ground plus an Inference is recorded as semantics on the node. See design decision 2.
 
-**5. A full conjunction→relationship rules table exists and has been extracted.** A dedicated Biblearc sheet maps **64 Greek conjunctions to 105 relationship associations**, each with a scripture example. Extracted in full to `docs/data/greek-conjunctions.json`. This is a ready-made basis for relationship *suggestion*. Its limits are also now known: most conjunctions are ambiguous (`εἰ` spans four relationships), Action-Result vs. Action-Purpose is not lexically distinguishable at all, and Situation-Response has no conjunction signal whatsoever.
+**5. Conjunctions narrow the candidates but never decide.** Research into a third-party conjunction table (`docs/data/greek-conjunctions.json`, extracted from a Biblearc sheet with no recorded licence, reference only) showed that most conjunctions are ambiguous (`εἰ` spans four relationships), Action-Result vs. Action-Purpose is not lexically distinguishable at all, and Situation-Response has no conjunction signal. The app's own cue table is compiled from scholarly sources and is reference material the user opens on request, never a suggestion.
 
-**6. Clause segmentation is already available as licensed data.** MACULA Greek (CC BY 4.0) ships syntax trees over SBLGNT containing explicit clause nodes — 6,001 `<wg class="cl">` nodes in Matthew alone — plus sentence boundaries, constituent role labels, and conjunction nodes. Auto-splitting a passage into candidate propositions is therefore far less speculative than assumed, and grammatical diagramming's data dependency is satisfied rather than blocked.
+**6. Clause data is available as licensed data, and is used only as reference.** MACULA Greek (CC BY 4.0) ships syntax trees over SBLGNT with explicit clause nodes, sentence boundaries and conjunction nodes. It is never used to split a passage into propositions (see Impact), and it satisfies grammatical diagramming's data dependency.
 
 ## Capabilities
 
 ### New Capabilities
 
 - `discourse/relationship-taxonomy`: The canonical set of logical relationships — 18 core plus 4 extended — with names, abbreviations, definitions, category classification (coordinate vs. subordinate; restatement / distinct statement / contrary statement), directionality, arity, and associated trigger conjunctions per language.
-- `discourse/proposition-model`: The proposition tree — how a passage is segmented into propositions, how propositions are linked by labeled relationships, and the structural rules governing valid analyses (including the Bilateral multi-parent case).
+- `discourse/proposition-model`: The proposition tree — how a passage is segmented into propositions, how propositions are linked by labeled relationships, and the structural rules governing valid analyses (including Bilateral as a single ternary connection).
 - `text/greek-source`: The SBLGNT text as a source corpus — passage addressing (book/chapter/verse/word), text retrieval, and the attribution obligations imposed by its CC BY 4.0 license.
 
 ### Modified Capabilities
 
-None — this is the first change in the project.
+None in `openspec/specs/`, which is empty. `app-server-and-sqlite` (unarchived) replaces this change's design decisions 5 and 8 and parts of 4 and 7, and delivers part of this change early (see tasks.md section 0). This change archives after it.
+
+### Moved to later changes
+
+These requirements describe user interface that this foundation does not build, so they are not in this change's specs. Each later change adds them when it builds the feature:
+- **Arc and bracket renderers:** rendering independence (same analysis as arcs and as brackets, edits reflected in both, Bilateral drawn as one connection) and rendering an incomplete analysis.
+- **Arcing editor:** the relationship picker (choices grouped by category, extended relationships visually distinguished, Bilateral selectable by name), analysis portability (export and re-import round-trip, export naming passage and edition), and showing an analysis's edition to the user.
 
 ## Impact
 
@@ -49,7 +55,7 @@ None — this is the first change in the project.
 **Deliberately out of scope for this change:**
 - Arc and bracket **renderers** — they consume this model; they are separate changes.
 - **Grammatical/sentence diagramming** — a distinct data model. Its data dependency is now satisfied (MACULA Greek syntax trees, CC BY 4.0), so this is deferred on scope grounds rather than blocked. Its own change.
-- **Persistence, accounts, backend API** — no storage decisions made here.
+- **Persistence, accounts, backend API** — storage is decided by `app-server-and-sqlite`, not here.
 - **Relationship auto-suggestion and proposition auto-splitting** — not planned. Product decision (2026-10-22): the app never interprets for the user. The conjunction table is reference material a user can look up; MACULA clause data is never used to segment a passage.
 
 **Language scope:** Greek (SBLGNT) for v1.
