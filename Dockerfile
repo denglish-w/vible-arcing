@@ -1,12 +1,18 @@
 # syntax=docker/dockerfile:1
 
-# All stages use the same glibc base, so the better-sqlite3 binary matches. It
-# ships prebuilt binaries for linux glibc (x64, arm64); nothing compiles here.
+# All stages use the same glibc base, so the better-sqlite3 binary built in
+# `deps` runs in `runtime`. better-sqlite3 publishes no prebuilt binary for
+# every Node ABI, and node-gyp then compiles it, so the stages that run
+# `npm ci` carry Python and a C++ toolchain. The runtime stage does not.
 # The Node major must match .node-version.
+FROM node:26-slim AS toolchain
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends python3 make g++ \
+ && rm -rf /var/lib/apt/lists/*
 
 # Production dependencies for the entrypoint scripts and the server's external
 # native module: drizzle-orm, better-sqlite3 and zod.
-FROM node:26-slim AS deps
+FROM toolchain AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 # `prepare` (husky) is a dev tool and is not installed here; it is allowed to fail.
@@ -14,7 +20,7 @@ RUN npm ci --omit=dev
 
 # Build the standalone server. No data/ directory exists here (see .dockerignore),
 # and the build must not need one.
-FROM node:26-slim AS build
+FROM toolchain AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
