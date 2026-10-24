@@ -71,3 +71,11 @@ next-env.d.ts
 
 # Local reader verification captures
 /.impeccable/review/
+
+# local agent tooling state (dagr, oh-my-codex) and editor settings
+/.dagr/
+/.omx/
+/.vscode/
+
+# git worktrees made outside .claude/
+/.worktrees/

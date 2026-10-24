@@ -22,13 +22,14 @@ Use the pinned Node (`fnm use`, reads `.node-version`).
 - A Husky `pre-push` hook (`.husky/pre-push`) runs `npm run lint && npm run format:check`; `npm install` wires it up through the `prepare` script.
 - CI is `.github/workflows/ci.yml` (the checks above, a check that `db:generate` produces no migration changes, `build-storybook` and `lat check`, then a Docker image build and a container smoke test). The `Dockerfile` runs the standalone server; its entrypoint migrates, seeds the corpus when missing or stale, then starts. Docker is installed locally: `docker build -t vible-arcing .` and `docker run -p 127.0.0.1:3000:3000 -v vible-data:/app/data vible-arcing`. The dev machine is arm64 and CI is amd64, so a local build does not prove the CI one.
 - **Single user, local only.** There are no accounts: anyone who can reach the server can read and change all saved work. It binds to `127.0.0.1` and refuses non-local `Host` headers unless `ALLOW_UNAUTHENTICATED_NETWORK=1` and `ALLOWED_HOSTS` are set (`src/lib/host.ts`). Never weaken this without a change that adds accounts.
+- `npm run coord -- <list|claim|release|check|prune|base>`: coordination between agents in separate worktrees; a `PreToolUse` hook warns when an edited file is claimed or changed in another worktree. Protocol in `lat.md/agent-coordination.md`.
 - Next.js docs for the installed version are in `node_modules/next/dist/docs/`; the `next-devtools` MCP server in `.mcp.json` points to them.
 
 The product is a web app for studying the Greek New Testament: reading, grammatical (sentence) diagramming, and arcing/bracketing (discourse analysis) of the same passage in one place. Who it is for, its positioning and its open decisions (including whether it is free and open source) are in `PRODUCT.md`.
 
 ## Workflow: OpenSpec
 
-Before changing project skills or slash commands, read and follow `lat.md/skill-maintenance.md`. Update matching Claude and Codex workflows together and compare them before finishing.
+Before changing project skills or slash commands, read and follow `lat.md/skill-maintenance.md`. Create new worktrees at `.worktrees/<branch>` inside this repo (`git worktree add .worktrees/<branch> -b <branch>`), not under `.claude/worktrees/`. When working in a worktree alongside other agents, follow the claim and check protocol in `lat.md/agent-coordination.md`. Update matching Claude and Codex workflows together and compare them before finishing.
 
 Changes are planned with OpenSpec before code is written. Slash commands live in `.claude/commands/opsx/` (`/opsx:propose`, `/opsx:apply`, `/opsx:archive`, etc.). A change's `proposal.md`, `design.md` and `specs/` are the source of truth for what to build; `openspec/config.yaml` carries project context shown to the model when generating artifacts.
 
