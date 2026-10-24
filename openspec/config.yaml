@@ -100,8 +100,8 @@ operations:
         for this change at `.worktrees/<branch>`, or reuse one explicitly
         assigned to this session.
         Leave other agents' and users' worktrees untouched.
-      - Follow lat.md/agent-coordination.md: claim the change's shared files
-        with `npm run coord -- claim` before editing them, and run
+      - Follow the protocol in lat.md/agent-coordination.md. Claim the change's
+        shared files with `npm run coord -- claim` before editing them, and run
         `npm run coord -- check` before each commit.
       - After finishing each section of tasks (a `## N.` heading in tasks.md)
         that changed code, run two read-only reviewers in parallel on that
