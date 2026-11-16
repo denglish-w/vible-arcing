@@ -89,15 +89,15 @@ A maintainer regenerates the whole New Testament from the pinned MACULA source b
 - **FR-001**: The corpus MUST contain every chapter of all 27 New Testament books of the SBL Greek New Testament (260 chapters), taken from one pinned version of the MACULA Greek source.
 - **FR-002**: Every word MUST carry the same data as the existing Philippians 1 corpus: MACULA identifier, surface form, following punctuation, verse number, lemma, gloss when present, part of speech and applicable morphology.
 - **FR-003**: The corpus MUST use the existing published corpus format, version 1, so the app reads the new chapters without changes to how chapters are stored or shown.
-- **FR-004**: Words MUST appear in reading order, and joining each word with its following punctuation MUST reproduce the chapter's SBLGNT text.
+- **FR-004**: Words MUST appear in reading order (verse, then word position, from MACULA's references). Every word MUST have non-empty text, and every word's following punctuation MUST be a space, or a punctuation mark followed by a space, as MACULA gives it, so joining each word with its following punctuation gives the chapter's text as MACULA records it.
 - **FR-005**: The corpus MUST NOT contain Louw-Nida or UBS semantic-domain data, or any source field outside the existing whitelist.
 - **FR-006**: The attribution records MUST be unchanged in content; the SBLGNT and MACULA modification notes stay accurate for the full text.
 - **FR-007**: Philippians 1 MUST keep the same word identifiers and the same word data after the full ingest.
 - **FR-008**: The existing build command MUST load the full corpus, and an existing store built from fewer chapters MUST be detected as stale and rebuilt by the existing rebuild-if-stale step.
 - **FR-009**: The ingest MUST be a single documented procedure that extends the existing sample extractor rather than replacing it, uses only the pinned source, and produces identical output when run twice on the same input.
 - **FR-010**: The ingest MUST stop with a message naming the file when a source file is missing, malformed, declares a DTD or entities, or holds markup characters in word text, punctuation, lemma or gloss, and MUST NOT leave partial output in the committed corpus.
-- **FR-011**: The ingest MUST NOT add clause, sentence-role or conjunction data. That stays in the discourse-analysis-foundation feature, and MACULA's sentence-role labels are never shown (Constitution I).
-- **FR-012**: The "unavailable" state MUST remain for the case where the corpus store cannot be read, even though no valid chapter is un-ingested any more.
+- **FR-011**: The ingest MUST NOT keep MACULA's syntax trees, clause boundaries, sentence-role labels or conjunction data. Working out how a sentence is built is the analysis the user performs in the diagramming and arcing editors, so the corpus carries only facts about each word (Constitution I). Whether any of that data is added later is a separate decision for the discourse-analysis-foundation feature.
+- **FR-012**: When a valid chapter is missing from an installed corpus store that is out of date, the reading screen MUST say the chapter's text is missing and how to rebuild it, and MUST keep chapter navigation working. When the corpus store is missing or cannot be read, the existing "not installed" message MUST be shown as today.
 
 ### Key Entities
 
@@ -111,7 +111,7 @@ A maintainer regenerates the whole New Testament from the pinned MACULA source b
 ### Measurable Outcomes
 
 - **SC-001**: All 260 New Testament chapters open in the reader with text; zero valid chapters show the unavailable message when the store is present.
-- **SC-002**: The total word count of the corpus matches the word count of the pinned MACULA SBLGNT source (about 138,000 words), with each word appearing exactly once.
+- **SC-002**: The total word count of the corpus matches the word count of the pinned MACULA SBLGNT source (137,741 words), with each word appearing exactly once.
 - **SC-003**: Opening any chapter, including the longest (Matthew 26, Luke 1), feels as fast as opening Philippians 1 does today: under one second on the development machine.
 - **SC-004**: A search of every corpus file and every store table finds zero Louw-Nida or UBS semantic-domain fields.
 - **SC-005**: 100% of Philippians 1 words have the same identifier and data before and after the full ingest.
@@ -121,7 +121,7 @@ A maintainer regenerates the whole New Testament from the pinned MACULA source b
 ## Assumptions
 
 - The pinned MACULA commit stays `8423afe47b9e8f24b7772e808af45c7159a6fe7e`, the one Philippians 1 came from, so Philippians 1 identifiers cannot change. Moving to a newer commit is a separate decision.
-- The generated corpus files are committed to the repository like Philippians 1 is today. At about 128 KB per chapter that is roughly 30–35 MB; whether to shrink or relocate them is a planning decision, provided the app still needs no network access at runtime.
+- The generated corpus files are committed to the repository like Philippians 1 is today. That is about 36 MB on disk (about 3 MB compressed in git); whether to shrink or relocate them is a planning decision, provided the app still needs no network access at runtime.
 - The reader, navigation, word help, credits and saved-work behaviour already handle any ingested chapter; no user-facing screen changes are expected beyond chapters now showing text.
 - Ingest stays an offline, release-time step using only the standard library; nothing in the request path parses source XML.
 - Out of scope: clause and conjunction data, other editions, search, and any change to the corpus format.
