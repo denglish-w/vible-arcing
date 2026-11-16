@@ -38,7 +38,7 @@ export default async function BookPage({
               href={`/read/${book.slug}/${chapter}`}
               aria-label={
                 available && !available.has(chapter)
-                  ? `${book.name} ${chapter}, not yet available`
+                  ? `${book.name} ${chapter}, not available`
                   : `${book.name} ${chapter}`
               }
             >

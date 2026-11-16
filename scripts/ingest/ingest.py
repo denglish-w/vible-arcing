@@ -1,15 +1,18 @@
-"""Emit one chapter of MACULA Greek (SBLGNT lowfat) in corpus format v1.
+"""Emit the whole SBL Greek New Testament from MACULA Greek (SBLGNT lowfat) in corpus format v1.
 
-Run with the standard library only, in isolated mode:
+Run with the standard library only, in isolated mode, after downloading the
+27 book files with scripts/ingest/fetch.sh:
 
-    python3 -I scripts/ingest/sample_chapter.py \
-        --xml <path to 11-philippians.xml> --commit <MACULA commit SHA> \
-        --chapter 1 --out corpus/v1
+    python3 -I scripts/ingest/ingest.py \
+        --source <dir holding the 27 lowfat book files> \
+        --commit <MACULA commit SHA> --out corpus/v1
 
-It writes <out>/<BOOK>/<chapter>.json and <out>/attribution.json. Fields are
-copied from an explicit whitelist, so Louw-Nida and UBS semantic-domain
-attributes (`ln`, `domain`) and anything else MACULA adds never reach the
-output. The full ingest extends this script rather than replacing it.
+It writes <out>/<BOOK>/<chapter>.json for all 260 chapters and
+<out>/attribution.json. Fields are copied from an explicit whitelist, so
+Louw-Nida and UBS semantic-domain attributes (`ln`, `domain`), syntax trees,
+clause and role data, and anything else MACULA adds never reach the output.
+Every book is read and checked before anything is written, and the new output
+replaces <out> in one swap, so a failure leaves <out> as it was.
 """
 
 from __future__ import annotations
@@ -17,6 +20,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shutil
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -25,6 +29,22 @@ FORMAT = 1
 EDITION = "SBLGNT"
 DATASET = "macula-greek"
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
+
+# The SBLGNT lowfat book files in canonical order, with the book code each must
+# hold and its chapter count (the same as src/lib/books.ts): 27 books, 260 chapters.
+BOOKS = (
+    ("01-matthew.xml", "MAT", 28), ("02-mark.xml", "MRK", 16), ("03-luke.xml", "LUK", 24),
+    ("04-john.xml", "JHN", 21), ("05-acts.xml", "ACT", 28), ("06-romans.xml", "ROM", 16),
+    ("07-1corinthians.xml", "1CO", 16), ("08-2corinthians.xml", "2CO", 13),
+    ("09-galatians.xml", "GAL", 6), ("10-ephesians.xml", "EPH", 6),
+    ("11-philippians.xml", "PHP", 4), ("12-colossians.xml", "COL", 4),
+    ("13-1thessalonians.xml", "1TH", 5), ("14-2thessalonians.xml", "2TH", 3),
+    ("15-1timothy.xml", "1TI", 6), ("16-2timothy.xml", "2TI", 4), ("17-titus.xml", "TIT", 3),
+    ("18-philemon.xml", "PHM", 1), ("19-hebrews.xml", "HEB", 13), ("20-james.xml", "JAS", 5),
+    ("21-1peter.xml", "1PE", 5), ("22-2peter.xml", "2PE", 3), ("23-1john.xml", "1JN", 5),
+    ("24-2john.xml", "2JN", 1), ("25-3john.xml", "3JN", 1), ("26-jude.xml", "JUD", 1),
+    ("27-revelation.xml", "REV", 22),
+)
 
 # Morphology attributes kept under "m", in this order, only when present.
 MORPHOLOGY = ("person", "number", "gender", "case", "tense", "voice", "mood", "degree")
@@ -172,40 +192,119 @@ def write_json(path: Path, value: object) -> None:
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def read_book(xml_path: Path) -> tuple[str, dict[int, list[dict]]]:
+    """One book file's chapters, each as its words in reading order."""
+    try:
+        root = parse_book(xml_path)
+    except ET.ParseError as error:
+        raise IngestError(f"{xml_path} is not well-formed XML: {error}") from None
+    book = root.get("id", "")
+    if root.tag != "book" or not BOOK_CODE.fullmatch(book):
+        raise IngestError(f"{xml_path} is not a MACULA lowfat book file")
+    numbers = set()
+    for w in root.iter("w"):
+        ref = REF.fullmatch(w.get("ref", ""))
+        if not ref:
+            raise IngestError(f"{xml_path}: unrecognised word reference {w.get('ref')!r}")
+        if ref["book"] != book:
+            raise IngestError(f"{xml_path}: word {w.get('ref')} is not in {book}")
+        numbers.add(int(ref["chapter"]))
+    if sorted(numbers) != list(range(1, len(numbers) + 1)):
+        raise IngestError(f"{xml_path}: chapters are not contiguous from 1 ({sorted(numbers)})")
+    try:
+        return book, {n: chapter_words(root, book, n) for n in sorted(numbers)}
+    except IngestError as error:
+        raise IngestError(f"{xml_path}: {error}") from None
+
+
+def read_all(source: Path, commit: str) -> list[dict]:
+    """Every chapter of the New Testament, checked, before anything is written."""
+    chapters: list[dict] = []
+    ids: set[str] = set()
+    for name, code, expected in BOOKS:
+        path = source / name
+        if not path.is_file():
+            raise IngestError(f"{path} is missing")
+        book, by_number = read_book(path)
+        if book != code:
+            raise IngestError(f"{path} holds {book}, expected {code}")
+        if len(by_number) != expected:
+            raise IngestError(f"{path} has {len(by_number)} chapters, expected {expected}")
+        for number, words in by_number.items():
+            for word in words:
+                if word["id"] in ids:
+                    raise IngestError(f"{path}: word id {word['id']} appears twice")
+                ids.add(word["id"])
+            chapters.append({
+                "format": FORMAT,
+                "edition": EDITION,
+                "source": {"dataset": DATASET, "commit": commit},
+                "book": book,
+                "chapter": number,
+                "words": words,
+            })
+    return chapters
+
+
+def recover(out: Path) -> None:
+    """Put back output that an interrupted swap left only in <out>.old.
+
+    Runs before anything else, so a run that then fails on bad input still
+    leaves <out> in place rather than missing.
+    """
+    previous = out.with_name(out.name + ".old")
+    if previous.exists() and not out.exists():
+        previous.rename(out)
+
+
+def write_all(out: Path, chapters: list[dict]) -> None:
+    """Write into <out>.new, then swap it in place of <out>."""
+    staging = out.with_name(out.name + ".new")
+    previous = out.with_name(out.name + ".old")
+    for leftover in (staging, previous):
+        if leftover.exists():
+            shutil.rmtree(leftover)
+    try:
+        for chapter in chapters:
+            write_json(staging / chapter["book"] / f"{chapter['chapter']}.json", chapter)
+        write_json(staging / "attribution.json", {"format": FORMAT, "datasets": ATTRIBUTION})
+    except BaseException:
+        shutil.rmtree(staging, ignore_errors=True)
+        raise
+    if out.exists():
+        out.rename(previous)
+    try:
+        staging.rename(out)
+    except BaseException:
+        if previous.exists() and not out.exists():
+            previous.rename(out)
+        shutil.rmtree(staging, ignore_errors=True)
+        raise
+    shutil.rmtree(previous, ignore_errors=True)
+
+
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--xml", type=Path, required=True, help="MACULA SBLGNT lowfat book file")
-    parser.add_argument("--commit", required=True, help="MACULA Greek commit SHA the file came from")
-    parser.add_argument("--chapter", type=int, required=True)
+    parser.add_argument("--source", type=Path, required=True,
+                        help="directory holding the 27 SBLGNT lowfat book files")
+    parser.add_argument("--commit", required=True, help="MACULA Greek commit SHA the files came from")
     parser.add_argument("--out", type=Path, required=True, help="output root, e.g. corpus/v1")
     args = parser.parse_args(argv)
 
     if not COMMIT.fullmatch(args.commit):
         parser.error("--commit must be a full 40-character lower-case SHA")
-    if args.chapter < 1:
-        parser.error("--chapter must be 1 or more")
 
     try:
-        root = parse_book(args.xml)
-        book = root.get("id", "")
-        if root.tag != "book" or not BOOK_CODE.fullmatch(book):
-            raise IngestError(f"{args.xml} is not a MACULA lowfat book file")
-        words = chapter_words(root, book, args.chapter)
+        recover(args.out)
+        chapters = read_all(args.source, args.commit)
+        write_all(args.out, chapters)
     except (IngestError, ET.ParseError, OSError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 1
 
-    chapter = {
-        "format": FORMAT,
-        "edition": EDITION,
-        "source": {"dataset": DATASET, "commit": args.commit},
-        "book": book,
-        "chapter": args.chapter,
-        "words": words,
-    }
-    write_json(args.out / book / f"{args.chapter}.json", chapter)
-    write_json(args.out / "attribution.json", {"format": FORMAT, "datasets": ATTRIBUTION})
-    print(f"wrote {book} {args.chapter}: {len(words)} words")
+    words = sum(len(c["words"]) for c in chapters)
+    books = len({c["book"] for c in chapters})
+    print(f"wrote {books} books, {len(chapters)} chapters, {words} words")
     return 0
 
 

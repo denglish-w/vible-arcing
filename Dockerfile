@@ -4,8 +4,8 @@
 # `deps` runs in `runtime`. better-sqlite3 publishes no prebuilt binary for
 # every Node ABI, and node-gyp then compiles it, so the stages that run
 # `npm ci` carry Python and a C++ toolchain. The runtime stage does not.
-# The Node major must match .node-version.
-FROM node:26-slim AS toolchain
+# The Node version (26.13.1) must match .node-version.
+FROM node:26.13.1-slim AS toolchain
 RUN apt-get update \
  && apt-get install -y --no-install-recommends python3 make g++ \
  && rm -rf /var/lib/apt/lists/*
@@ -28,7 +28,7 @@ COPY . .
 # public/ may be absent (git keeps no empty directory); the runtime copies it.
 RUN mkdir -p public && npm run build
 
-FROM node:26-slim AS runtime
+FROM node:26.13.1-slim AS runtime
 WORKDIR /app
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \

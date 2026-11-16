@@ -40,8 +40,7 @@ export default async function ContentsPage() {
                   <span>
                     {book.chapters}{" "}
                     {book.chapters === 1 ? "chapter" : "chapters"}
-                    {availableCount.get(book.code) === 0 &&
-                      " · not yet available"}
+                    {availableCount.get(book.code) === 0 && " · not available"}
                   </span>
                 </Link>
               ))}

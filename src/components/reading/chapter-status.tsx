@@ -1,14 +1,11 @@
-import Link from "next/link";
-
 export function ChapterUnavailable() {
   return (
     <section className="unavailable">
-      <h2>Text not yet available</h2>
+      <h2>Text not available</h2>
       <p>
-        This chapter’s Greek text has not been added yet. Philippians 1 is
-        available to read.
+        This chapter is missing from the installed Greek text, which is out of
+        date. Run <code>npm run db:seed</code> to rebuild it.
       </p>
-      <Link href="/read/php/1">Read Philippians 1</Link>
     </section>
   );
 }

@@ -51,12 +51,12 @@ The reading screen SHALL provide links to the previous and next chapter, crossin
 
 ### Requirement: Unavailable chapter data
 
-When the corpus data for a chapter is not available, because it has not been ingested yet or because the corpus store cannot be read, the reading screen SHALL say the text is not available and SHALL keep the chapter navigation working.
+When the corpus data for a chapter is not available, because the installed corpus store is out of date and lacks it or because the store cannot be read, the reading screen SHALL say the text is not available and SHALL keep the chapter navigation working. The whole New Testament is ingested, so a missing chapter means the store needs rebuilding, and the screen SHALL say how.
 
-#### Scenario: Chapter not yet ingested
+#### Scenario: Chapter missing from an out-of-date store
 
-- **WHEN** a user opens a chapter that exists but has not been ingested into the corpus store
-- **THEN** the screen states the text is not yet available
+- **WHEN** a user opens a chapter that exists but is missing from the installed corpus store
+- **THEN** the screen states the text is not available and how to rebuild the store
 - **AND** the previous and next chapter links still work
 
 ### Requirement: Word detail
