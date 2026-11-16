@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-The app is a local-only Next.js server with SQLite (`app-server-and-sqlite`). It has themed contents, book and chapter pages, a Greek reader with word morphology and persisted display settings, credits read from the corpus store (falling back to the committed attribution when the store is missing), and saved work: a `/work` list, server actions that validate analyses before saving, and file export. Philippians 1 is the only ingested chapter; other chapters show an unavailable state. Pages are server-rendered from the corpus store per request; nothing loads corpus data in the browser. The relationship taxonomy, proposition model types and validation module exist; the arcing and diagramming editors do not. Research and plans live in `docs/` and `openspec/changes/`.
+The app is a local-only Next.js server with SQLite (`app-server-and-sqlite`). It has themed contents, book and chapter pages, a Greek reader with word morphology and persisted display settings, credits read from the corpus store (falling back to the committed attribution when the store is missing), and saved work: a `/work` list, server actions that validate analyses before saving, and file export. The whole SBL Greek New Testament (27 books, 260 chapters) is ingested from MACULA by `scripts/ingest/ingest.py`, keeping only per-word facts. Pages are server-rendered from the corpus store per request; nothing loads corpus data in the browser. The relationship taxonomy, proposition model types and validation module exist; the arcing and diagramming editors do not. Research and plans live in `docs/` and `openspec/changes/`.
 
 ## Commands
 

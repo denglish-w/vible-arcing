@@ -1,0 +1,5263 @@
+{
+  "format": 1,
+  "edition": "SBLGNT",
+  "source": {
+    "dataset": "macula-greek",
+    "commit": "8423afe47b9e8f24b7772e808af45c7159a6fe7e"
+  },
+  "book": "1PE",
+  "chapter": 1,
+  "words": [
+    {
+      "id": "n60001001001",
+      "v": 1,
+      "text": "Πέτρος",
+      "after": " ",
+      "lemma": "Πέτρος",
+      "gloss": "Peter",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001001002",
+      "v": 1,
+      "text": "ἀπόστολος",
+      "after": " ",
+      "lemma": "ἀπόστολος",
+      "gloss": "an apostle",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001001003",
+      "v": 1,
+      "text": "Ἰησοῦ",
+      "after": " ",
+      "lemma": "Ἰησοῦς",
+      "gloss": "of Jesus",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001001004",
+      "v": 1,
+      "text": "Χριστοῦ",
+      "after": " ",
+      "lemma": "Χριστός",
+      "gloss": "Christ",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001001005",
+      "v": 1,
+      "text": "ἐκλεκτοῖς",
+      "after": " ",
+      "lemma": "ἐκλεκτός",
+      "gloss": "To [the] elect",
+      "pos": "adj",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001001006",
+      "v": 1,
+      "text": "παρεπιδήμοις",
+      "after": " ",
+      "lemma": "παρεπίδημος",
+      "gloss": "sojourners",
+      "pos": "adj",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001001007",
+      "v": 1,
+      "text": "διασπορᾶς",
+      "after": " ",
+      "lemma": "διασπορά",
+      "gloss": "of [the] Dispersion",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001001008",
+      "v": 1,
+      "text": "Πόντου",
+      "after": ", ",
+      "lemma": "Πόντος",
+      "gloss": "of Pontus",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001001009",
+      "v": 1,
+      "text": "Γαλατίας",
+      "after": ", ",
+      "lemma": "Γαλατία",
+      "gloss": "Galatia",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001001010",
+      "v": 1,
+      "text": "Καππαδοκίας",
+      "after": ", ",
+      "lemma": "Καππαδοκία",
+      "gloss": "Cappadocia",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001001011",
+      "v": 1,
+      "text": "Ἀσίας",
+      "after": ", ",
+      "lemma": "Ἀσία",
+      "gloss": "Asia",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001001012",
+      "v": 1,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001001013",
+      "v": 1,
+      "text": "Βιθυνίας",
+      "after": ", ",
+      "lemma": "Βιθυνία",
+      "gloss": "Bithynia",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001002001",
+      "v": 2,
+      "text": "κατὰ",
+      "after": " ",
+      "lemma": "κατά",
+      "gloss": "according to",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001002002",
+      "v": 2,
+      "text": "πρόγνωσιν",
+      "after": " ",
+      "lemma": "πρόγνωσις",
+      "gloss": "[the] foreknowledge",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001002003",
+      "v": 2,
+      "text": "θεοῦ",
+      "after": " ",
+      "lemma": "θεός",
+      "gloss": "of God",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001002004",
+      "v": 2,
+      "text": "πατρός",
+      "after": ", ",
+      "lemma": "πατήρ",
+      "gloss": "[the] Father",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001002005",
+      "v": 2,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "by",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001002006",
+      "v": 2,
+      "text": "ἁγιασμῷ",
+      "after": " ",
+      "lemma": "ἁγιασμός",
+      "gloss": "[the] sanctification",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001002007",
+      "v": 2,
+      "text": "πνεύματος",
+      "after": ", ",
+      "lemma": "πνεῦμα",
+      "gloss": "of [the] Spirit",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001002008",
+      "v": 2,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "unto",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001002009",
+      "v": 2,
+      "text": "ὑπακοὴν",
+      "after": " ",
+      "lemma": "ὑπακοή",
+      "gloss": "[the] obedience",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001002010",
+      "v": 2,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001002011",
+      "v": 2,
+      "text": "ῥαντισμὸν",
+      "after": " ",
+      "lemma": "ῥαντισμός",
+      "gloss": "sprinkling",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001002012",
+      "v": 2,
+      "text": "αἵματος",
+      "after": " ",
+      "lemma": "αἷμα",
+      "gloss": "of [the] blood",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001002013",
+      "v": 2,
+      "text": "Ἰησοῦ",
+      "after": " ",
+      "lemma": "Ἰησοῦς",
+      "gloss": "of Jesus",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001002014",
+      "v": 2,
+      "text": "Χριστοῦ",
+      "after": "· ",
+      "lemma": "Χριστός",
+      "gloss": "Christ",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001002015",
+      "v": 2,
+      "text": "χάρις",
+      "after": " ",
+      "lemma": "χάρις",
+      "gloss": "Grace",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001002016",
+      "v": 2,
+      "text": "ὑμῖν",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "to you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001002017",
+      "v": 2,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001002018",
+      "v": 2,
+      "text": "εἰρήνη",
+      "after": " ",
+      "lemma": "εἰρήνη",
+      "gloss": "peace",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001002019",
+      "v": 2,
+      "text": "πληθυνθείη",
+      "after": ". ",
+      "lemma": "πληθύνω",
+      "gloss": "may be multiplied",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "singular",
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "optative"
+      }
+    },
+    {
+      "id": "n60001003001",
+      "v": 3,
+      "text": "Εὐλογητὸς",
+      "after": " ",
+      "lemma": "εὐλογητός",
+      "gloss": "Blessed [be]",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001003002",
+      "v": 3,
+      "text": "ὁ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001003003",
+      "v": 3,
+      "text": "θεὸς",
+      "after": " ",
+      "lemma": "θεός",
+      "gloss": "God",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001003004",
+      "v": 3,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001003005",
+      "v": 3,
+      "text": "πατὴρ",
+      "after": " ",
+      "lemma": "πατήρ",
+      "gloss": "Father",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001003006",
+      "v": 3,
+      "text": "τοῦ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "of the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001003007",
+      "v": 3,
+      "text": "κυρίου",
+      "after": " ",
+      "lemma": "κύριος",
+      "gloss": "Lord",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001003008",
+      "v": 3,
+      "text": "ἡμῶν",
+      "after": " ",
+      "lemma": "ἐγώ",
+      "gloss": "of us",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001003009",
+      "v": 3,
+      "text": "Ἰησοῦ",
+      "after": " ",
+      "lemma": "Ἰησοῦς",
+      "gloss": "Jesus",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001003010",
+      "v": 3,
+      "text": "Χριστοῦ",
+      "after": ", ",
+      "lemma": "Χριστός",
+      "gloss": "Christ",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001003011",
+      "v": 3,
+      "text": "ὁ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the [One]",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001003012",
+      "v": 3,
+      "text": "κατὰ",
+      "after": " ",
+      "lemma": "κατά",
+      "gloss": "according to",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001003013",
+      "v": 3,
+      "text": "τὸ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001003014",
+      "v": 3,
+      "text": "πολὺ",
+      "after": " ",
+      "lemma": "πολύς",
+      "gloss": "great",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001003015",
+      "v": 3,
+      "text": "αὐτοῦ",
+      "after": " ",
+      "lemma": "αὐτός",
+      "gloss": "of Him",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001003016",
+      "v": 3,
+      "text": "ἔλεος",
+      "after": " ",
+      "lemma": "ἔλεος",
+      "gloss": "mercy",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001003017",
+      "v": 3,
+      "text": "ἀναγεννήσας",
+      "after": " ",
+      "lemma": "ἀναγεννάω",
+      "gloss": "having begotten again",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "aorist",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001003018",
+      "v": 3,
+      "text": "ἡμᾶς",
+      "after": " ",
+      "lemma": "ἐγώ",
+      "gloss": "us",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001003019",
+      "v": 3,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "to",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001003020",
+      "v": 3,
+      "text": "ἐλπίδα",
+      "after": " ",
+      "lemma": "ἐλπίς",
+      "gloss": "a hope",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001003021",
+      "v": 3,
+      "text": "ζῶσαν",
+      "after": " ",
+      "lemma": "ζάω",
+      "gloss": "living",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative",
+        "tense": "present",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001003022",
+      "v": 3,
+      "text": "δι",
+      "after": "’ ",
+      "lemma": "διά",
+      "gloss": "through",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001003023",
+      "v": 3,
+      "text": "ἀναστάσεως",
+      "after": " ",
+      "lemma": "ἀνάστασις",
+      "gloss": "[the] resurrection",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001003024",
+      "v": 3,
+      "text": "Ἰησοῦ",
+      "after": " ",
+      "lemma": "Ἰησοῦς",
+      "gloss": "of Jesus",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001003025",
+      "v": 3,
+      "text": "Χριστοῦ",
+      "after": " ",
+      "lemma": "Χριστός",
+      "gloss": "Christ",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001003026",
+      "v": 3,
+      "text": "ἐκ",
+      "after": " ",
+      "lemma": "ἐκ",
+      "gloss": "out from",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001003027",
+      "v": 3,
+      "text": "νεκρῶν",
+      "after": ", ",
+      "lemma": "νεκρός",
+      "gloss": "[the] dead",
+      "pos": "adj",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001004001",
+      "v": 4,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "to",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001004002",
+      "v": 4,
+      "text": "κληρονομίαν",
+      "after": " ",
+      "lemma": "κληρονομία",
+      "gloss": "an inheritance",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001004003",
+      "v": 4,
+      "text": "ἄφθαρτον",
+      "after": " ",
+      "lemma": "ἄφθαρτος",
+      "gloss": "imperishable",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001004004",
+      "v": 4,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001004005",
+      "v": 4,
+      "text": "ἀμίαντον",
+      "after": " ",
+      "lemma": "ἀμίαντος",
+      "gloss": "undefiled",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001004006",
+      "v": 4,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001004007",
+      "v": 4,
+      "text": "ἀμάραντον",
+      "after": ", ",
+      "lemma": "ἀμάραντος",
+      "gloss": "unfading",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001004008",
+      "v": 4,
+      "text": "τετηρημένην",
+      "after": " ",
+      "lemma": "τηρέω",
+      "gloss": "being reserved",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative",
+        "tense": "perfect",
+        "voice": "passive",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001004009",
+      "v": 4,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001004010",
+      "v": 4,
+      "text": "οὐρανοῖς",
+      "after": " ",
+      "lemma": "οὐρανός",
+      "gloss": "[the] heavens",
+      "pos": "noun",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001004011",
+      "v": 4,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "for",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001004012",
+      "v": 4,
+      "text": "ὑμᾶς",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001005001",
+      "v": 5,
+      "text": "τοὺς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "who",
+      "pos": "det",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001005002",
+      "v": 5,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "by",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001005003",
+      "v": 5,
+      "text": "δυνάμει",
+      "after": " ",
+      "lemma": "δύναμις",
+      "gloss": "[the] power",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001005004",
+      "v": 5,
+      "text": "θεοῦ",
+      "after": " ",
+      "lemma": "θεός",
+      "gloss": "of God",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001005005",
+      "v": 5,
+      "text": "φρουρουμένους",
+      "after": " ",
+      "lemma": "φρουρέω",
+      "gloss": "[are] being guarded",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "accusative",
+        "tense": "present",
+        "voice": "passive",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001005006",
+      "v": 5,
+      "text": "διὰ",
+      "after": " ",
+      "lemma": "διά",
+      "gloss": "through",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001005007",
+      "v": 5,
+      "text": "πίστεως",
+      "after": " ",
+      "lemma": "πίστις",
+      "gloss": "faith",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001005008",
+      "v": 5,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "for",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001005009",
+      "v": 5,
+      "text": "σωτηρίαν",
+      "after": " ",
+      "lemma": "σωτηρία",
+      "gloss": "[the] salvation",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001005010",
+      "v": 5,
+      "text": "ἑτοίμην",
+      "after": " ",
+      "lemma": "ἕτοιμος",
+      "gloss": "ready",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001005011",
+      "v": 5,
+      "text": "ἀποκαλυφθῆναι",
+      "after": " ",
+      "lemma": "ἀποκαλύπτω",
+      "gloss": "to be revealed",
+      "pos": "verb",
+      "m": {
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "infinitive"
+      }
+    },
+    {
+      "id": "n60001005012",
+      "v": 5,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001005013",
+      "v": 5,
+      "text": "καιρῷ",
+      "after": " ",
+      "lemma": "καιρός",
+      "gloss": "[the] time",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001005014",
+      "v": 5,
+      "text": "ἐσχάτῳ",
+      "after": ". ",
+      "lemma": "ἔσχατος",
+      "gloss": "last",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "dative",
+        "degree": "superlative"
+      }
+    },
+    {
+      "id": "n60001006001",
+      "v": 6,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001006002",
+      "v": 6,
+      "text": "ᾧ",
+      "after": " ",
+      "lemma": "ὅς",
+      "gloss": "which",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001006003",
+      "v": 6,
+      "text": "ἀγαλλιᾶσθε",
+      "after": ", ",
+      "lemma": "ἀγαλλιάω",
+      "gloss": "you greatly rejoice",
+      "pos": "verb",
+      "m": {
+        "person": "second",
+        "number": "plural",
+        "tense": "present",
+        "voice": "middle",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001006004",
+      "v": 6,
+      "text": "ὀλίγον",
+      "after": " ",
+      "lemma": "ὀλίγος",
+      "gloss": "for a little while",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001006005",
+      "v": 6,
+      "text": "ἄρτι",
+      "after": " ",
+      "lemma": "ἄρτι",
+      "gloss": "at present",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001006006",
+      "v": 6,
+      "text": "εἰ",
+      "after": " ",
+      "lemma": "εἰ",
+      "gloss": "if",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001006007",
+      "v": 6,
+      "text": "δέον",
+      "after": " ",
+      "lemma": "δέω",
+      "gloss": "being necessary",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative",
+        "tense": "present",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001006008",
+      "v": 6,
+      "text": "λυπηθέντες",
+      "after": " ",
+      "lemma": "λυπέω",
+      "gloss": "having been put to grief",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001006009",
+      "v": 6,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "by",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001006010",
+      "v": 6,
+      "text": "ποικίλοις",
+      "after": " ",
+      "lemma": "ποικίλος",
+      "gloss": "various",
+      "pos": "adj",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001006011",
+      "v": 6,
+      "text": "πειρασμοῖς",
+      "after": ", ",
+      "lemma": "πειρασμός",
+      "gloss": "trials",
+      "pos": "noun",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001007001",
+      "v": 7,
+      "text": "ἵνα",
+      "after": " ",
+      "lemma": "ἵνα",
+      "gloss": "so that",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001007002",
+      "v": 7,
+      "text": "τὸ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001007003",
+      "v": 7,
+      "text": "δοκίμιον",
+      "after": " ",
+      "lemma": "δοκίμιον",
+      "gloss": "proven genuineness",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001007004",
+      "v": 7,
+      "text": "ὑμῶν",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "of your",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001007005",
+      "v": 7,
+      "text": "τῆς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "-",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001007006",
+      "v": 7,
+      "text": "πίστεως",
+      "after": " ",
+      "lemma": "πίστις",
+      "gloss": "faith",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001007007",
+      "v": 7,
+      "text": "πολυτιμότερον",
+      "after": " ",
+      "lemma": "πολύτιμος",
+      "gloss": "more precious",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative",
+        "degree": "comparative"
+      }
+    },
+    {
+      "id": "n60001007008",
+      "v": 7,
+      "text": "χρυσίου",
+      "after": " ",
+      "lemma": "χρυσίον",
+      "gloss": "than gold",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001007009",
+      "v": 7,
+      "text": "τοῦ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "-",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001007010",
+      "v": 7,
+      "text": "ἀπολλυμένου",
+      "after": " ",
+      "lemma": "ἀπόλλυμι",
+      "gloss": "perishing",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "genitive",
+        "tense": "present",
+        "voice": "middle",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001007011",
+      "v": 7,
+      "text": "διὰ",
+      "after": " ",
+      "lemma": "διά",
+      "gloss": "by",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001007012",
+      "v": 7,
+      "text": "πυρὸς",
+      "after": " ",
+      "lemma": "πῦρ",
+      "gloss": "fire",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001007013",
+      "v": 7,
+      "text": "δὲ",
+      "after": " ",
+      "lemma": "δέ",
+      "gloss": "though",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001007014",
+      "v": 7,
+      "text": "δοκιμαζομένου",
+      "after": " ",
+      "lemma": "δοκιμάζω",
+      "gloss": "being refined",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "genitive",
+        "tense": "present",
+        "voice": "passive",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001007015",
+      "v": 7,
+      "text": "εὑρεθῇ",
+      "after": " ",
+      "lemma": "εὑρίσκω",
+      "gloss": "may be discovered",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "singular",
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "subjunctive"
+      }
+    },
+    {
+      "id": "n60001007016",
+      "v": 7,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "to result in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001007017",
+      "v": 7,
+      "text": "ἔπαινον",
+      "after": " ",
+      "lemma": "ἔπαινος",
+      "gloss": "praise",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001007018",
+      "v": 7,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001007019",
+      "v": 7,
+      "text": "δόξαν",
+      "after": " ",
+      "lemma": "δόξα",
+      "gloss": "glory",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001007020",
+      "v": 7,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001007021",
+      "v": 7,
+      "text": "τιμὴν",
+      "after": " ",
+      "lemma": "τιμή",
+      "gloss": "honor",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001007022",
+      "v": 7,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001007023",
+      "v": 7,
+      "text": "ἀποκαλύψει",
+      "after": " ",
+      "lemma": "ἀποκάλυψις",
+      "gloss": "[the] revelation",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001007024",
+      "v": 7,
+      "text": "Ἰησοῦ",
+      "after": " ",
+      "lemma": "Ἰησοῦς",
+      "gloss": "of Jesus",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001007025",
+      "v": 7,
+      "text": "Χριστοῦ",
+      "after": ". ",
+      "lemma": "Χριστός",
+      "gloss": "Christ",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001008001",
+      "v": 8,
+      "text": "ὃν",
+      "after": " ",
+      "lemma": "ὅς",
+      "gloss": "whom",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001008002",
+      "v": 8,
+      "text": "οὐκ",
+      "after": " ",
+      "lemma": "οὐ",
+      "gloss": "not",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001008003",
+      "v": 8,
+      "text": "ἰδόντες",
+      "after": " ",
+      "lemma": "ὁράω",
+      "gloss": "having seen",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "aorist",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001008004",
+      "v": 8,
+      "text": "ἀγαπᾶτε",
+      "after": ", ",
+      "lemma": "ἀγαπάω",
+      "gloss": "you love",
+      "pos": "verb",
+      "m": {
+        "person": "second",
+        "number": "plural",
+        "tense": "present",
+        "voice": "active",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001008005",
+      "v": 8,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "on",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001008006",
+      "v": 8,
+      "text": "ὃν",
+      "after": " ",
+      "lemma": "ὅς",
+      "gloss": "whom",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001008007",
+      "v": 8,
+      "text": "ἄρτι",
+      "after": " ",
+      "lemma": "ἄρτι",
+      "gloss": "now [though]",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001008008",
+      "v": 8,
+      "text": "μὴ",
+      "after": " ",
+      "lemma": "μή",
+      "gloss": "not",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001008009",
+      "v": 8,
+      "text": "ὁρῶντες",
+      "after": " ",
+      "lemma": "ὁράω",
+      "gloss": "seeing",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "present",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001008010",
+      "v": 8,
+      "text": "πιστεύοντες",
+      "after": " ",
+      "lemma": "πιστεύω",
+      "gloss": "believing",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "present",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001008011",
+      "v": 8,
+      "text": "δὲ",
+      "after": " ",
+      "lemma": "δέ",
+      "gloss": "now",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001008012",
+      "v": 8,
+      "text": "ἀγαλλιᾶσθε",
+      "after": " ",
+      "lemma": "ἀγαλλιάω",
+      "gloss": "you exult",
+      "pos": "verb",
+      "m": {
+        "person": "second",
+        "number": "plural",
+        "tense": "present",
+        "voice": "middle",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001008013",
+      "v": 8,
+      "text": "χαρᾷ",
+      "after": " ",
+      "lemma": "χαρά",
+      "gloss": "with joy",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001008014",
+      "v": 8,
+      "text": "ἀνεκλαλήτῳ",
+      "after": " ",
+      "lemma": "ἀνεκλάλητος",
+      "gloss": "inexpressible",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001008015",
+      "v": 8,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001008016",
+      "v": 8,
+      "text": "δεδοξασμένῃ",
+      "after": ", ",
+      "lemma": "δοξάζω",
+      "gloss": "filled with glory",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "dative",
+        "tense": "perfect",
+        "voice": "passive",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001009001",
+      "v": 9,
+      "text": "κομιζόμενοι",
+      "after": " ",
+      "lemma": "κομίζω",
+      "gloss": "receiving",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "present",
+        "voice": "middle",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001009002",
+      "v": 9,
+      "text": "τὸ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001009003",
+      "v": 9,
+      "text": "τέλος",
+      "after": " ",
+      "lemma": "τέλος",
+      "gloss": "outcome",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001009004",
+      "v": 9,
+      "text": "τῆς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "of the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001009005",
+      "v": 9,
+      "text": "πίστεως",
+      "after": " ",
+      "lemma": "πίστις",
+      "gloss": "faith",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001009006",
+      "v": 9,
+      "text": "ὑμῶν",
+      "after": " ",
+      "lemma": "σύ",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001009007",
+      "v": 9,
+      "text": "σωτηρίαν",
+      "after": " ",
+      "lemma": "σωτηρία",
+      "gloss": "[the] salvation",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001009008",
+      "v": 9,
+      "text": "ψυχῶν",
+      "after": ". ",
+      "lemma": "ψυχή",
+      "gloss": "of [your] souls",
+      "pos": "noun",
+      "m": {
+        "number": "plural",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001010001",
+      "v": 10,
+      "text": "Περὶ",
+      "after": " ",
+      "lemma": "περί",
+      "gloss": "Concerning",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001010002",
+      "v": 10,
+      "text": "ἧς",
+      "after": " ",
+      "lemma": "ὅς",
+      "gloss": "this",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001010003",
+      "v": 10,
+      "text": "σωτηρίας",
+      "after": " ",
+      "lemma": "σωτηρία",
+      "gloss": "salvation",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001010004",
+      "v": 10,
+      "text": "ἐξεζήτησαν",
+      "after": " ",
+      "lemma": "ἐκζητέω",
+      "gloss": "sought out",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "plural",
+        "tense": "aorist",
+        "voice": "active",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001010005",
+      "v": 10,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001010006",
+      "v": 10,
+      "text": "ἐξηραύνησαν",
+      "after": " ",
+      "lemma": "ἐξεραυνάω",
+      "gloss": "searched out diligently",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "plural",
+        "tense": "aorist",
+        "voice": "active",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001010007",
+      "v": 10,
+      "text": "προφῆται",
+      "after": " ",
+      "lemma": "προφήτης",
+      "gloss": "[the] prophets",
+      "pos": "noun",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001010008",
+      "v": 10,
+      "text": "οἱ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "-",
+      "pos": "det",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001010009",
+      "v": 10,
+      "text": "περὶ",
+      "after": " ",
+      "lemma": "περί",
+      "gloss": "of",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001010010",
+      "v": 10,
+      "text": "τῆς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001010011",
+      "v": 10,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "toward",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001010012",
+      "v": 10,
+      "text": "ὑμᾶς",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001010013",
+      "v": 10,
+      "text": "χάριτος",
+      "after": " ",
+      "lemma": "χάρις",
+      "gloss": "grace",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001010014",
+      "v": 10,
+      "text": "προφητεύσαντες",
+      "after": ", ",
+      "lemma": "προφητεύω",
+      "gloss": "having prophesied",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "aorist",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001011001",
+      "v": 11,
+      "text": "ἐραυνῶντες",
+      "after": " ",
+      "lemma": "ἐραυνάω",
+      "gloss": "inquiring",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "present",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001011002",
+      "v": 11,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "into",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001011003",
+      "v": 11,
+      "text": "τίνα",
+      "after": " ",
+      "lemma": "τίς",
+      "gloss": "what",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001011004",
+      "v": 11,
+      "text": "ἢ",
+      "after": " ",
+      "lemma": "ἤ",
+      "gloss": "or",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001011005",
+      "v": 11,
+      "text": "ποῖον",
+      "after": " ",
+      "lemma": "ποῖος",
+      "gloss": "what manner of",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001011006",
+      "v": 11,
+      "text": "καιρὸν",
+      "after": " ",
+      "lemma": "καιρός",
+      "gloss": "time",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001011007",
+      "v": 11,
+      "text": "ἐδήλου",
+      "after": " ",
+      "lemma": "δηλόω",
+      "gloss": "was signifying",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "singular",
+        "tense": "imperfect",
+        "voice": "active",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001011008",
+      "v": 11,
+      "text": "τὸ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001011009",
+      "v": 11,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001011010",
+      "v": 11,
+      "text": "αὐτοῖς",
+      "after": " ",
+      "lemma": "αὐτός",
+      "gloss": "them",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001011011",
+      "v": 11,
+      "text": "πνεῦμα",
+      "after": " ",
+      "lemma": "πνεῦμα",
+      "gloss": "Spirit",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001011012",
+      "v": 11,
+      "text": "Χριστοῦ",
+      "after": " ",
+      "lemma": "Χριστός",
+      "gloss": "of Christ",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001011013",
+      "v": 11,
+      "text": "προμαρτυρόμενον",
+      "after": " ",
+      "lemma": "προμαρτύρομαι",
+      "gloss": "testifying beforehand",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative",
+        "tense": "present",
+        "voice": "middle",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001011014",
+      "v": 11,
+      "text": "τὰ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "-",
+      "pos": "det",
+      "m": {
+        "number": "plural",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001011015",
+      "v": 11,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "unto",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001011016",
+      "v": 11,
+      "text": "Χριστὸν",
+      "after": " ",
+      "lemma": "Χριστός",
+      "gloss": "Christ's",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001011017",
+      "v": 11,
+      "text": "παθήματα",
+      "after": " ",
+      "lemma": "πάθημα",
+      "gloss": "sufferings",
+      "pos": "noun",
+      "m": {
+        "number": "plural",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001011018",
+      "v": 11,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001011019",
+      "v": 11,
+      "text": "τὰς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "plural",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001011020",
+      "v": 11,
+      "text": "μετὰ",
+      "after": " ",
+      "lemma": "μετά",
+      "gloss": "after",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001011021",
+      "v": 11,
+      "text": "ταῦτα",
+      "after": " ",
+      "lemma": "οὗτος",
+      "gloss": "these",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001011022",
+      "v": 11,
+      "text": "δόξας",
+      "after": "· ",
+      "lemma": "δόξα",
+      "gloss": "glories",
+      "pos": "noun",
+      "m": {
+        "number": "plural",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001012001",
+      "v": 12,
+      "text": "οἷς",
+      "after": " ",
+      "lemma": "ὅς",
+      "gloss": "to whom",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001012002",
+      "v": 12,
+      "text": "ἀπεκαλύφθη",
+      "after": " ",
+      "lemma": "ἀποκαλύπτω",
+      "gloss": "it was revealed",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "singular",
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001012003",
+      "v": 12,
+      "text": "ὅτι",
+      "after": " ",
+      "lemma": "ὅτι",
+      "gloss": "that",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001012004",
+      "v": 12,
+      "text": "οὐχ",
+      "after": " ",
+      "lemma": "οὐ",
+      "gloss": "not",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001012005",
+      "v": 12,
+      "text": "ἑαυτοῖς",
+      "after": " ",
+      "lemma": "ἑαυτοῦ",
+      "gloss": "themselves",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001012006",
+      "v": 12,
+      "text": "ὑμῖν",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001012007",
+      "v": 12,
+      "text": "δὲ",
+      "after": " ",
+      "lemma": "δέ",
+      "gloss": "however",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001012008",
+      "v": 12,
+      "text": "διηκόνουν",
+      "after": " ",
+      "lemma": "διακονέω",
+      "gloss": "they were serving",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "plural",
+        "tense": "imperfect",
+        "voice": "active",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001012009",
+      "v": 12,
+      "text": "αὐτά",
+      "after": ", ",
+      "lemma": "αὐτός",
+      "gloss": "in those things",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001012010",
+      "v": 12,
+      "text": "ἃ",
+      "after": " ",
+      "lemma": "ὅς",
+      "gloss": "which",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001012011",
+      "v": 12,
+      "text": "νῦν",
+      "after": " ",
+      "lemma": "νῦν",
+      "gloss": "now",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001012012",
+      "v": 12,
+      "text": "ἀνηγγέλη",
+      "after": " ",
+      "lemma": "ἀναγγέλλω",
+      "gloss": "have been proclaimed",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "singular",
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001012013",
+      "v": 12,
+      "text": "ὑμῖν",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "to you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001012014",
+      "v": 12,
+      "text": "διὰ",
+      "after": " ",
+      "lemma": "διά",
+      "gloss": "by",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001012015",
+      "v": 12,
+      "text": "τῶν",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "those",
+      "pos": "det",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001012016",
+      "v": 12,
+      "text": "εὐαγγελισαμένων",
+      "after": " ",
+      "lemma": "εὐαγγελίζω",
+      "gloss": "having proclaimed the gospel to",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "genitive",
+        "tense": "aorist",
+        "voice": "middle",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001012017",
+      "v": 12,
+      "text": "ὑμᾶς",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001012018",
+      "v": 12,
+      "text": "πνεύματι",
+      "after": " ",
+      "lemma": "πνεῦμα",
+      "gloss": "[the] Spirit",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001012019",
+      "v": 12,
+      "text": "ἁγίῳ",
+      "after": " ",
+      "lemma": "ἅγιος",
+      "gloss": "Holy",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001012020",
+      "v": 12,
+      "text": "ἀποσταλέντι",
+      "after": " ",
+      "lemma": "ἀποστέλλω",
+      "gloss": "having been sent",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "dative",
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001012021",
+      "v": 12,
+      "text": "ἀπ",
+      "after": "’ ",
+      "lemma": "ἀπό",
+      "gloss": "from",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001012022",
+      "v": 12,
+      "text": "οὐρανοῦ",
+      "after": ", ",
+      "lemma": "οὐρανός",
+      "gloss": "heaven",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001012023",
+      "v": 12,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "into",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001012024",
+      "v": 12,
+      "text": "ἃ",
+      "after": " ",
+      "lemma": "ὅς",
+      "gloss": "which",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001012025",
+      "v": 12,
+      "text": "ἐπιθυμοῦσιν",
+      "after": " ",
+      "lemma": "ἐπιθυμέω",
+      "gloss": "desire",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "plural",
+        "tense": "present",
+        "voice": "active",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001012026",
+      "v": 12,
+      "text": "ἄγγελοι",
+      "after": " ",
+      "lemma": "ἄγγελος",
+      "gloss": "angels",
+      "pos": "noun",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001012027",
+      "v": 12,
+      "text": "παρακύψαι",
+      "after": ". ",
+      "lemma": "παρακύπτω",
+      "gloss": "to look",
+      "pos": "verb",
+      "m": {
+        "tense": "aorist",
+        "voice": "active",
+        "mood": "infinitive"
+      }
+    },
+    {
+      "id": "n60001013001",
+      "v": 13,
+      "text": "Διὸ",
+      "after": " ",
+      "lemma": "διό",
+      "gloss": "Therefore",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001013002",
+      "v": 13,
+      "text": "ἀναζωσάμενοι",
+      "after": " ",
+      "lemma": "ἀναζώννυμι",
+      "gloss": "having girded up",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "aorist",
+        "voice": "middle",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001013003",
+      "v": 13,
+      "text": "τὰς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "plural",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001013004",
+      "v": 13,
+      "text": "ὀσφύας",
+      "after": " ",
+      "lemma": "ὀσφῦς",
+      "gloss": "loins",
+      "pos": "noun",
+      "m": {
+        "number": "plural",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001013005",
+      "v": 13,
+      "text": "τῆς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "of the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001013006",
+      "v": 13,
+      "text": "διανοίας",
+      "after": " ",
+      "lemma": "διάνοια",
+      "gloss": "mind",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001013007",
+      "v": 13,
+      "text": "ὑμῶν",
+      "after": ", ",
+      "lemma": "σύ",
+      "gloss": "of you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001013008",
+      "v": 13,
+      "text": "νήφοντες",
+      "after": " ",
+      "lemma": "νήφω",
+      "gloss": "being sober-minded",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "present",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001013009",
+      "v": 13,
+      "text": "τελείως",
+      "after": ", ",
+      "lemma": "τελείως",
+      "gloss": "fully",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001013010",
+      "v": 13,
+      "text": "ἐλπίσατε",
+      "after": " ",
+      "lemma": "ἐλπίζω",
+      "gloss": "set [your] hope",
+      "pos": "verb",
+      "m": {
+        "person": "second",
+        "number": "plural",
+        "tense": "aorist",
+        "voice": "active",
+        "mood": "imperative"
+      }
+    },
+    {
+      "id": "n60001013011",
+      "v": 13,
+      "text": "ἐπὶ",
+      "after": " ",
+      "lemma": "ἐπί",
+      "gloss": "upon",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001013012",
+      "v": 13,
+      "text": "τὴν",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001013013",
+      "v": 13,
+      "text": "φερομένην",
+      "after": " ",
+      "lemma": "φέρω",
+      "gloss": "being brought",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative",
+        "tense": "present",
+        "voice": "passive",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001013014",
+      "v": 13,
+      "text": "ὑμῖν",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "to you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001013015",
+      "v": 13,
+      "text": "χάριν",
+      "after": " ",
+      "lemma": "χάρις",
+      "gloss": "grace",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001013016",
+      "v": 13,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001013017",
+      "v": 13,
+      "text": "ἀποκαλύψει",
+      "after": " ",
+      "lemma": "ἀποκάλυψις",
+      "gloss": "[the] revelation",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001013018",
+      "v": 13,
+      "text": "Ἰησοῦ",
+      "after": " ",
+      "lemma": "Ἰησοῦς",
+      "gloss": "of Jesus",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001013019",
+      "v": 13,
+      "text": "Χριστοῦ",
+      "after": ". ",
+      "lemma": "Χριστός",
+      "gloss": "Christ",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001014001",
+      "v": 14,
+      "text": "ὡς",
+      "after": " ",
+      "lemma": "ὡς",
+      "gloss": "as",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001014002",
+      "v": 14,
+      "text": "τέκνα",
+      "after": " ",
+      "lemma": "τέκνον",
+      "gloss": "children",
+      "pos": "noun",
+      "m": {
+        "number": "plural",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001014003",
+      "v": 14,
+      "text": "ὑπακοῆς",
+      "after": ", ",
+      "lemma": "ὑπακοή",
+      "gloss": "of obedience",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001014004",
+      "v": 14,
+      "text": "μὴ",
+      "after": " ",
+      "lemma": "μή",
+      "gloss": "not",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001014005",
+      "v": 14,
+      "text": "συσχηματιζόμενοι",
+      "after": " ",
+      "lemma": "συσχηματίζομαι",
+      "gloss": "fashioning yourselves",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "present",
+        "voice": "middle",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001014006",
+      "v": 14,
+      "text": "ταῖς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "to the",
+      "pos": "det",
+      "m": {
+        "number": "plural",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001014007",
+      "v": 14,
+      "text": "πρότερον",
+      "after": " ",
+      "lemma": "πρότερος",
+      "gloss": "former",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "accusative",
+        "degree": "comparative"
+      }
+    },
+    {
+      "id": "n60001014008",
+      "v": 14,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001014009",
+      "v": 14,
+      "text": "τῇ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001014010",
+      "v": 14,
+      "text": "ἀγνοίᾳ",
+      "after": " ",
+      "lemma": "ἄγνοια",
+      "gloss": "ignorance",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001014011",
+      "v": 14,
+      "text": "ὑμῶν",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "of you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001014012",
+      "v": 14,
+      "text": "ἐπιθυμίαις",
+      "after": ", ",
+      "lemma": "ἐπιθυμία",
+      "gloss": "desires",
+      "pos": "noun",
+      "m": {
+        "number": "plural",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001015001",
+      "v": 15,
+      "text": "ἀλλὰ",
+      "after": " ",
+      "lemma": "ἀλλά",
+      "gloss": "But",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001015002",
+      "v": 15,
+      "text": "κατὰ",
+      "after": " ",
+      "lemma": "κατά",
+      "gloss": "as",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001015003",
+      "v": 15,
+      "text": "τὸν",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the [One]",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001015004",
+      "v": 15,
+      "text": "καλέσαντα",
+      "after": " ",
+      "lemma": "καλέω",
+      "gloss": "having called",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative",
+        "tense": "aorist",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001015005",
+      "v": 15,
+      "text": "ὑμᾶς",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001015006",
+      "v": 15,
+      "text": "ἅγιον",
+      "after": " ",
+      "lemma": "ἅγιος",
+      "gloss": "[is] holy",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001015007",
+      "v": 15,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "also",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001015008",
+      "v": 15,
+      "text": "αὐτοὶ",
+      "after": " ",
+      "lemma": "αὐτός",
+      "gloss": "yourselves",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001015009",
+      "v": 15,
+      "text": "ἅγιοι",
+      "after": " ",
+      "lemma": "ἅγιος",
+      "gloss": "holy",
+      "pos": "adj",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001015010",
+      "v": 15,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001015011",
+      "v": 15,
+      "text": "πάσῃ",
+      "after": " ",
+      "lemma": "πᾶς",
+      "gloss": "all",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001015012",
+      "v": 15,
+      "text": "ἀναστροφῇ",
+      "after": " ",
+      "lemma": "ἀναστροφή",
+      "gloss": "[your] conduct",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001015013",
+      "v": 15,
+      "text": "γενήθητε",
+      "after": ", ",
+      "lemma": "γίνομαι",
+      "gloss": "be",
+      "pos": "verb",
+      "m": {
+        "person": "second",
+        "number": "plural",
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "imperative"
+      }
+    },
+    {
+      "id": "n60001016001",
+      "v": 16,
+      "text": "διότι",
+      "after": " ",
+      "lemma": "διότι",
+      "gloss": "because",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001016002",
+      "v": 16,
+      "text": "γέγραπται",
+      "after": " ",
+      "lemma": "γράφω",
+      "gloss": "it has been written",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "singular",
+        "tense": "perfect",
+        "voice": "passive",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001016003",
+      "v": 16,
+      "text": "ὅτι",
+      "after": " ",
+      "lemma": "ὅτι",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001016004",
+      "v": 16,
+      "text": "Ἅγιοι",
+      "after": " ",
+      "lemma": "ἅγιος",
+      "gloss": "Holy",
+      "pos": "adj",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001016005",
+      "v": 16,
+      "text": "ἔσεσθε",
+      "after": ", ",
+      "lemma": "εἰμί",
+      "gloss": "you shall be",
+      "pos": "verb",
+      "m": {
+        "person": "second",
+        "number": "plural",
+        "tense": "future",
+        "voice": "middle",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001016006",
+      "v": 16,
+      "text": "ὅτι",
+      "after": " ",
+      "lemma": "ὅτι",
+      "gloss": "because",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001016007",
+      "v": 16,
+      "text": "ἐγὼ",
+      "after": " ",
+      "lemma": "ἐγώ",
+      "gloss": "I",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001016008",
+      "v": 16,
+      "text": "ἅγιος",
+      "after": ". ",
+      "lemma": "ἅγιος",
+      "gloss": "holy",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001017001",
+      "v": 17,
+      "text": "Καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "And",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001017002",
+      "v": 17,
+      "text": "εἰ",
+      "after": " ",
+      "lemma": "εἰ",
+      "gloss": "if",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001017003",
+      "v": 17,
+      "text": "πατέρα",
+      "after": " ",
+      "lemma": "πατήρ",
+      "gloss": "[as] Father",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001017004",
+      "v": 17,
+      "text": "ἐπικαλεῖσθε",
+      "after": " ",
+      "lemma": "ἐπικαλέω",
+      "gloss": "you call on",
+      "pos": "verb",
+      "m": {
+        "person": "second",
+        "number": "plural",
+        "tense": "present",
+        "voice": "middle",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001017005",
+      "v": 17,
+      "text": "τὸν",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the [One]",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001017006",
+      "v": 17,
+      "text": "ἀπροσωπολήμπτως",
+      "after": " ",
+      "lemma": "ἀπροσωπολήμπτως",
+      "gloss": "impartially",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001017007",
+      "v": 17,
+      "text": "κρίνοντα",
+      "after": " ",
+      "lemma": "κρίνω",
+      "gloss": "judging",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative",
+        "tense": "present",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001017008",
+      "v": 17,
+      "text": "κατὰ",
+      "after": " ",
+      "lemma": "κατά",
+      "gloss": "according to",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001017009",
+      "v": 17,
+      "text": "τὸ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001017010",
+      "v": 17,
+      "text": "ἑκάστου",
+      "after": " ",
+      "lemma": "ἕκαστος",
+      "gloss": "of each",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001017011",
+      "v": 17,
+      "text": "ἔργον",
+      "after": ", ",
+      "lemma": "ἔργον",
+      "gloss": "work",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001017012",
+      "v": 17,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001017013",
+      "v": 17,
+      "text": "φόβῳ",
+      "after": " ",
+      "lemma": "φόβος",
+      "gloss": "fear",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001017014",
+      "v": 17,
+      "text": "τὸν",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "during the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001017015",
+      "v": 17,
+      "text": "τῆς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "of the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001017016",
+      "v": 17,
+      "text": "παροικίας",
+      "after": " ",
+      "lemma": "παροικία",
+      "gloss": "sojourn",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001017017",
+      "v": 17,
+      "text": "ὑμῶν",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "of you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001017018",
+      "v": 17,
+      "text": "χρόνον",
+      "after": " ",
+      "lemma": "χρόνος",
+      "gloss": "time",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001017019",
+      "v": 17,
+      "text": "ἀναστράφητε",
+      "after": "· ",
+      "lemma": "ἀναστρέφω",
+      "gloss": "conduct yourselves",
+      "pos": "verb",
+      "m": {
+        "person": "second",
+        "number": "plural",
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "imperative"
+      }
+    },
+    {
+      "id": "n60001018001",
+      "v": 18,
+      "text": "εἰδότες",
+      "after": " ",
+      "lemma": "οἶδα",
+      "gloss": "knowing",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "perfect",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001018002",
+      "v": 18,
+      "text": "ὅτι",
+      "after": " ",
+      "lemma": "ὅτι",
+      "gloss": "that",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001018003",
+      "v": 18,
+      "text": "οὐ",
+      "after": " ",
+      "lemma": "οὐ",
+      "gloss": "not",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001018004",
+      "v": 18,
+      "text": "φθαρτοῖς",
+      "after": ", ",
+      "lemma": "φθαρτός",
+      "gloss": "by perishable things",
+      "pos": "adj",
+      "m": {
+        "number": "plural",
+        "gender": "neuter",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001018005",
+      "v": 18,
+      "text": "ἀργυρίῳ",
+      "after": " ",
+      "lemma": "ἀργύριον",
+      "gloss": "by silver",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001018006",
+      "v": 18,
+      "text": "ἢ",
+      "after": " ",
+      "lemma": "ἤ",
+      "gloss": "or",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001018007",
+      "v": 18,
+      "text": "χρυσίῳ",
+      "after": ", ",
+      "lemma": "χρυσίον",
+      "gloss": "by gold",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001018008",
+      "v": 18,
+      "text": "ἐλυτρώθητε",
+      "after": " ",
+      "lemma": "λυτρόομαι",
+      "gloss": "you were redeemed",
+      "pos": "verb",
+      "m": {
+        "person": "second",
+        "number": "plural",
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001018009",
+      "v": 18,
+      "text": "ἐκ",
+      "after": " ",
+      "lemma": "ἐκ",
+      "gloss": "from",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001018010",
+      "v": 18,
+      "text": "τῆς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001018011",
+      "v": 18,
+      "text": "ματαίας",
+      "after": " ",
+      "lemma": "μάταιος",
+      "gloss": "futile",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001018012",
+      "v": 18,
+      "text": "ὑμῶν",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "of you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001018013",
+      "v": 18,
+      "text": "ἀναστροφῆς",
+      "after": " ",
+      "lemma": "ἀναστροφή",
+      "gloss": "manner of life",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001018014",
+      "v": 18,
+      "text": "πατροπαραδότου",
+      "after": ", ",
+      "lemma": "πατροπαράδοτος",
+      "gloss": "handed down from [your] fathers",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001019001",
+      "v": 19,
+      "text": "ἀλλὰ",
+      "after": " ",
+      "lemma": "ἀλλά",
+      "gloss": "but",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001019002",
+      "v": 19,
+      "text": "τιμίῳ",
+      "after": " ",
+      "lemma": "τίμιος",
+      "gloss": "by [the] precious",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001019003",
+      "v": 19,
+      "text": "αἵματι",
+      "after": " ",
+      "lemma": "αἷμα",
+      "gloss": "blood",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001019004",
+      "v": 19,
+      "text": "ὡς",
+      "after": " ",
+      "lemma": "ὡς",
+      "gloss": "as",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001019005",
+      "v": 19,
+      "text": "ἀμνοῦ",
+      "after": " ",
+      "lemma": "ἀμνός",
+      "gloss": "of a lamb",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001019006",
+      "v": 19,
+      "text": "ἀμώμου",
+      "after": " ",
+      "lemma": "ἄμωμος",
+      "gloss": "without blemish",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001019007",
+      "v": 19,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001019008",
+      "v": 19,
+      "text": "ἀσπίλου",
+      "after": " ",
+      "lemma": "ἄσπιλος",
+      "gloss": "without spot",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001019009",
+      "v": 19,
+      "text": "Χριστοῦ",
+      "after": ", ",
+      "lemma": "Χριστός",
+      "gloss": "of Christ",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001020001",
+      "v": 20,
+      "text": "προεγνωσμένου",
+      "after": " ",
+      "lemma": "προγινώσκω",
+      "gloss": "having been foreknown",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive",
+        "tense": "perfect",
+        "voice": "passive",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001020002",
+      "v": 20,
+      "text": "μὲν",
+      "after": " ",
+      "lemma": "μέν",
+      "gloss": "indeed",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001020003",
+      "v": 20,
+      "text": "πρὸ",
+      "after": " ",
+      "lemma": "πρό",
+      "gloss": "before",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001020004",
+      "v": 20,
+      "text": "καταβολῆς",
+      "after": " ",
+      "lemma": "καταβολή",
+      "gloss": "[the] foundation",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001020005",
+      "v": 20,
+      "text": "κόσμου",
+      "after": ", ",
+      "lemma": "κόσμος",
+      "gloss": "of [the] world",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001020006",
+      "v": 20,
+      "text": "φανερωθέντος",
+      "after": " ",
+      "lemma": "φανερόω",
+      "gloss": "having been revealed",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive",
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001020007",
+      "v": 20,
+      "text": "δὲ",
+      "after": " ",
+      "lemma": "δέ",
+      "gloss": "however",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001020008",
+      "v": 20,
+      "text": "ἐπ",
+      "after": "’ ",
+      "lemma": "ἐπί",
+      "gloss": "in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001020009",
+      "v": 20,
+      "text": "ἐσχάτου",
+      "after": " ",
+      "lemma": "ἔσχατος",
+      "gloss": "[the] last",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive",
+        "degree": "superlative"
+      }
+    },
+    {
+      "id": "n60001020010",
+      "v": 20,
+      "text": "τῶν",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "-",
+      "pos": "det",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001020011",
+      "v": 20,
+      "text": "χρόνων",
+      "after": " ",
+      "lemma": "χρόνος",
+      "gloss": "times",
+      "pos": "noun",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001020012",
+      "v": 20,
+      "text": "δι",
+      "after": "’ ",
+      "lemma": "διά",
+      "gloss": "for the sake of",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001020013",
+      "v": 20,
+      "text": "ὑμᾶς",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001021001",
+      "v": 21,
+      "text": "τοὺς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "who",
+      "pos": "det",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001021002",
+      "v": 21,
+      "text": "δι",
+      "after": "’ ",
+      "lemma": "διά",
+      "gloss": "by",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001021003",
+      "v": 21,
+      "text": "αὐτοῦ",
+      "after": " ",
+      "lemma": "αὐτός",
+      "gloss": "Him",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001021004",
+      "v": 21,
+      "text": "πιστοὺς",
+      "after": " ",
+      "lemma": "πιστός",
+      "gloss": "believe",
+      "pos": "adj",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001021005",
+      "v": 21,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001021006",
+      "v": 21,
+      "text": "θεὸν",
+      "after": " ",
+      "lemma": "θεός",
+      "gloss": "God",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001021007",
+      "v": 21,
+      "text": "τὸν",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the [one]",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001021008",
+      "v": 21,
+      "text": "ἐγείραντα",
+      "after": " ",
+      "lemma": "ἐγείρω",
+      "gloss": "having raised up",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative",
+        "tense": "aorist",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001021009",
+      "v": 21,
+      "text": "αὐτὸν",
+      "after": " ",
+      "lemma": "αὐτός",
+      "gloss": "Him",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001021010",
+      "v": 21,
+      "text": "ἐκ",
+      "after": " ",
+      "lemma": "ἐκ",
+      "gloss": "out from",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001021011",
+      "v": 21,
+      "text": "νεκρῶν",
+      "after": " ",
+      "lemma": "νεκρός",
+      "gloss": "[the] dead",
+      "pos": "adj",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001021012",
+      "v": 21,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001021013",
+      "v": 21,
+      "text": "δόξαν",
+      "after": " ",
+      "lemma": "δόξα",
+      "gloss": "glory",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001021014",
+      "v": 21,
+      "text": "αὐτῷ",
+      "after": " ",
+      "lemma": "αὐτός",
+      "gloss": "Him",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001021015",
+      "v": 21,
+      "text": "δόντα",
+      "after": ", ",
+      "lemma": "δίδωμι",
+      "gloss": "having given",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative",
+        "tense": "aorist",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001021016",
+      "v": 21,
+      "text": "ὥστε",
+      "after": " ",
+      "lemma": "ὥστε",
+      "gloss": "so as for",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001021017",
+      "v": 21,
+      "text": "τὴν",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001021018",
+      "v": 21,
+      "text": "πίστιν",
+      "after": " ",
+      "lemma": "πίστις",
+      "gloss": "faith",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001021019",
+      "v": 21,
+      "text": "ὑμῶν",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "of you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001021020",
+      "v": 21,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001021021",
+      "v": 21,
+      "text": "ἐλπίδα",
+      "after": " ",
+      "lemma": "ἐλπίς",
+      "gloss": "hope",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001021022",
+      "v": 21,
+      "text": "εἶναι",
+      "after": " ",
+      "lemma": "εἰμί",
+      "gloss": "to be",
+      "pos": "verb",
+      "m": {
+        "tense": "present",
+        "voice": "active",
+        "mood": "infinitive"
+      }
+    },
+    {
+      "id": "n60001021023",
+      "v": 21,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "in",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001021024",
+      "v": 21,
+      "text": "θεόν",
+      "after": ". ",
+      "lemma": "θεός",
+      "gloss": "God",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001022001",
+      "v": 22,
+      "text": "Τὰς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "The",
+      "pos": "det",
+      "m": {
+        "number": "plural",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001022002",
+      "v": 22,
+      "text": "ψυχὰς",
+      "after": " ",
+      "lemma": "ψυχή",
+      "gloss": "souls",
+      "pos": "noun",
+      "m": {
+        "number": "plural",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001022003",
+      "v": 22,
+      "text": "ὑμῶν",
+      "after": " ",
+      "lemma": "σύ",
+      "gloss": "of you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001022004",
+      "v": 22,
+      "text": "ἡγνικότες",
+      "after": " ",
+      "lemma": "ἁγνίζω",
+      "gloss": "having purified",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "perfect",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001022005",
+      "v": 22,
+      "text": "ἐν",
+      "after": " ",
+      "lemma": "ἐν",
+      "gloss": "by",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001022006",
+      "v": 22,
+      "text": "τῇ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "-",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001022007",
+      "v": 22,
+      "text": "ὑπακοῇ",
+      "after": " ",
+      "lemma": "ὑπακοή",
+      "gloss": "obedience",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "dative"
+      }
+    },
+    {
+      "id": "n60001022008",
+      "v": 22,
+      "text": "τῆς",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "to the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001022009",
+      "v": 22,
+      "text": "ἀληθείας",
+      "after": " ",
+      "lemma": "ἀλήθεια",
+      "gloss": "truth",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001022010",
+      "v": 22,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "unto",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001022011",
+      "v": 22,
+      "text": "φιλαδελφίαν",
+      "after": " ",
+      "lemma": "φιλαδελφία",
+      "gloss": "brotherly love",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001022012",
+      "v": 22,
+      "text": "ἀνυπόκριτον",
+      "after": " ",
+      "lemma": "ἀνυπόκριτος",
+      "gloss": "sincere",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001022013",
+      "v": 22,
+      "text": "ἐκ",
+      "after": " ",
+      "lemma": "ἐκ",
+      "gloss": "out of",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001022014",
+      "v": 22,
+      "text": "καρδίας",
+      "after": " ",
+      "lemma": "καρδία",
+      "gloss": "of heart",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001022015",
+      "v": 22,
+      "text": "ἀλλήλους",
+      "after": " ",
+      "lemma": "ἀλλήλων",
+      "gloss": "one another",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001022016",
+      "v": 22,
+      "text": "ἀγαπήσατε",
+      "after": " ",
+      "lemma": "ἀγαπάω",
+      "gloss": "love",
+      "pos": "verb",
+      "m": {
+        "person": "second",
+        "number": "plural",
+        "tense": "aorist",
+        "voice": "active",
+        "mood": "imperative"
+      }
+    },
+    {
+      "id": "n60001022017",
+      "v": 22,
+      "text": "ἐκτενῶς",
+      "after": ", ",
+      "lemma": "ἐκτενῶς",
+      "gloss": "fervently",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001023001",
+      "v": 23,
+      "text": "ἀναγεγεννημένοι",
+      "after": " ",
+      "lemma": "ἀναγεννάω",
+      "gloss": "Having been born again",
+      "pos": "verb",
+      "m": {
+        "number": "plural",
+        "gender": "masculine",
+        "case": "nominative",
+        "tense": "perfect",
+        "voice": "passive",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001023002",
+      "v": 23,
+      "text": "οὐκ",
+      "after": " ",
+      "lemma": "οὐ",
+      "gloss": "not",
+      "pos": "adv"
+    },
+    {
+      "id": "n60001023003",
+      "v": 23,
+      "text": "ἐκ",
+      "after": " ",
+      "lemma": "ἐκ",
+      "gloss": "of",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001023004",
+      "v": 23,
+      "text": "σπορᾶς",
+      "after": " ",
+      "lemma": "σπορά",
+      "gloss": "seed",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001023005",
+      "v": 23,
+      "text": "φθαρτῆς",
+      "after": " ",
+      "lemma": "φθαρτός",
+      "gloss": "perishable",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001023006",
+      "v": 23,
+      "text": "ἀλλὰ",
+      "after": " ",
+      "lemma": "ἀλλά",
+      "gloss": "but",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001023007",
+      "v": 23,
+      "text": "ἀφθάρτου",
+      "after": ", ",
+      "lemma": "ἄφθαρτος",
+      "gloss": "of imperishable",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001023008",
+      "v": 23,
+      "text": "διὰ",
+      "after": " ",
+      "lemma": "διά",
+      "gloss": "by",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001023009",
+      "v": 23,
+      "text": "λόγου",
+      "after": " ",
+      "lemma": "λόγος",
+      "gloss": "[the] word",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001023010",
+      "v": 23,
+      "text": "ζῶντος",
+      "after": " ",
+      "lemma": "ζάω",
+      "gloss": "living",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive",
+        "tense": "present",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001023011",
+      "v": 23,
+      "text": "θεοῦ",
+      "after": " ",
+      "lemma": "θεός",
+      "gloss": "of God",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001023012",
+      "v": 23,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001023013",
+      "v": 23,
+      "text": "μένοντος",
+      "after": "· ",
+      "lemma": "μένω",
+      "gloss": "abiding",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive",
+        "tense": "present",
+        "voice": "active",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001024001",
+      "v": 24,
+      "text": "διότι",
+      "after": " ",
+      "lemma": "διότι",
+      "gloss": "because",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001024002",
+      "v": 24,
+      "text": "πᾶσα",
+      "after": " ",
+      "lemma": "πᾶς",
+      "gloss": "All",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001024003",
+      "v": 24,
+      "text": "σὰρξ",
+      "after": " ",
+      "lemma": "σάρξ",
+      "gloss": "flesh [is]",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001024004",
+      "v": 24,
+      "text": "ὡς",
+      "after": " ",
+      "lemma": "ὡς",
+      "gloss": "like",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001024005",
+      "v": 24,
+      "text": "χόρτος",
+      "after": ", ",
+      "lemma": "χόρτος",
+      "gloss": "grass",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001024006",
+      "v": 24,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001024007",
+      "v": 24,
+      "text": "πᾶσα",
+      "after": " ",
+      "lemma": "πᾶς",
+      "gloss": "all",
+      "pos": "adj",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001024008",
+      "v": 24,
+      "text": "δόξα",
+      "after": " ",
+      "lemma": "δόξα",
+      "gloss": "[the] glory",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001024009",
+      "v": 24,
+      "text": "αὐτῆς",
+      "after": " ",
+      "lemma": "αὐτός",
+      "gloss": "of it",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "gender": "feminine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001024010",
+      "v": 24,
+      "text": "ὡς",
+      "after": " ",
+      "lemma": "ὡς",
+      "gloss": "like",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001024011",
+      "v": 24,
+      "text": "ἄνθος",
+      "after": " ",
+      "lemma": "ἄνθος",
+      "gloss": "[the] flower",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001024012",
+      "v": 24,
+      "text": "χόρτου",
+      "after": "· ",
+      "lemma": "χόρτος",
+      "gloss": "of grass",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001024013",
+      "v": 24,
+      "text": "ἐξηράνθη",
+      "after": " ",
+      "lemma": "ξηραίνω",
+      "gloss": "Withers",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "singular",
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001024014",
+      "v": 24,
+      "text": "ὁ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001024015",
+      "v": 24,
+      "text": "χόρτος",
+      "after": ", ",
+      "lemma": "χόρτος",
+      "gloss": "grass",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001024016",
+      "v": 24,
+      "text": "καὶ",
+      "after": " ",
+      "lemma": "καί",
+      "gloss": "and",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001024017",
+      "v": 24,
+      "text": "τὸ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001024018",
+      "v": 24,
+      "text": "ἄνθος",
+      "after": " ",
+      "lemma": "ἄνθος",
+      "gloss": "flower",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001024019",
+      "v": 24,
+      "text": "ἐξέπεσεν",
+      "after": "· ",
+      "lemma": "ἐκπίπτω",
+      "gloss": "falls away",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "singular",
+        "tense": "aorist",
+        "voice": "active",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001025001",
+      "v": 25,
+      "text": "τὸ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "-",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001025002",
+      "v": 25,
+      "text": "δὲ",
+      "after": " ",
+      "lemma": "δέ",
+      "gloss": "but",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001025003",
+      "v": 25,
+      "text": "ῥῆμα",
+      "after": " ",
+      "lemma": "ῥῆμα",
+      "gloss": "the word",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001025004",
+      "v": 25,
+      "text": "κυρίου",
+      "after": " ",
+      "lemma": "κύριος",
+      "gloss": "of [the] Lord",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "genitive"
+      }
+    },
+    {
+      "id": "n60001025005",
+      "v": 25,
+      "text": "μένει",
+      "after": " ",
+      "lemma": "μένω",
+      "gloss": "abides",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "singular",
+        "tense": "present",
+        "voice": "active",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001025006",
+      "v": 25,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "to",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001025007",
+      "v": 25,
+      "text": "τὸν",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001025008",
+      "v": 25,
+      "text": "αἰῶνα",
+      "after": ". ",
+      "lemma": "αἰών",
+      "gloss": "age",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "masculine",
+        "case": "accusative"
+      }
+    },
+    {
+      "id": "n60001025009",
+      "v": 25,
+      "text": "τοῦτο",
+      "after": " ",
+      "lemma": "οὗτος",
+      "gloss": "This",
+      "pos": "pron",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001025010",
+      "v": 25,
+      "text": "δέ",
+      "after": " ",
+      "lemma": "δέ",
+      "gloss": "now",
+      "pos": "conj"
+    },
+    {
+      "id": "n60001025011",
+      "v": 25,
+      "text": "ἐστιν",
+      "after": " ",
+      "lemma": "εἰμί",
+      "gloss": "is",
+      "pos": "verb",
+      "m": {
+        "person": "third",
+        "number": "singular",
+        "tense": "present",
+        "voice": "active",
+        "mood": "indicative"
+      }
+    },
+    {
+      "id": "n60001025012",
+      "v": 25,
+      "text": "τὸ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "the",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001025013",
+      "v": 25,
+      "text": "ῥῆμα",
+      "after": " ",
+      "lemma": "ῥῆμα",
+      "gloss": "word",
+      "pos": "noun",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001025014",
+      "v": 25,
+      "text": "τὸ",
+      "after": " ",
+      "lemma": "ὁ",
+      "gloss": "-",
+      "pos": "det",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative"
+      }
+    },
+    {
+      "id": "n60001025015",
+      "v": 25,
+      "text": "εὐαγγελισθὲν",
+      "after": " ",
+      "lemma": "εὐαγγελίζω",
+      "gloss": "having been proclaimed",
+      "pos": "verb",
+      "m": {
+        "number": "singular",
+        "gender": "neuter",
+        "case": "nominative",
+        "tense": "aorist",
+        "voice": "passive",
+        "mood": "participle"
+      }
+    },
+    {
+      "id": "n60001025016",
+      "v": 25,
+      "text": "εἰς",
+      "after": " ",
+      "lemma": "εἰς",
+      "gloss": "to",
+      "pos": "prep"
+    },
+    {
+      "id": "n60001025017",
+      "v": 25,
+      "text": "ὑμᾶς",
+      "after": ". ",
+      "lemma": "σύ",
+      "gloss": "you",
+      "pos": "pron",
+      "m": {
+        "number": "plural",
+        "case": "accusative"
+      }
+    }
+  ]
+}

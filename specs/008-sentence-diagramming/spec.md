@@ -261,7 +261,7 @@ A pastor taps ἐλπίδα in the reader, switches to diagramming and finds the
 - The implied subject is shown as a non-word mark in the slot (settling that open notation question in principle; the exact glyph is a design detail). Adverbial participles get no mark beyond where they attach. Textual variants are out of scope: diagrams use the SBLGNT text as ingested.
 - The user decides structure (what attaches to what, in which slot); the app computes line geometry within a clause from that structure. This is drawing the user's own decisions, not interpretation, and it is what makes keyboard and screen-reader editing workable.
 - Undo history lasts for the editing session and need not survive a reload; the diagram content always does.
-- Philippians 1 is the only ingested chapter, so testing uses it; the feature works for any chapter once ingested.
+- The whole New Testament is ingested (spec 009); testing uses Philippians 1, and the feature works for any chapter.
 - The arcing view does not exist yet. FR-021 applies to it when it is built; until then the shared selection covers the reader and the diagram.
 - Importing a diagram file back into the app is out of scope for this feature; the validation in FR-030 is written so an import can reuse it later.
 - The single-user, local-only limits of saved work apply unchanged; this feature adds no accounts or sharing.

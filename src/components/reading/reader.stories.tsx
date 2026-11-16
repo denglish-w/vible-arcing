@@ -23,7 +23,7 @@ export const Unavailable: Story = {
   args: { chapter: 2, content: { status: "unavailable" } },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByText("Text not yet available")).toBeVisible();
+    await expect(canvas.getByText("Text not available")).toBeVisible();
     // Navigation stays usable when the text is missing.
     await expect(
       canvas.getAllByRole("link", { name: "Next chapter: Philippians 3" })[0],

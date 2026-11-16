@@ -12,7 +12,17 @@ import {
 import { tmpdir } from "node:os";
 import path from "node:path";
 import Database from "better-sqlite3";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+} from "vitest";
+import { BOOKS } from "../lib/books.ts";
+import { parseChapter } from "../lib/corpus/format.ts";
 import { openCorpus } from "./client.ts";
 import {
   getAttribution,
@@ -32,11 +42,17 @@ let tmp: string;
 let dataDir: string;
 let corpusDir: string;
 
+// Behaviour tests build from a small fixture (the attribution and Philippians
+// 1) rather than the whole committed corpus, which would add seconds to every
+// test. The "committed corpus" block checks the full output once.
 beforeEach(() => {
   tmp = mkdtempSync(path.join(tmpdir(), "vible-seed-"));
   dataDir = path.join(tmp, "data");
   corpusDir = path.join(tmp, "corpus");
-  cpSync(committedCorpus, corpusDir, { recursive: true });
+  for (const file of ["attribution.json", path.join("PHP", "1.json")]) {
+    mkdirSync(path.dirname(path.join(corpusDir, file)), { recursive: true });
+    cpSync(path.join(committedCorpus, file), path.join(corpusDir, file));
+  }
 });
 afterEach(() => rmSync(tmp, { recursive: true, force: true }));
 
@@ -361,5 +377,138 @@ describe("corpus store contents", () => {
       .pluck()
       .get();
     expect(orphans).toBe(0);
+  });
+});
+
+// The whole committed New Testament, built once (spec 009).
+describe("committed corpus", () => {
+  const PINNED_COMMIT = "8423afe47b9e8f24b7772e808af45c7159a6fe7e";
+  let fullTmp: string;
+  let db: ReturnType<typeof openCorpus>;
+  let built: ReturnType<typeof seedCorpus>;
+
+  beforeAll(() => {
+    fullTmp = mkdtempSync(path.join(tmpdir(), "vible-full-"));
+    built = seedCorpus({
+      dataDir: fullTmp,
+      corpusDir: committedCorpus,
+      migrationsFolder,
+    });
+    db = openCorpus(path.join(fullTmp, "corpus.sqlite"));
+    // Building 260 chapters takes a few seconds; CI runners are slower.
+  }, 30_000);
+  afterAll(() => {
+    db.$client.close();
+    rmSync(fullTmp, { recursive: true, force: true });
+  });
+
+  it("holds every chapter of all 27 books", () => {
+    expect(built).toMatchObject({ chapters: 260, words: 137741 });
+    const books = listBooks(db);
+    expect(books.map((b) => b.code)).toEqual(BOOKS.map((b) => b.code));
+    for (const book of BOOKS) {
+      const summary = books.find((b) => b.code === book.code);
+      expect(summary?.available).toEqual(
+        Array.from({ length: book.chapters }, (_, i) => i + 1),
+      );
+    }
+    for (const [book, chapter] of [
+      ["MAT", 1],
+      ["MAT", 26],
+      ["REV", 22],
+    ] as const) {
+      expect(getChapter(db, book, chapter).status).toBe("ok");
+    }
+    expect(getChapter(db, "PHP", 5)).toEqual({ status: "does-not-exist" });
+  });
+
+  it("keeps only the whitelisted facts for every word", () => {
+    const pos = new Set([
+      "noun",
+      "verb",
+      "det",
+      "conj",
+      "pron",
+      "prep",
+      "adj",
+      "adv",
+      "ptcl",
+      "num",
+      "intj",
+    ]);
+    const morphology = new Set([
+      "person",
+      "number",
+      "gender",
+      "case",
+      "tense",
+      "voice",
+      "mood",
+      "degree",
+    ]);
+    // Space, comma, full stop, ano teleia, Greek question mark (U+037E, not
+    // ";"), and the two elision marks, each followed by a space.
+    const after = new Set([
+      " ",
+      ", ",
+      ". ",
+      "\u00b7 ",
+      "\u037e ",
+      "\u2019 ",
+      "\u1fbf ",
+    ]);
+    const ids = new Set<string>();
+    const problems: string[] = [];
+    const files = jsonFiles(committedCorpus).filter(
+      (f) => !f.endsWith("attribution.json"),
+    );
+    expect(files).toHaveLength(260);
+    for (const file of files) {
+      // Strict: an `ln`, `domain` or any field outside the whitelist throws.
+      const chapter = parseChapter(
+        JSON.parse(readFileSync(file, "utf8")),
+        path.relative(committedCorpus, file),
+      );
+      if (chapter.source.commit !== PINNED_COMMIT) {
+        problems.push(`${file}: commit ${chapter.source.commit}`);
+      }
+      let verse = 0;
+      for (const word of chapter.words) {
+        const at = word.id || file;
+        if (!word.id || !word.text || !word.lemma || !word.pos) {
+          problems.push(`${at}: missing id, text, lemma or pos`);
+        }
+        if (!pos.has(word.pos)) problems.push(`${at}: pos ${word.pos}`);
+        if (!after.has(word.after)) {
+          problems.push(`${at}: after ${JSON.stringify(word.after)}`);
+        }
+        for (const key of Object.keys(word.m ?? {})) {
+          if (!morphology.has(key)) problems.push(`${at}: morphology ${key}`);
+        }
+        if (word.v < verse) problems.push(`${at}: verse goes back`);
+        verse = word.v;
+        if (ids.has(word.id)) problems.push(`${at}: id repeated`);
+        ids.add(word.id);
+      }
+    }
+    // Collected rather than asserted per word: 137,741 expect calls are slow.
+    expect(problems).toEqual([]);
+    expect(ids.size).toBe(137741);
+  }, 30_000);
+
+  it("leaves Philippians 1 and the credits as they were", () => {
+    const fixture = JSON.parse(
+      readFileSync(path.join(committedCorpus, "PHP", "1.json"), "utf8"),
+    ) as { words: { id: string }[] };
+    const php1 = getChapter(db, "PHP", 1);
+    if (php1.status !== "ok") throw new Error("Philippians 1 is missing");
+    expect(php1.words).toHaveLength(501);
+    expect(php1.words[0].id).toBe("n50001001001");
+    expect(php1.words.map((w) => w.id)).toEqual(fixture.words.map((w) => w.id));
+    expect(getAttribution(db).map((a) => a.name)).toEqual([
+      "SBL Greek New Testament",
+      "MACULA Greek Linguistic Datasets",
+      "Berean Interlinear Bible",
+    ]);
   });
 });

@@ -1,6 +1,6 @@
 # Architecture
 
-A Next.js server provides a themed Greek reader, a SQLite corpus store with sample data, and storage for saved work. The editor and discourse model are still planned in `openspec/changes/discourse-analysis-foundation/design.md`.
+A Next.js server provides a themed Greek reader, a SQLite store of the whole SBLGNT, and storage for saved work. The editor and discourse model are still planned in `openspec/changes/discourse-analysis-foundation/design.md`.
 
 ## Node server
 
@@ -62,4 +62,4 @@ Structural rules live in one pure TypeScript module, used by the save path now a
 
 Python is used only for a release-time script that converts MACULA Greek XML into compact versioned JSON under `corpus/v1/`, which `npm run db:seed` loads into SQLite.
 
-[[scripts/ingest/sample_chapter.py]] extracts a pinned Philippians 1 from `SBLGNT/lowfat` into versioned chapter JSON. Nothing in the request path parses XML, and the browser never fetches the JSON: the server reads the store. See [[corpus#Ingest pipeline]] and [[reader#Greek reader]] for the format and consumer.
+[[scripts/ingest/ingest.py]] converts all 27 `SBLGNT/lowfat` books at a pinned commit into versioned chapter JSON. Nothing in the request path parses XML, and the browser never fetches the JSON: the server reads the store. See [[corpus#Ingest pipeline]] and [[reader#Greek reader]] for the format and consumer.

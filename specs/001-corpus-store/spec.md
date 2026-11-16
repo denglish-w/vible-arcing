@@ -133,7 +133,7 @@ Anyone viewing corpus text can reach the credits, which list each dataset with i
 
 ### Measurable Outcomes
 
-- **SC-001**: For the ingested chapter (Philippians 1), 100% of its words are returned exactly once, in canonical order, each with every field in FR-011.
+- **SC-001**: For every ingested chapter (all 260, spec 009), 100% of its words are returned exactly once, in canonical order, each with every field in FR-011.
 - **SC-002**: Two builds from the same ingest output produce stores whose rows match in 100% of tables.
 - **SC-003**: After a refused build (unknown version) and after a build that fails partway, the earlier store opens and returns the same chapter data as before, in both cases.
 - **SC-004**: A write attempted through the running app's connection fails in 100% of attempts, and starting with no store creates no store file.
@@ -143,7 +143,7 @@ Anyone viewing corpus text can reach the credits, which list each dataset with i
 
 ## Assumptions
 
-- Philippians 1 is the only ingested chapter; every other New Testament chapter is reported as unavailable.
+- All 260 New Testament chapters are ingested (spec 009); a chapter missing from an out-of-date store is reported as unavailable.
 - The data source is MACULA Greek (SBLGNT lowfat) under CC BY 4.0; exact notice strings are in `docs/reference/data-sources.md`.
 - The committed attribution (`corpus/v1/attribution.json`) also lists the Berean Interlinear Bible as a third dataset, shown in credits alongside the two the spec requires.
 - Ingest is an offline, release-time step; nothing in the request path parses source files and browsers never fetch the corpus files.

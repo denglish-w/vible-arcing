@@ -1,5 +1,12 @@
 import { createHash } from "node:crypto";
-import { mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
+import {
+  cpSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  statSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -409,10 +416,20 @@ describe("corpus rebuilds", () => {
     const repoRoot = path.resolve(import.meta.dirname, "../..");
     tmp = mkdtempSync(path.join(tmpdir(), "vible-work-"));
     const dataDir = path.join(tmp, "data");
+    // A small corpus (attribution and Philippians 1): what is checked does not
+    // depend on its size, and seeding the whole New Testament twice is slow.
+    const corpusDir = path.join(tmp, "corpus");
+    mkdirSync(path.join(corpusDir, "PHP"), { recursive: true });
+    for (const file of ["attribution.json", path.join("PHP", "1.json")]) {
+      cpSync(
+        path.join(repoRoot, "corpus", "v1", file),
+        path.join(corpusDir, file),
+      );
+    }
     const seed = () =>
       seedCorpus({
         dataDir,
-        corpusDir: path.join(repoRoot, "corpus", "v1"),
+        corpusDir,
         migrationsFolder: path.join(repoRoot, "drizzle", "corpus"),
       });
     seed();

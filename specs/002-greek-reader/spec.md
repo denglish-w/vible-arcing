@@ -71,15 +71,15 @@ A user opens the display menu and chooses theme, Greek typeface, text size, line
 
 ### User Story 4 - Know when a chapter has no text yet (Priority: P2)
 
-A user opens a chapter that exists but has not been loaded. Only Philippians 1 is loaded today. The screen says the text is not yet available and the user can still move to other chapters.
+A user opens a chapter that exists but is missing from the installed corpus, which happens when the store was built from an older corpus. The screen says the text is not available and how to rebuild it, and the user can still move to other chapters.
 
-**Why this priority**: Most chapters are in this state, so the experience must be clear and must not trap the user.
+**Why this priority**: The experience must be clear and must not trap the user, even when the installed corpus is out of date.
 
-**Independent Test**: Open any chapter other than Philippians 1 and confirm the message and that the previous and next links work.
+**Independent Test**: With a store built from an older corpus (for example Philippians 1 only), open a chapter it lacks and confirm the message and that the previous and next links work.
 
 **Acceptance Scenarios**:
 
-1. **Given** a chapter that exists but is not yet loaded, **When** a user opens it, **Then** the screen states the text is not yet available, and the previous and next chapter links still work.
+1. **Given** a chapter that exists but is missing from the installed corpus, **When** a user opens it, **Then** the screen states the text is not available and how to rebuild the corpus, and the previous and next chapter links still work.
 2. **Given** the corpus store cannot be read, **When** a user opens any chapter, **Then** the screen says the text is not available and the chapter navigation still works.
 3. **Given** a chapter loaded after the application was built, **When** a user opens it, **Then** it appears without rebuilding the application.
 
@@ -151,13 +151,13 @@ A user opens the credits page and sees every work whose text or data the app shi
 - **SC-004**: In 100% of word popovers, no syntactic role or other interpretive label appears.
 - **SC-005**: Every display setting takes effect with no page reload, and every setting chosen survives a reload.
 - **SC-006**: With browser storage unavailable, the reading screen renders with defaults in 100% of loads.
-- **SC-007**: On every un-ingested chapter, the unavailable message is shown and both navigation links that exist work.
+- **SC-007**: On every chapter missing from the installed corpus, the unavailable message is shown and both navigation links that exist work.
 - **SC-008**: 100% of datasets in the corpus attribution appear on the credits page.
 - **SC-009**: Word selection, popover dismissal and chapter navigation are all operable with the keyboard alone.
 
 ## Assumptions
 
-- Only Philippians 1 is loaded today; every other chapter shows the unavailable state until its text is added.
+- The whole SBL Greek New Testament is loaded (spec 009); the unavailable state appears only when the installed corpus is out of date.
 - English glosses and morphology come from the loaded corpus data; the format of that data is specified elsewhere (`text/corpus-store`) and is out of scope here.
 - Visual identity, themes, colour categories and typefaces are specified in `003-visual-theme`; this spec covers how the reader uses them.
 - The reader has no editing, arcing or diagramming; those are separate features.

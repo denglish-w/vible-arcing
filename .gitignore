@@ -79,3 +79,8 @@ next-env.d.ts
 
 # git worktrees made outside .claude/
 /.worktrees/
+
+# python (offline ingest)
+__pycache__/
+*.pyc
+/.venv/

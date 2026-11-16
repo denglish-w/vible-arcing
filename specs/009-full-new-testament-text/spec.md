@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-15
 
-**Status**: Draft
+**Status**: Implemented
 
 **Input**: User description: "Full SBL Greek New Testament text in the reader. Today only Philippians 1 is ingested and every other chapter shows "not available yet". Users want every chapter of all 27 books of the SBLGNT (from MACULA Greek SBLGNT/lowfat at a pinned commit) readable in the reader with the same word data as Philippians 1 (text, punctuation, lemma, gloss, part of speech, morphology, MACULA word ids), with Louw-Nida/UBS domain attributes still stripped and attribution unchanged. Scope is the text only: clause and conjunction data stay in the discourse-analysis-foundation change. The existing sample extractor scripts/ingest/sample_chapter.py is extended rather than replaced, and npm run db:seed loads the result."
 

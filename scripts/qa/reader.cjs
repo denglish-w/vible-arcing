@@ -66,11 +66,16 @@ const fs = require('node:fs');
     await page.keyboard.press('Escape');
     await menu(); await capture('menu-mobile'); await page.keyboard.press('Escape');
     await page.goto(`${base}/read/mat/28`);
-    await page.getByText('Text not yet available', { exact: true }).waitFor();
+    await page.locator('[lang="grc"]').first().waitFor();
+    assert.equal(await page.getByText('Text not available', { exact: true }).count(), 0);
     await page.getByRole('link', { name: 'Next chapter: Mark 1' }).last().click();
     await page.waitForURL(/\/read\/mrk\/1\/?$/);
     await page.goto(`${base}/credits`);
-    assert.equal(await page.locator('.credits section').count(), 3);
+    // Three dataset credits plus the Method section.
+    assert.equal(await page.locator('.credits section').count(), 4);
+    for (const name of ['SBL Greek New Testament', 'MACULA Greek Linguistic Datasets', 'Berean Interlinear Bible']) {
+      assert.equal(await page.getByText(name, { exact: true }).count() > 0, true, name);
+    }
     await capture('credits-mobile');
     await page.goto(base);
     assert.equal(await page.locator('.book-row').count(), 27);

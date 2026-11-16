@@ -322,4 +322,4 @@ A student exports her finished analysis to hand to a classmate, who imports it i
 - The view preference is kept per analysis in the user's browser; losing it only means the analysis opens in the arc view.
 - Arcing mode reuses the existing passage picker and workspace surfaces described in `DESIGN.md`. Relationship colours, if any, are new theme tokens with light, dark and sepia values.
 - Out of scope: per-proposition notes, paraphrases or translations; sharing and accounts; Hebrew; grammatical diagramming; any form of automatic division, connection or relationship suggestion.
-- Greek is the only language; Philippians 1 is the only ingested chapter today, so testing uses it until more chapters are ingested.
+- Greek is the only language; the whole New Testament is ingested (spec 009); testing uses Philippians 1.
