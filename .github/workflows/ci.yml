@@ -66,8 +66,10 @@ jobs:
           cache-to: type=gha,mode=max
       - name: Smoke test the image
         run: |
-          data="$(mktemp -d)"
-          docker run -d --name smoke -p 127.0.0.1:3000:3000 -v "$data:/app/data" vible-arcing:ci
+          # A fresh named volume, as the README runs it: Docker gives it the
+          # image's /app/data ownership (node). A host temp dir would belong to
+          # the runner user, and the container's node user could not write it.
+          docker run -d --name smoke -p 127.0.0.1:3000:3000 -v smoke-data:/app/data vible-arcing:ci
           fail() { echo "$1"; docker logs smoke; exit 1; }
           ready=
           for _ in $(seq 1 60); do
