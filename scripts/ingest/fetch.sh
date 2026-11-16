@@ -4,9 +4,12 @@
 #   sh scripts/ingest/fetch.sh <dir>
 #
 # <dir> should be outside the repository: the XML is source input for
-# ingest.py and is never committed. A URL at a commit SHA does not change, and
-# re-running the ingest shows any difference in its output.
+# ingest.py and is never committed. Each file is checked against
+# scripts/ingest/SHA256SUMS, recorded from the pinned commit, so a changed or
+# truncated download stops here rather than reaching the ingest.
 set -eu
+
+SUMS="$(cd "$(dirname "$0")" && pwd)/SHA256SUMS"
 
 COMMIT=8423afe47b9e8f24b7772e808af45c7159a6fe7e
 BASE="https://raw.githubusercontent.com/Clear-Bible/macula-greek/$COMMIT/SBLGNT/lowfat"
@@ -31,5 +34,15 @@ for name in $FILES; do
   fi
 done
 
-echo "downloaded 27 book files to $dir"
+if command -v sha256sum >/dev/null 2>&1; then
+  check() { sha256sum -c --quiet "$SUMS"; }
+else
+  check() { shasum -a 256 -c --quiet "$SUMS"; }
+fi
+if ! (cd "$dir" && check); then
+  echo "error: a downloaded file does not match scripts/ingest/SHA256SUMS" >&2
+  exit 1
+fi
+
+echo "downloaded and verified 27 book files in $dir"
 echo "MACULA commit: $COMMIT"

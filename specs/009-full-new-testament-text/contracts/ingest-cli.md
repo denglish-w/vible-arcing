@@ -7,6 +7,7 @@ The maintainer-facing interface of this feature. The app's own interfaces (pages
 - Downloads the 27 `SBLGNT/lowfat` book files (`01-matthew.xml` … `27-revelation.xml`) at the pinned MACULA commit into `<dir>`, creating it if needed.
 - `<dir>` should be outside the repository.
 - Exit 0 when all 27 files are downloaded; non-zero, naming the file, on any download failure.
+- Checks every file against `scripts/ingest/SHA256SUMS` and exits 1 on any mismatch.
 - Prints the pinned commit, so the maintainer can pass it to the ingest.
 
 ## `python3 -I scripts/ingest/ingest.py --source <dir> --commit <sha> --out <dir>`
@@ -21,7 +22,7 @@ The maintainer-facing interface of this feature. The app's own interfaces (pages
 
 **On failure** (exit 1): `error: <message>` on stderr naming the file and problem, and `<out>` is exactly as it was. Failures include:
 
-- a missing, extra or duplicate book file;
+- a missing book file, or a file that holds a different book than its name or the wrong number of chapters;
 - a file that is not plain UTF-8, declares a DTD or entities, or is not a lowfat `book`;
 - a word with no id, text, lemma or part of speech, an unrecognised `ref`, or a `ref` naming another book;
 - markup characters in text, punctuation, lemma or gloss;

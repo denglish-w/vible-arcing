@@ -30,15 +30,20 @@ EDITION = "SBLGNT"
 DATASET = "macula-greek"
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
 
-# The SBLGNT lowfat book files, in canonical order.
-BOOK_FILES = (
-    "01-matthew.xml", "02-mark.xml", "03-luke.xml", "04-john.xml", "05-acts.xml",
-    "06-romans.xml", "07-1corinthians.xml", "08-2corinthians.xml", "09-galatians.xml",
-    "10-ephesians.xml", "11-philippians.xml", "12-colossians.xml",
-    "13-1thessalonians.xml", "14-2thessalonians.xml", "15-1timothy.xml",
-    "16-2timothy.xml", "17-titus.xml", "18-philemon.xml", "19-hebrews.xml",
-    "20-james.xml", "21-1peter.xml", "22-2peter.xml", "23-1john.xml", "24-2john.xml",
-    "25-3john.xml", "26-jude.xml", "27-revelation.xml",
+# The SBLGNT lowfat book files in canonical order, with the book code each must
+# hold and its chapter count (the same as src/lib/books.ts): 27 books, 260 chapters.
+BOOKS = (
+    ("01-matthew.xml", "MAT", 28), ("02-mark.xml", "MRK", 16), ("03-luke.xml", "LUK", 24),
+    ("04-john.xml", "JHN", 21), ("05-acts.xml", "ACT", 28), ("06-romans.xml", "ROM", 16),
+    ("07-1corinthians.xml", "1CO", 16), ("08-2corinthians.xml", "2CO", 13),
+    ("09-galatians.xml", "GAL", 6), ("10-ephesians.xml", "EPH", 6),
+    ("11-philippians.xml", "PHP", 4), ("12-colossians.xml", "COL", 4),
+    ("13-1thessalonians.xml", "1TH", 5), ("14-2thessalonians.xml", "2TH", 3),
+    ("15-1timothy.xml", "1TI", 6), ("16-2timothy.xml", "2TI", 4), ("17-titus.xml", "TIT", 3),
+    ("18-philemon.xml", "PHM", 1), ("19-hebrews.xml", "HEB", 13), ("20-james.xml", "JAS", 5),
+    ("21-1peter.xml", "1PE", 5), ("22-2peter.xml", "2PE", 3), ("23-1john.xml", "1JN", 5),
+    ("24-2john.xml", "2JN", 1), ("25-3john.xml", "3JN", 1), ("26-jude.xml", "JUD", 1),
+    ("27-revelation.xml", "REV", 22),
 )
 
 # Morphology attributes kept under "m", in this order, only when present.
@@ -215,16 +220,16 @@ def read_book(xml_path: Path) -> tuple[str, dict[int, list[dict]]]:
 def read_all(source: Path, commit: str) -> list[dict]:
     """Every chapter of the New Testament, checked, before anything is written."""
     chapters: list[dict] = []
-    books: dict[str, str] = {}
     ids: set[str] = set()
-    for name in BOOK_FILES:
+    for name, code, expected in BOOKS:
         path = source / name
         if not path.is_file():
             raise IngestError(f"{path} is missing")
         book, by_number = read_book(path)
-        if book in books:
-            raise IngestError(f"{path} holds {book}, already read from {books[book]}")
-        books[book] = name
+        if book != code:
+            raise IngestError(f"{path} holds {book}, expected {code}")
+        if len(by_number) != expected:
+            raise IngestError(f"{path} has {len(by_number)} chapters, expected {expected}")
         for number, words in by_number.items():
             for word in words:
                 if word["id"] in ids:
@@ -241,14 +246,21 @@ def read_all(source: Path, commit: str) -> list[dict]:
     return chapters
 
 
+def recover(out: Path) -> None:
+    """Put back output that an interrupted swap left only in <out>.old.
+
+    Runs before anything else, so a run that then fails on bad input still
+    leaves <out> in place rather than missing.
+    """
+    previous = out.with_name(out.name + ".old")
+    if previous.exists() and not out.exists():
+        previous.rename(out)
+
+
 def write_all(out: Path, chapters: list[dict]) -> None:
     """Write into <out>.new, then swap it in place of <out>."""
     staging = out.with_name(out.name + ".new")
     previous = out.with_name(out.name + ".old")
-    # A run interrupted between the two renames below leaves the old output
-    # only in <out>.old: put it back rather than deleting it.
-    if previous.exists() and not out.exists():
-        previous.rename(out)
     for leftover in (staging, previous):
         if leftover.exists():
             shutil.rmtree(leftover)
@@ -283,6 +295,7 @@ def main(argv: list[str]) -> int:
         parser.error("--commit must be a full 40-character lower-case SHA")
 
     try:
+        recover(args.out)
         chapters = read_all(args.source, args.commit)
         write_all(args.out, chapters)
     except (IngestError, ET.ParseError, OSError) as error:

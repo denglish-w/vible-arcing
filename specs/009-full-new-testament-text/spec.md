@@ -96,7 +96,7 @@ A maintainer regenerates the whole New Testament from the pinned MACULA source b
 - **FR-008**: The existing build command MUST load the full corpus, and an existing store built from fewer chapters MUST be detected as stale and rebuilt by the existing rebuild-if-stale step.
 - **FR-009**: The ingest MUST be a single documented procedure that extends the existing sample extractor rather than replacing it, uses only the pinned source, and produces identical output when run twice on the same input.
 - **FR-010**: The ingest MUST stop with a message naming the file when a source file is missing, malformed, declares a DTD or entities, or holds markup characters in word text, punctuation, lemma or gloss, and MUST NOT leave partial output in the committed corpus.
-- **FR-011**: The ingest MUST NOT keep MACULA's syntax trees, clause boundaries, sentence-role labels or conjunction data. Working out how a sentence is built is the analysis the user performs in the diagramming and arcing editors, so the corpus carries only facts about each word (Constitution I). Whether any of that data is added later is a separate decision for the discourse-analysis-foundation feature.
+- **FR-011**: This feature's ingest does not keep MACULA's syntax trees, clause boundaries, sentence-role labels or conjunction data; the chapter files carry only facts about each word. Working out how a sentence is built is the analysis the user performs in the diagramming and arcing editors (Constitution I). Whether clause data is added later, as reference data in its own files, is decided in the discourse-analysis-foundation feature, which still lists it and has it on hold.
 - **FR-012**: When a valid chapter is missing from an installed corpus store that is out of date, the reading screen MUST say the chapter's text is missing and how to rebuild it, and MUST keep chapter navigation working. When the corpus store is missing or cannot be read, the existing "not installed" message MUST be shown as today.
 
 ### Key Entities
@@ -121,7 +121,7 @@ A maintainer regenerates the whole New Testament from the pinned MACULA source b
 ## Assumptions
 
 - The pinned MACULA commit stays `8423afe47b9e8f24b7772e808af45c7159a6fe7e`, the one Philippians 1 came from, so Philippians 1 identifiers cannot change. Moving to a newer commit is a separate decision.
-- The generated corpus files are committed to the repository like Philippians 1 is today. That is about 36 MB on disk (about 3 MB compressed in git); whether to shrink or relocate them is a planning decision, provided the app still needs no network access at runtime.
+- The generated corpus files are committed to the repository like Philippians 1 is today. That is about 37 MB on disk (about 2.7 MB compressed in git); whether to shrink or relocate them is a planning decision, provided the app still needs no network access at runtime.
 - The reader, navigation, word help, credits and saved-work behaviour already handle any ingested chapter; no user-facing screen changes are expected beyond chapters now showing text.
 - Ingest stays an offline, release-time step using only the standard library; nothing in the request path parses source XML.
 - Out of scope: clause and conjunction data, other editions, search, and any change to the corpus format.

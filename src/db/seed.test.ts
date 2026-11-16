@@ -9,6 +9,7 @@ import {
   statSync,
   writeFileSync,
 } from "node:fs";
+import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import Database from "better-sqlite3";
@@ -497,14 +498,24 @@ describe("committed corpus", () => {
   }, 30_000);
 
   it("leaves Philippians 1 and the credits as they were", () => {
-    const fixture = JSON.parse(
-      readFileSync(path.join(committedCorpus, "PHP", "1.json"), "utf8"),
-    ) as { words: { id: string }[] };
+    // The file as it was before the whole-NT ingest: saved work depends on
+    // its word ids, so any change to it must be deliberate.
+    const bytes = readFileSync(path.join(committedCorpus, "PHP", "1.json"));
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe(
+      "df76024598bc8f863cab273b584d4af1785d3e8360be8c1461203a42dbd62cde",
+    );
     const php1 = getChapter(db, "PHP", 1);
     if (php1.status !== "ok") throw new Error("Philippians 1 is missing");
     expect(php1.words).toHaveLength(501);
     expect(php1.words[0].id).toBe("n50001001001");
-    expect(php1.words.map((w) => w.id)).toEqual(fixture.words.map((w) => w.id));
+    // Joining text and following punctuation gives the SBLGNT verse (FR-004).
+    const verse1 = php1.words
+      .filter((w) => w.verse === 1)
+      .map((w) => w.text + w.after)
+      .join("");
+    expect(verse1).toBe(
+      "Παῦλος καὶ Τιμόθεος δοῦλοι Χριστοῦ Ἰησοῦ πᾶσιν τοῖς ἁγίοις ἐν Χριστῷ Ἰησοῦ τοῖς οὖσιν ἐν Φιλίπποις σὺν ἐπισκόποις καὶ διακόνοις· ",
+    );
     expect(getAttribution(db).map((a) => a.name)).toEqual([
       "SBL Greek New Testament",
       "MACULA Greek Linguistic Datasets",
