@@ -49,7 +49,7 @@ Add a Learning mode to the reading screen in which the user parses a word (dicti
 | VI. Accessible, SPA-fast | Native labelled selects, focus management, live-region outcome, text-plus-symbol agreement marks, bottom sheet on phones, stories with axe in three themes. Word form opens with no round trip. | Pass |
 | VII. Local until network accounts | New actions and the export route use the existing Host and same-origin checks. No network exposure. Spec 015 later adds ownership. | Pass |
 | Licensing | No new dataset. UBS attributes stay stripped; nothing new is read from MACULA. | Pass |
-| Workflow | OpenSpec change, `lat.md/` and `CLAUDE.md` updated with the implementation (see Documentation updates). | Pass |
+| Workflow | Planned in Spec Kit only (no OpenSpec change folder, CLAUDE.md Workflow); the implementing change edits `openspec/specs/text/greek-reader/spec.md` and `openspec/specs/app/saved-work/spec.md`, plus `lat.md/` and `CLAUDE.md` (see Documentation updates). | Pass |
 
 No violations. **Post-design re-check**: the design (research R1–R11, contracts) adds no dependency, no interpretive data and no network surface, and the cookie carries only the mode. Still passes.
 
@@ -106,7 +106,8 @@ scripts/qa/reader.cjs             # + Learning-mode assertions (no answer in HTM
 
 ### Documentation updates
 
-- **OpenSpec**: a change `openspec/changes/learning-mode/` (proposal, design, delta for `text/greek-reader`), because OpenSpec is authoritative and features update both copies.
+- **OpenSpec** (no change folder; features are planned in Spec Kit): the implementing change edits `openspec/specs/text/greek-reader/spec.md` (Learning mode, lean payload, withheld word facts) and `openspec/specs/app/saved-work/spec.md` (parse attempts as a kind of saved work, not listed on `/work`, exportable).
+- **Siblings on the same reader page**: whichever of 010, 013 and 014 merges second adds the Learning-mode exclusions: no 013 word facts and no 014 occurrence data or `?w=` focus in a Learning render (spec 010 FR-004; spec 014 FR-024).
 - **lat.md**: `lat.md/reader.md` gains Learning mode (server-decided mode, lean payload, grading on the server). A saved-work section covers attempts. Run `lat check`.
 - **CLAUDE.md**: the project-state paragraph mentions Learning mode and attempts.
 - **Spec 002**: note Learning mode as an extension of the reader. Spec 005: list attempts as a kind of saved work not shown on `/work`.

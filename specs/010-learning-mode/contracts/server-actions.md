@@ -18,6 +18,7 @@ All actions live in `src/app/read/learning-actions.ts` (`"use server"`), call `a
 | Input | Parsing answer `{ wordId, lemma, pos, fields }`, validated with the shared schema |
 | Effect | Read-only. Loads the word from the corpus store and grades with `grade.ts`. |
 | Returns | `{ ok: true, comparisons, allAgreed, differCount, source }` with `source` the full source parsing plus gloss; or `{ ok: false, reason: "invalid" \| "unknown-word" \| "corpus-missing" }` |
+| Unreachable server | The client treats a rejected call as "could not check": answers kept, "Check again" offered, nothing saved, no source shown. |
 | Guarantee | This response is the first and only way the source's lemma, gloss, part of speech or morphology for `wordId` reaches the browser in Learning mode (FR-020). |
 
 ## `recordAttempt(attempt)`

@@ -61,6 +61,8 @@ Grading rules (`src/lib/learning/grade.ts`, pure):
 
 ## Source parsing (returned by a check only)
 
+`pos` is the form value from the mapping above, or the corpus's own value as given when it has no form equivalent (spec edge case); any answer differs from such a value.
+
 `{ lemma, pos, pos label, tense?, voice?, mood?, person?, number?, gender?, case?, degree? }`, taken from the corpus word. Never includes gloss in the comparison table (gloss is shown with the full parsing after checking, as a word fact), and never includes any syntactic role, which the corpus does not contain.
 
 ## Attempt (stored: table `parse_attempts` in `app.sqlite`)

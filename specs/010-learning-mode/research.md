@@ -20,6 +20,7 @@ Findings checked on 2026-11-16 against the committed corpus (`corpus/v1`, 137,74
 
 - **Decision**: Grading runs on the server in a `checkParse` server action. It loads the word from the corpus store, grades the answer with the shared pure module `src/lib/learning/grade.ts`, and returns the comparison together with the source's lemma and full parsing. The client never holds the source before this response.
 - **Decision**: Recording is a separate step. The client sends the checked attempt to `recordAttempt` through a small outbox that retries with backoff (R6). The server re-validates and re-grades on record and stores what it computed, never the client's claimed source values.
+- **Consequence**: Checking needs the server. If the check itself cannot reach it, the form keeps the answers and offers to check again, shows no source value and saves nothing (spec edge case). The unsaved indicator and retry apply only to a check that succeeded and whose save then failed.
 - **Rationale**: Splitting grade from record satisfies FR-023: the result appears after one fast local round trip, and a failed save never hides it. Re-grading on record keeps the stored outcome honest even if the client is tampered with.
 - **Alternatives considered**: Grading in the browser would require the source to be in the page (fails R1). One combined grade-and-save action would make a storage failure also lose the result shown, against FR-023.
 

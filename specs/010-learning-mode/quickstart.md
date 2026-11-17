@@ -46,6 +46,7 @@ curl -s http://127.0.0.1:3000/read/php/1 | grep -c '"lemma"'   # Reading mode: e
 3. Restart the server (`npm start` again). Open the chapter in another browser, switch it to Learning and reopen 1:3: the form is pre-filled and says when it was checked and that one field differed, without the source values (User Story 2).
 4. Use Next word across the 1:3 → 1:4 boundary, then jump to the last word of the chapter and press Next word: "End of the chapter" offers Philippians 2 (User Story 3).
 5. Repeat steps 2 and 4 with keyboard only, with VoiceOver, and in a tablet-sized touch emulation (User Story 5).
-6. Stop the server mid-session, check a word: the result shows at once with "Not saved yet — retrying"; start the server: the indicator clears (User Story 2 scenario 5).
-7. Download `/api/attempts/export` and confirm it lists the attempts with references, surface forms and edition (FR-028).
-8. Switch back to Reading: colouring returns and the display menu shows the same settings as before (SC-009).
+6. Make saving fail while checking still works (for example, in the browser's developer tools block only the `recordAttempt` action request, or make `app.sqlite` read-only), check a word: the result shows at once with "Not saved yet — retrying"; unblock: the indicator clears (User Story 2 scenario 5). Then stop the server and check a word: the form keeps the answers, says "Couldn't check this word" and offers "Check again", and shows no source value (spec edge case "the check cannot reach the server").
+7. Rebuild the corpus (`npm run db:seed`) and reopen a word checked earlier: it is still pre-filled (SC-005).
+8. Download `/api/attempts/export` and confirm it lists the attempts with references, surface forms and edition (FR-028).
+9. Switch back to Reading: colouring returns and the display menu shows the same settings as before (SC-009).

@@ -112,6 +112,7 @@ A student on a tablet parses words by tapping; another uses only the keyboard; a
 - An attempt refers to a word that no longer exists after the corpus is rebuilt: the attempt is kept, never silently deleted, and is simply not shown on any page.
 - The source corrects a word's parsing after re-ingest: earlier attempts keep the outcome they had when checked; a new check is graded against the current source.
 - The page scrolls or the window resizes while the form is open: the form stays usable and attached to its word, or closes without losing a checked attempt.
+- The check cannot reach the server (for example, the server has stopped): the user's answers are kept, the form says the word could not be checked and offers to try again, nothing is saved and no source value is shown. Only a check that succeeded can leave an attempt waiting to be saved.
 - The user opens the same chapter in two tabs and checks the same word in both: both attempts are kept, and the most recent one pre-fills the form.
 
 ## Requirements *(mandatory)*
