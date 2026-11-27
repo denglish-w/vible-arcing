@@ -1,6 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AppDb, CorpusDb } from "../../db/client.ts";
-import { DatabaseMissingError } from "../../db/client.ts";
+import {
+  DatabaseDamagedError,
+  DatabaseMissingError,
+  DatabaseNeedsMigrationError,
+} from "../../db/client.ts";
 import { listAttempts } from "../../db/attempts.ts";
 import {
   LEARNING_VERB as VERB,
@@ -27,10 +31,14 @@ const db = vi.hoisted(() => ({
   app: null as AppDb | null,
   corpus: null as CorpusDb | null,
   corpusMissing: false,
+  appError: null as Error | null,
 }));
 vi.mock("../../db/client.ts", async (original) => ({
   ...(await original<typeof import("../../db/client.ts")>()),
-  getAppDb: () => db.app,
+  getAppDb: () => {
+    if (db.appError) throw db.appError;
+    return db.app;
+  },
   getCorpusDb: () => {
     if (db.corpusMissing) throw new DatabaseMissingError("corpus", "/x");
     return db.corpus;
@@ -57,6 +65,7 @@ beforeEach(() => {
   db.app = createTestAppDb();
   db.corpus = learningCorpus();
   db.corpusMissing = false;
+  db.appError = null;
   request.headers = new Headers({ host: "127.0.0.1:3000" });
   vi.clearAllMocks();
 });
@@ -127,6 +136,14 @@ describe("checkParse", () => {
     });
   });
 
+  it("checks without the saved-work database", async () => {
+    db.appError = new DatabaseMissingError("app", "/x");
+    expect(await actions.checkParse(answer())).toMatchObject({
+      ok: true,
+      allAgreed: true,
+    });
+  });
+
   it("returns the source with a correct parse", async () => {
     expect(await actions.checkParse(answer())).toMatchObject({
       ok: true,
@@ -186,6 +203,19 @@ describe("recordAttempt", () => {
       ok: false,
       reason: "corpus-missing",
     });
+  });
+
+  it("refuses, rather than fails, when saved work is unavailable", async () => {
+    for (const error of [
+      new DatabaseMissingError("app", "/x"),
+      new DatabaseDamagedError("/x", "bad"),
+      new DatabaseNeedsMigrationError("/x"),
+    ]) {
+      db.appError = error;
+      expect(await actions.recordAttempt({ id: ID, answer: answer() })).toEqual(
+        { ok: false, reason: "store-unavailable" },
+      );
+    }
   });
 
   it("refuses a request for another host", async () => {

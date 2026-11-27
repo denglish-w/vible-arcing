@@ -1,6 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AppDb, CorpusDb } from "../../../../db/client.ts";
-import { DatabaseMissingError } from "../../../../db/client.ts";
+import {
+  DatabaseMissingError,
+  DatabaseNeedsMigrationError,
+} from "../../../../db/client.ts";
 import { recordAttempt } from "../../../../db/attempts.ts";
 import {
   LEARNING_VERB as VERB,
@@ -19,11 +22,13 @@ const db = vi.hoisted(() => ({
   app: null as AppDb | null,
   corpus: null as CorpusDb | null,
   appMissing: false,
+  appStale: false,
 }));
 vi.mock("../../../../db/client.ts", async (original) => ({
   ...(await original<typeof import("../../../../db/client.ts")>()),
   getAppDb: () => {
     if (db.appMissing) throw new DatabaseMissingError("app", "/x");
+    if (db.appStale) throw new DatabaseNeedsMigrationError("/x");
     return db.app;
   },
   getCorpusDb: () => db.corpus,
@@ -42,6 +47,7 @@ beforeEach(() => {
   db.app = createTestAppDb();
   db.corpus = learningCorpus();
   db.appMissing = false;
+  db.appStale = false;
   request.headers = new Headers({ host: "127.0.0.1:3000" });
 });
 
@@ -96,6 +102,11 @@ describe("GET /api/attempts/export", () => {
 
   it("answers 503 when the store is missing", async () => {
     db.appMissing = true;
+    expect((await get()).status).toBe(503);
+  });
+
+  it("answers 503 when the store needs migrating", async () => {
+    db.appStale = true;
     expect((await get()).status).toBe(503);
   });
 });

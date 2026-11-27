@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["better-sqlite3"],
   // Keep local databases, which hold users' saved work, out of the standalone trace.
   outputFileTracingExcludes: { "*": ["data/**"] },
+  // The saved-work migrations, so the built server can tell when the database
+  // lags them (src/db/client.ts `bundledMigrations`). Traced files land at the
+  // same relative path in .next/standalone.
+  outputFileTracingIncludes: { "*": ["drizzle/app/**"] },
   experimental: {
     // Saved documents are capped at 512 KB in the app, so the cap gives the error, not this limit.
     serverActions: { bodySizeLimit: "1mb" },

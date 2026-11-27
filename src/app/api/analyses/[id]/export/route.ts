@@ -2,7 +2,12 @@
 // analysis"; app-server-and-sqlite design decisions 6 and 9). The file names
 // the passage and edition and carries the document exactly as stored.
 import { connection } from "next/server";
-import { appDb, getWork } from "../../../../../db/server";
+import {
+  appDb,
+  getWork,
+  isStoreUnavailable,
+  type WorkRecord,
+} from "../../../../../db/server";
 import { exportRefusal, refuse } from "../../../export-guards";
 
 /** Identifies the file's layout, so a later import can recognise it. */
@@ -17,7 +22,13 @@ export async function GET(
   const refused = await exportRefusal(request);
   if (refused) return refused;
   const { id } = await params;
-  const record = getWork(await appDb(), "analysis", id);
+  let record: WorkRecord | undefined;
+  try {
+    record = getWork(await appDb(), "analysis", id);
+  } catch (error) {
+    if (isStoreUnavailable(error)) return refuse(503, error.message);
+    throw error;
+  }
   if (!record) return refuse(404, "There is no saved analysis with that id.");
 
   const head = JSON.stringify({

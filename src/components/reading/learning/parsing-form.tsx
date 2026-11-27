@@ -3,9 +3,9 @@
 // contracts/ui.md "Parsing form"). It holds the user's answers only; the
 // source's values arrive in the response to a check and nowhere else (FR-020).
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import Link from "next/link";
 import { Fragment, useEffect, useId, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { GuardedLink } from "./guarded-link";
 import {
   FIELD_LABELS,
   FIELD_VALUES,
@@ -62,6 +62,8 @@ const REFUSALS: Record<string, string> = {
     "This word is not in the corpus store, so it couldn't be checked.",
   "corpus-missing":
     "The Greek corpus has not been built, so words can't be checked yet.",
+  "store-unavailable":
+    "Your saved work can't be reached, so this attempt was not stored. Ask whoever runs this app to check the saved-work database.",
 };
 
 const valueLabel = (value: string) =>
@@ -138,6 +140,8 @@ export function ParsingForm({
   const [dirty, setDirty] = useState(confirmingInitially);
   const [confirming, setConfirming] = useState(confirmingInitially);
   const [announcement, setAnnouncement] = useState("");
+  // What Discard does once confirmed: Next or Previous word, else closing.
+  const [leave, setLeave] = useState<(() => void) | null>(null);
 
   useEffect(() => {
     lemmaRef.current?.focus();
@@ -152,8 +156,10 @@ export function ParsingForm({
     onEscape.current = () => {
       if (endOfChapter !== undefined) onClose();
       else if (confirming) setConfirming(false);
-      else if (dirty) setConfirming(true);
-      else onClose();
+      else if (dirty) {
+        setLeave(null);
+        setConfirming(true);
+      } else onClose();
     };
   });
   useEffect(() => {
@@ -185,6 +191,17 @@ export function ParsingForm({
     setAnswer({ ...next, fields });
     setDirty(true);
     setConfirming(false);
+    // The comparison belongs to the answers that were checked.
+    setResult(null);
+    setAnnouncement("");
+  }
+
+  function moveTo(go: (() => void) | undefined) {
+    if (!go) return;
+    if (dirty) {
+      setLeave(() => go);
+      setConfirming(true);
+    } else go();
   }
 
   async function check() {
@@ -214,8 +231,10 @@ export function ParsingForm({
   }
 
   function requestClose() {
-    if (dirty) setConfirming(true);
-    else onClose();
+    if (dirty) {
+      setLeave(null);
+      setConfirming(true);
+    } else onClose();
   }
 
   if (endOfChapter !== undefined) {
@@ -231,9 +250,9 @@ export function ParsingForm({
         </div>
         {endOfChapter ? (
           <p>
-            <Link href={endOfChapter.href}>
+            <GuardedLink href={endOfChapter.href}>
               Continue with {endOfChapter.label}
-            </Link>
+            </GuardedLink>
           </p>
         ) : (
           <p>There are no more words to parse.</p>
@@ -347,7 +366,7 @@ export function ParsingForm({
           <fieldset className="parsing-confirm">
             <legend>Discard your answers?</legend>
             <div className="parsing-actions">
-              <Button onClick={onClose}>Discard</Button>
+              <Button onClick={leave ?? onClose}>Discard</Button>
               <Button ref={keepRef} onClick={() => setConfirming(false)}>
                 Keep editing
               </Button>
@@ -358,11 +377,11 @@ export function ParsingForm({
             <Button type="submit" className="button-check" disabled={checking}>
               {problem?.kind === "unreachable" ? "Check again" : "Check"}
             </Button>
-            <Button onClick={onPrevious} disabled={!onPrevious}>
+            <Button onClick={() => moveTo(onPrevious)} disabled={!onPrevious}>
               <ChevronLeft size={16} aria-hidden />
               Previous word
             </Button>
-            <Button onClick={onNext}>
+            <Button onClick={() => moveTo(onNext)}>
               Next word
               <ChevronRight size={16} aria-hidden />
             </Button>

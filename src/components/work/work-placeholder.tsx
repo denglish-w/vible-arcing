@@ -1,7 +1,7 @@
 // Shown at /analysis/[id] and /diagram/[id] until each editor lands, so saved
 // work can be reopened now (app-server-and-sqlite design decision 8).
 import Link from "next/link";
-import { LabelStrip, PageShell } from "@/components/site-shell";
+import { LabelStrip, PageShell } from "../site-shell";
 import type { WorkListItem } from "./work-list";
 
 const KIND = {

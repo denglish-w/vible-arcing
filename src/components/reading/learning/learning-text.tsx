@@ -3,14 +3,23 @@
 // FR-023, FR-029 to FR-031). It receives each word's text and id only; a word's
 // source parsing arrives in the response to checking it. Same verse layout and
 // display settings as Reading mode, without part-of-speech styling.
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { getBook, nextChapter } from "@/lib/books";
-import { createOutbox, type Outbox } from "@/lib/learning/outbox";
+import type { Unsaved } from "@/lib/learning/outbox";
+import { sharedOutbox } from "@/lib/learning/shared-outbox";
+import { newUuid } from "@/lib/learning/uuid";
 import { adjacentWord } from "@/lib/learning/navigation";
 import {
   revealWord,
@@ -28,7 +37,17 @@ import type {
 import { SIZE_SCALE, SPACING, useSettingsStore } from "@/lib/settings";
 import { ParsingForm, type EndOfChapter, type SaveState } from "./parsing-form";
 
-type Save = { id: string; state: SaveState; reason?: string };
+const NONE: Unsaved[] = [];
+
+/** The worst state among a word's unsaved attempts: refused, else pending. */
+function wordSave(unsaved: Unsaved[], wordId: string) {
+  let worst: Unsaved | undefined;
+  for (const save of unsaved) {
+    if (save.wordId !== wordId) continue;
+    if (!worst || save.state === "refused") worst = save;
+  }
+  return worst as (Unsaved & { state: SaveState }) | undefined;
+}
 
 export function LearningText({
   data,
@@ -43,53 +62,36 @@ export function LearningText({
   const selectedId = useSelectionStore((state) => state.selectedId);
   const select = useSelectionStore((state) => state.select);
   const [attempts, setAttempts] = useState(initialAttempts);
-  const [saves, setSaves] = useState<Record<string, Save>>({});
   const [atEnd, setAtEnd] = useState(false);
   const dirty = useRef(false);
-  const outbox = useRef<Outbox | null>(null);
   const book = getBook(data.book);
 
-  useEffect(() => {
-    const box = createOutbox({
-      send: actions.recordAttempt,
-      onStatus: (status) =>
-        setSaves((current) => {
-          const entry = Object.entries(current).find(
-            ([, save]) => save.id === status.id,
-          );
-          if (!entry) return current;
-          const [wordId] = entry;
-          return {
-            ...current,
-            [wordId]: {
-              id: status.id,
-              state:
-                status.state === "retrying"
-                  ? "pending"
-                  : status.state === "refused"
-                    ? "refused"
-                    : undefined,
-              reason: status.state === "refused" ? status.reason : undefined,
-            },
-          };
-        }),
-      target: window,
-    });
-    outbox.current = box;
-    return () => box.dispose();
-  }, [actions.recordAttempt]);
+  // The outbox outlives this component, so attempts still waiting to be saved
+  // keep retrying across navigation, and a refusal that arrived elsewhere is
+  // here on return; this only reads their state. The server render has none.
+  const unsaved = useSyncExternalStore(
+    (listener) => sharedOutbox(actions.recordAttempt).watch(listener),
+    () => sharedOutbox(actions.recordAttempt).unsaved(),
+    () => NONE,
+  );
+  useEffect(() => () => useSelectionStore.getState().setDirty(false), []);
 
   // A word selected before switching mode stays selected (FR-006).
   useEffect(() => restoreSelection(data.words), [data.words]);
+
+  const onDirtyChange = useCallback((value: boolean) => {
+    dirty.current = value;
+    useSelectionStore.getState().setDirty(value);
+  }, []);
 
   const close = useCallback(
     (id: string) => {
       select(null);
       setAtEnd(false);
-      dirty.current = false;
+      onDirtyChange(false);
       document.getElementById(id)?.focus();
     },
-    [select],
+    [select, onDirtyChange],
   );
 
   function move(from: string, step: 1 | -1) {
@@ -98,7 +100,7 @@ export function LearningText({
       return;
     }
     const target = adjacentWord(data.words, from, step);
-    dirty.current = false;
+    onDirtyChange(false);
     if (!target) {
       if (step === 1) setAtEnd(true);
       return;
@@ -111,11 +113,7 @@ export function LearningText({
   async function check(answer: ParsingAnswer): Promise<CheckResult> {
     const result = await actions.checkParse(answer);
     if (result.ok) {
-      const id = crypto.randomUUID();
-      setSaves((current) => ({
-        ...current,
-        [answer.wordId]: { id, state: "pending" },
-      }));
+      const id = newUuid();
       setAttempts((current) => ({
         ...current,
         [answer.wordId]: {
@@ -126,7 +124,7 @@ export function LearningText({
         },
       }));
       // The result shows at once; saving happens in the background (FR-023).
-      outbox.current?.add({ id, answer });
+      sharedOutbox(actions.recordAttempt).add({ id, answer });
     }
     return result;
   }
@@ -144,9 +142,6 @@ export function LearningText({
         label: `${following.book.name} ${following.chapter}`,
       }
     : null;
-  const onDirtyChange = useCallback((value: boolean) => {
-    dirty.current = value;
-  }, []);
 
   return (
     <div
@@ -172,7 +167,7 @@ export function LearningText({
                   open={open}
                   onOpenChange={(next) => {
                     if (next) {
-                      dirty.current = false;
+                      onDirtyChange(false);
                       setAtEnd(false);
                       select(word.id);
                     } else if (open && !dirty.current) close(word.id);
@@ -214,8 +209,8 @@ export function LearningText({
                         reference={`${book?.name ?? data.book} ${data.chapter}:${word.v}`}
                         previous={attempts[word.id]}
                         onCheck={check}
-                        saveState={saves[word.id]?.state}
-                        saveRefusal={saves[word.id]?.reason}
+                        saveState={wordSave(unsaved, word.id)?.state}
+                        saveRefusal={wordSave(unsaved, word.id)?.reason}
                         onPrevious={
                           index > 0 || atEnd
                             ? () => move(word.id, -1)

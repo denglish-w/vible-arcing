@@ -10,10 +10,12 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 import { assertAllowedHost } from "../../lib/host";
 import { MODE_COOKIE, type ReadingMode } from "../../lib/learning/mode";
-import type { ParsingAnswer } from "../../lib/learning/types";
+import type { ParsingAnswer, RecordRefusal } from "../../lib/learning/types";
 import {
   attemptDeps,
   checkAnswer,
+  corpusOnlyDeps,
+  isStoreUnavailable,
   recordAttempt as storeAttempt,
   type AttemptRefusal,
   type Checked,
@@ -44,14 +46,23 @@ export async function checkParse(
   answer: ParsingAnswer,
 ): Promise<Checked | AttemptRefusal> {
   await assertAllowedHost();
-  const { corpus } = await attemptDeps();
+  // The corpus alone: checking does not need saved work.
+  const { corpus } = await corpusOnlyDeps();
   return checkAnswer(corpus, answer);
 }
 
 export async function recordAttempt(attempt: {
   id: string;
   answer: ParsingAnswer;
-}): Promise<{ ok: true } | AttemptRefusal> {
+}): Promise<{ ok: true } | AttemptRefusal | RecordRefusal> {
   await assertAllowedHost();
-  return storeAttempt(await attemptDeps(), attempt);
+  try {
+    return storeAttempt(await attemptDeps(), attempt);
+  } catch (error) {
+    // Retrying cannot fix these, so they are a refusal rather than a failure
+    // the browser would keep retrying.
+    if (isStoreUnavailable(error))
+      return { ok: false, reason: "store-unavailable" };
+    throw error;
+  }
 }

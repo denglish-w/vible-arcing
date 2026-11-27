@@ -1,7 +1,9 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   SELECTED_WORD_KEY,
+  cancelHandOverWithinPage,
   handOverSelection,
+  handOverWithinPage,
   resetHandOver,
   restoreSelection,
   takeHandedOverSelection,
@@ -47,6 +49,28 @@ describe("selection store", () => {
     });
   });
 
+  it("leaves an open popover alone when the same chapter shows again", () => {
+    useSelectionStore.getState().select("a");
+    restoreSelection([{ id: "a" }, { id: "b" }]);
+    expect(useSelectionStore.getState()).toMatchObject({
+      selectedId: "a",
+      lastId: "a",
+    });
+  });
+
+  it("does not bring a remembered word back without a hand-over", () => {
+    const focus = vi.fn<() => void>();
+    vi.stubGlobal("document", {
+      getElementById: () => ({ scrollIntoView: vi.fn<() => void>(), focus }),
+    });
+    vi.stubGlobal("window", {});
+    useSelectionStore.getState().select("a");
+    useSelectionStore.getState().select(null);
+    restoreSelection([{ id: "a" }]);
+    expect(focus).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
+  });
+
   it("hands the selection over a reload once", () => {
     const storage = memoryStorage();
     useSelectionStore.getState().select("n50001003001");
@@ -81,5 +105,30 @@ describe("selection store", () => {
     useSelectionStore.getState().select("x");
     expect(() => handOverSelection(blocked)).not.toThrow();
     expect(takeHandedOverSelection(blocked)).toBeNull();
+  });
+
+  it("hands the selection to Reading within the page, closing the popover", () => {
+    const focus = vi.fn<() => void>();
+    vi.stubGlobal("document", {
+      getElementById: () => ({ scrollIntoView: vi.fn<() => void>(), focus }),
+    });
+    vi.stubGlobal("window", {});
+    useSelectionStore.getState().select("a");
+    handOverWithinPage();
+    restoreSelection([{ id: "a" }, { id: "b" }]);
+    expect(useSelectionStore.getState()).toMatchObject({
+      selectedId: null,
+      lastId: "a",
+    });
+    expect(focus).toHaveBeenCalledOnce();
+    expect(takeHandedOverSelection(memoryStorage())).toBeNull();
+    vi.unstubAllGlobals();
+  });
+
+  it("drops a within-page hand-over when the switch fails", () => {
+    useSelectionStore.getState().select("a");
+    handOverWithinPage();
+    cancelHandOverWithinPage();
+    expect(takeHandedOverSelection(memoryStorage())).toBeNull();
   });
 });

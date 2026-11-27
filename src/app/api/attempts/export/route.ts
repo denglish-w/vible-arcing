@@ -4,8 +4,7 @@
 import { connection } from "next/server";
 import {
   appDb,
-  DatabaseDamagedError,
-  DatabaseMissingError,
+  isStoreUnavailable,
   listAttempts,
   type StoredAttempt,
 } from "../../../../db/server";
@@ -26,11 +25,7 @@ export async function GET(request: Request) {
   try {
     attempts = listAttempts(await appDb());
   } catch (error) {
-    if (
-      error instanceof DatabaseMissingError ||
-      error instanceof DatabaseDamagedError
-    )
-      return refuse(503, error.message);
+    if (isStoreUnavailable(error)) return refuse(503, error.message);
     throw error;
   }
   const now = new Date();

@@ -11,6 +11,13 @@ type SelectionState = {
   /** The word selected most recently, kept after its popover closes. */
   lastId: string | null;
   select: (id: string | null) => void;
+  /** Whether the open parsing form holds answers that were not checked. */
+  dirty: boolean;
+  setDirty: (dirty: boolean) => void;
+  /** A link click held back while answers are unchecked, awaiting the user's choice. */
+  leaveRequest: { href: string; trigger: HTMLElement | null } | null;
+  requestLeave: (href: string, trigger: HTMLElement | null) => void;
+  cancelLeave: () => void;
 };
 
 export const useSelectionStore = create<SelectionState>()((set) => ({
@@ -18,6 +25,11 @@ export const useSelectionStore = create<SelectionState>()((set) => ({
   lastId: null,
   select: (selectedId) =>
     set((state) => ({ selectedId, lastId: selectedId ?? state.lastId })),
+  dirty: false,
+  setDirty: (dirty) => set(dirty ? { dirty } : { dirty, leaveRequest: null }),
+  leaveRequest: null,
+  requestLeave: (href, trigger) => set({ leaveRequest: { href, trigger } }),
+  cancelLeave: () => set({ leaveRequest: null }),
 }));
 
 type Storage = Pick<globalThis.Storage, "getItem" | "setItem" | "removeItem">;
@@ -46,10 +58,29 @@ export function handOverSelection(storage: Storage | undefined = session()) {
   }
 }
 
+// A selection handed over without a reload (switching to Reading refreshes
+// the page in place), taken by the next text shown.
+let withinPage: string | null = null;
+
+/** Remembers the selected word for a mode switch that does not reload. */
+export function handOverWithinPage() {
+  withinPage = useSelectionStore.getState().lastId;
+}
+
+/** Drops a within-page hand-over when the switch failed. */
+export function cancelHandOverWithinPage() {
+  withinPage = null;
+}
+
 /** Reads and clears a handed-over selection, if any. */
 export function takeHandedOverSelection(
   storage: Storage | undefined = session(),
 ): string | null {
+  if (withinPage !== null) {
+    const id = withinPage;
+    withinPage = null;
+    return id;
+  }
   if (leaving) return null;
   try {
     const id = storage?.getItem(SELECTED_WORD_KEY) ?? null;
@@ -74,18 +105,33 @@ export function revealWord(id: string, focus = false) {
 }
 
 /**
- * On showing a chapter's text: brings the word selected before a mode switch
- * into view and focuses it (FR-006). Popovers start closed.
+ * On showing a chapter's text: brings the word handed over by a mode switch into
+ * view and focuses it (FR-006). Popovers start closed. Without a hand-over only
+ * a selection from another chapter is dropped, so showing the same chapter again
+ * (a refresh, a return visit) leaves an open popover and the scroll alone.
  */
 export function restoreSelection(wordIds: readonly { id: string }[]) {
+  const has = (id: string | null) =>
+    id !== null && wordIds.some((word) => word.id === id);
   const state = useSelectionStore.getState();
-  const id = takeHandedOverSelection() ?? state.lastId;
-  const known = id !== null && wordIds.some((word) => word.id === id);
-  useSelectionStore.setState({ selectedId: null, lastId: known ? id : null });
-  if (known) revealWord(id, true);
+  const handedOver = takeHandedOverSelection();
+  if (handedOver === null) {
+    useSelectionStore.setState({
+      selectedId: has(state.selectedId) ? state.selectedId : null,
+      lastId: has(state.lastId) ? state.lastId : null,
+    });
+    return;
+  }
+  const known = has(handedOver);
+  useSelectionStore.setState({
+    selectedId: null,
+    lastId: known ? handedOver : null,
+  });
+  if (known) revealWord(handedOver, true);
 }
 
 /** For tests: forget that this page handed its selection over. */
 export function resetHandOver() {
   leaving = false;
+  withinPage = null;
 }

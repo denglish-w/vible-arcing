@@ -14,6 +14,7 @@ import {
   createAnalysis as storeNewAnalysis,
   createDiagram as storeNewDiagram,
   deleteWork,
+  isStoreUnavailable,
   saveAnalysis as storeAnalysis,
   saveDiagram as storeDiagram,
   workDeps,
@@ -38,7 +39,8 @@ const diagramInput = analysisInput.extend({
 
 export type AnalysisInput = z.input<typeof analysisInput>;
 export type DiagramInput = z.input<typeof diagramInput>;
-export type DeleteResult = { ok: true } | { ok: false; reason: "not-found" };
+export type DeleteResult =
+  { ok: true } | { ok: false; reason: "not-found" | "store-unavailable" };
 
 const badRequest: Refusal = {
   ok: false,
@@ -46,13 +48,32 @@ const badRequest: Refusal = {
   detail: "The request is not in the expected form.",
 };
 
+const unavailable = { ok: false, reason: "store-unavailable" } as const;
+
+/**
+ * Runs a store call. A store that cannot be opened is a refusal, because
+ * retrying cannot fix it; anything else throws.
+ */
+async function guarded<T>(
+  run: () => Promise<T>,
+): Promise<T | typeof unavailable> {
+  try {
+    return await run();
+  } catch (error) {
+    if (isStoreUnavailable(error)) return unavailable;
+    throw error;
+  }
+}
+
 export async function createAnalysis(
   input: AnalysisInput,
 ): Promise<Created | Refusal> {
   await assertAllowedHost();
   const parsed = analysisInput.safeParse(input);
   if (!parsed.success) return badRequest;
-  const result = storeNewAnalysis(await workDeps(), parsed.data);
+  const result = await guarded(async () =>
+    storeNewAnalysis(await workDeps(), parsed.data),
+  );
   if (result.ok) revalidatePath("/work");
   return result;
 }
@@ -67,7 +88,9 @@ export async function saveAnalysis(
     .tuple([id, revision, analysisInput])
     .safeParse([analysisId, baseRevision, input]);
   if (!parsed.success) return badRequest;
-  const result = storeAnalysis(await workDeps(), ...parsed.data);
+  const result = await guarded(async () =>
+    storeAnalysis(await workDeps(), ...parsed.data),
+  );
   if (result.ok) revalidatePath("/work");
   return result;
 }
@@ -78,7 +101,9 @@ export async function createDiagram(
   await assertAllowedHost();
   const parsed = diagramInput.safeParse(input);
   if (!parsed.success) return badRequest;
-  const result = storeNewDiagram(await workDeps(), parsed.data);
+  const result = await guarded(async () =>
+    storeNewDiagram(await workDeps(), parsed.data),
+  );
   if (result.ok) revalidatePath("/work");
   return result;
 }
@@ -93,7 +118,9 @@ export async function saveDiagram(
     .tuple([id, revision, diagramInput])
     .safeParse([diagramId, baseRevision, input]);
   if (!parsed.success) return badRequest;
-  const result = storeDiagram(await workDeps(), ...parsed.data);
+  const result = await guarded(async () =>
+    storeDiagram(await workDeps(), ...parsed.data),
+  );
   if (result.ok) revalidatePath("/work");
   return result;
 }
@@ -102,8 +129,11 @@ async function remove(kind: WorkKind, recordId: string): Promise<DeleteResult> {
   await assertAllowedHost();
   const parsed = id.safeParse(recordId);
   if (!parsed.success) return { ok: false, reason: "not-found" };
-  const result = deleteWork(await appDb(), kind, parsed.data);
-  revalidatePath("/work");
+  const result = await guarded(async () =>
+    deleteWork(await appDb(), kind, parsed.data),
+  );
+  if (result.ok || result.reason !== "store-unavailable")
+    revalidatePath("/work");
   return result;
 }
 

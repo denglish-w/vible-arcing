@@ -53,6 +53,12 @@ export type CheckRefusal = {
 export type CheckResult =
   ({ ok: true; source: SourceParsing } & Grade) | CheckRefusal;
 
+/** What recording an attempt can refuse; `store-unavailable` is permanent until saved work is repaired. */
+export type RecordRefusal = {
+  ok: false;
+  reason: CheckRefusal["reason"] | "store-unavailable";
+};
+
 /**
  * The Learning-mode server actions, passed down from the page as props so no
  * client module imports server code (and stories can pass fakes).
@@ -63,5 +69,5 @@ export type LearningActions = {
   recordAttempt: (attempt: {
     id: string;
     answer: ParsingAnswer;
-  }) => Promise<{ ok: true } | CheckRefusal>;
+  }) => Promise<{ ok: true } | RecordRefusal>;
 };

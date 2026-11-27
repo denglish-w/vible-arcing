@@ -636,6 +636,7 @@ h2 {
 }
 .mode-control {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
   border: 0;
   margin: 0;
@@ -646,6 +647,25 @@ h2 {
   flex: none;
   padding: 6px 12px;
   font-size: 14px;
+}
+.mode-message {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 14px;
+  color: var(--foreground);
+}
+/* An empty live region stays in the DOM so messages are announced, but out of the
+   flex flow so it adds no gap. */
+.mode-message:empty {
+  position: absolute;
+}
+.leave-confirm {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--foreground);
 }
 .learning-notice {
   display: flex;

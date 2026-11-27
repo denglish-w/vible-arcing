@@ -13,8 +13,12 @@ import path from "node:path";
 import Database from "better-sqlite3";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import { migrate } from "drizzle-orm/better-sqlite3/migrator";
-import { readMigrationFiles } from "drizzle-orm/migrator";
-import { assertIntact, configureApp, MIGRATIONS_TABLE } from "./client.ts";
+import {
+  assertIntact,
+  configureApp,
+  MIGRATIONS_TABLE,
+  pendingMigrations,
+} from "./client.ts";
 import { dataPaths } from "./paths.ts";
 
 export const BACKUPS_KEPT = 5;
@@ -100,25 +104,6 @@ function hasTables(sqlite: Database.Database): boolean {
     )
     .get() as { n: number };
   return row.n > 0;
-}
-
-// Must match drizzle's own rule in sqlite-core/dialect.js `migrate()`: a migration
-// is pending if its folderMillis is newer than the latest recorded created_at.
-// Recheck this when upgrading drizzle-orm.
-function pendingMigrations(
-  sqlite: Database.Database,
-  migrationsFolder: string,
-): number {
-  const migrations = readMigrationFiles({ migrationsFolder });
-  const journal = sqlite
-    .prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?")
-    .get(MIGRATIONS_TABLE);
-  if (!journal) return migrations.length;
-  const last = sqlite
-    .prepare(`SELECT max(created_at) AS t FROM "${MIGRATIONS_TABLE}"`)
-    .get() as { t: number | null };
-  const applied = last.t === null ? -Infinity : Number(last.t);
-  return migrations.filter((m) => m.folderMillis > applied).length;
 }
 
 /** `app-20261022T204501123Z.sqlite`: UTC, sortable, and safe in a file name. */

@@ -6,12 +6,7 @@ import { MODE_COOKIE, parseMode } from "@/lib/learning/mode";
 import type { AttemptSummary } from "@/lib/learning/types";
 import { Reader, type ReaderContent } from "@/components/reading/reader";
 import { getChapter } from "@/db/corpus";
-import {
-  appDb,
-  DatabaseDamagedError,
-  DatabaseMissingError,
-  latestAttempts,
-} from "@/db/server";
+import { appDb, isStoreUnavailable, latestAttempts } from "@/db/server";
 import { readCorpus } from "@/app/corpus-store";
 import {
   checkParse,
@@ -29,11 +24,7 @@ async function attemptSummaries(
   try {
     return Object.fromEntries(latestAttempts(await appDb(), wordIds));
   } catch (error) {
-    if (
-      error instanceof DatabaseMissingError ||
-      error instanceof DatabaseDamagedError
-    )
-      return {};
+    if (isStoreUnavailable(error)) return {};
     throw error;
   }
 }

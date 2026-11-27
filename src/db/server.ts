@@ -13,7 +13,12 @@ import { getAppDb, getCorpusDb, type AppDb, type CorpusDb } from "./client.ts";
 import type { AttemptDeps } from "./attempts.ts";
 import type { WorkDeps } from "./work.ts";
 
-export { DatabaseDamagedError, DatabaseMissingError } from "./client.ts";
+export {
+  DatabaseDamagedError,
+  DatabaseMissingError,
+  DatabaseNeedsMigrationError,
+  isStoreUnavailable,
+} from "./client.ts";
 export { HostNotAllowedError } from "../lib/host";
 export { getAttribution, type Attribution } from "./corpus.ts";
 export {
@@ -76,4 +81,10 @@ export async function workDeps(): Promise<WorkDeps> {
 export async function attemptDeps(): Promise<AttemptDeps> {
   await assertAllowedHost();
   return { app: getAppDb(), corpus: getCorpusDb };
+}
+
+/** What checking a parse needs: the corpus alone, so it works without saved work. */
+export async function corpusOnlyDeps(): Promise<Pick<AttemptDeps, "corpus">> {
+  await assertAllowedHost();
+  return { corpus: getCorpusDb };
 }

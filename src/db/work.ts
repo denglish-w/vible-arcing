@@ -58,7 +58,9 @@ export type Refusal =
   | { ok: false; reason: "not-found" }
   | { ok: false; reason: "too-large"; bytes: number }
   | { ok: false; reason: "unknown-version"; docVersion: number }
-  | { ok: false; reason: "corpus-missing" };
+  | { ok: false; reason: "corpus-missing" }
+  /** The saved-work database is missing, damaged or behind the migrations. */
+  | { ok: false; reason: "store-unavailable" };
 
 export type Conflict = {
   ok: false;

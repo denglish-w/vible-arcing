@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Logo, SiteFooter } from "@/components/site-shell";
 import type { Book } from "@/lib/books";
 import type { ReadingMode } from "@/lib/learning/mode";
@@ -11,6 +10,8 @@ import { ChapterNavigation } from "./chapter-navigation";
 import { ChapterNotInstalled, ChapterUnavailable } from "./chapter-status";
 import { DisplayMenu } from "./display-menu";
 import { GreekText, type ChapterText } from "./greek-text";
+import { GuardedLink } from "./learning/guarded-link";
+import { LeaveConfirm } from "./learning/leave-confirm";
 import { LearningNotice } from "./learning/learning-notice";
 import { LearningText } from "./learning/learning-text";
 import { ModeControl } from "./learning/mode-control";
@@ -66,9 +67,9 @@ export function Reader({
       </header>
       <main id="main" className="reader-content">
         <h1 className="reader-title">
-          <Link href={`/book/${book.slug}`}>
+          <GuardedLink href={`/book/${book.slug}`}>
             {book.name} {chapter}
-          </Link>
+          </GuardedLink>
         </h1>
         <ChapterNavigation
           book={book}
@@ -81,7 +82,14 @@ export function Reader({
             {book.greek} {chapter}
           </span>
         </div>
-        {learning ? <LearningNotice /> : <PosLegend />}
+        {learning ? (
+          <>
+            <LearningNotice />
+            <LeaveConfirm />
+          </>
+        ) : (
+          <PosLegend />
+        )}
         {content.status === "ok" ? (
           content.mode === "learning" ? (
             <LearningText
