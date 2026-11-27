@@ -14,6 +14,14 @@ The reader preserves source order and MACULA word identity, with keyboard-select
 
 [[src/components/reading/greek-text.tsx#GreekText]] groups words by verse and applies the selected font, size, spacing and optional verse numbers. [[src/components/reading/word-detail.tsx#WordDetail]] omits absent morphology and never exposes source syntax roles. Radix supplies Escape, outside-click dismissal and focus return; the word bubble becomes a bottom sheet on phones. [[src/lib/pos.ts#wordCategory]] assigns eleven categories, including verb mood distinctions; [[src/lib/pos.ts#categoryStyle]] pairs token colour with underline styling, used by the words and by [[src/components/reading/pos-legend.tsx#PosLegend]], which lists only the enabled categories.
 
+## Learning mode
+
+Parsing practice on the reading screen keeps the answers out of the page by construction: the mode is decided on the server and a Learning render carries only each word's text and id.
+
+The reading page reads the `vible.mode` cookie through [[src/lib/learning/mode.ts#parseMode]]; anything but `learning` means Reading. In Learning mode it sends a lean chapter plus the user's latest attempt per word from [[src/db/attempts.ts#latestAttempts]] (their own answers, when, and how many fields differed, never source values). [[src/components/reading/learning/mode-control.tsx#ModeControl]] sets the cookie through `setReadingMode` in [[src/app/read/learning-actions.ts]] and, going into Learning, reloads the document so the Reading render's inline word facts are discarded; going back to Reading the action calls `refresh()`. The actions are passed from the page to the reader as props, so no client module imports server code and stories pass fakes from [[src/stories/learning.ts]].
+
+[[src/components/reading/learning/learning-text.tsx#LearningText]] renders words without part-of-speech styling and opens [[src/components/reading/learning/parsing-form.tsx#ParsingForm]] in the word popover. One module, [[src/lib/learning/fields.ts#fieldsFor]], decides which fields apply, for the form, the grader [[src/lib/learning/grade.ts#grade]] and the validator in [[src/lib/learning/validate.ts]]. "Middle or passive" agrees with either in the present, imperfect, perfect and pluperfect only. `checkParse` grades on the server and is the only way a word's source parsing reaches a Learning page. Latin letters become Greek as typed ([[src/lib/learning/translit.ts#toGreek]]), and lemmas compare without accents, breathings, iota subscript, case or final-sigma form ([[src/lib/learning/grade.ts#normaliseLemma]]). The selected word survives a mode switch through [[src/lib/learning/selection.ts#restoreSelection]], handed over in `sessionStorage` across the reload. In Learning mode the display menu keeps colouring settings editable and says they are paused; switching mode never writes a setting.
+
 ## Browser settings
 
 Settings validate every saved field independently and continue in memory when browser storage fails.
@@ -24,7 +32,7 @@ Settings validate every saved field independently and continue in memory when br
 
 Pure-module tests verify book boundaries, categorisation, malformed settings, storage failures, corpus validation and licence-safe data.
 
-See [[src/lib/books.test.ts]], [[src/lib/pos.test.ts]], [[src/lib/settings.test.ts]] and [[src/lib/corpus/format.test.ts]]. [[src/db/seed.test.ts]] checks the committed corpus files and the store built from them. [[scripts/qa/reader.cjs]] exercises the locally served app and captures desktop and phone evidence for keyboard selection, the saved theme already on `<html>` when the body is first parsed, the phone logo link's name, navigation, credits and blocked storage.
+See [[src/lib/books.test.ts]], [[src/lib/pos.test.ts]], [[src/lib/settings.test.ts]] and [[src/lib/corpus/format.test.ts]]. [[src/db/seed.test.ts]] checks the committed corpus files and the store built from them. [[scripts/qa/reader.cjs]] exercises the locally served app and captures desktop and phone evidence for keyboard selection, the saved theme already on `<html>` when the body is first parsed, the phone logo link's name, navigation, credits and blocked storage. Its Learning-mode run asserts that a Learning page holds no word facts, then parses a word by keyboard, checks, steps to the next word, reaches the end of the chapter, reloads to see the pre-filled attempt, checks the phone bottom sheet keeps its actions in reach, downloads the history and switches back with settings unchanged. [[src/lib/learning/corpus-values.test.ts]] fails if a re-ingest brings a value the form does not offer.
 
 ## Component stories
 

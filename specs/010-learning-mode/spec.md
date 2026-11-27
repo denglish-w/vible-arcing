@@ -8,6 +8,12 @@
 
 **Input**: User description: "Learning mode: practise parsing Greek words (from the Base44 prototype comparison)"
 
+## Clarifications
+
+### Session 2026-11-16
+
+- Q: Many verb forms look the same in middle and passive, but the source always picks one. How should a student's voice answer be graded? → A: Add a "middle or passive" voice choice that agrees when the source says middle or passive in a tense whose middle and passive forms are the same; "middle" and "passive" alone are still graded exactly.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Parse a word and check it against the source (Priority: P1)
@@ -105,6 +111,7 @@ A student on a tablet parses words by tapping; another uses only the keyboard; a
 
 - A word whose source parsing leaves a field blank that the form asks for (for example a pronoun with no person or gender): the user can answer "not applicable", which agrees with a blank source value.
 - A word with no part of speech in the source, or a category the form does not offer: the user can still answer; the comparison shows the source's value as given.
+- A present, imperfect, perfect or pluperfect verb whose middle and passive forms are the same: the user can answer "middle or passive", which agrees with either source value (FR-016a); the comparison still shows which one the source chose.
 - An indeclinable word such as a proper name with no case in the source: the case field agrees only with "not applicable".
 - The user checks with required fields left empty: the empty fields are graded as differing and shown as unanswered, rather than the check being blocked.
 - The dictionary form field is left empty: graded as differing and shown as unanswered.
@@ -139,7 +146,7 @@ A student on a tablet parses words by tapping; another uses only the keyboard; a
   - noun, adjective, article and numeral: case, number and gender;
   - pronoun: case, number, gender and person;
   - all other parts of speech: no further fields.
-- **FR-011**: Each field MUST offer a closed list of values: tense (present, imperfect, future, aorist, perfect, pluperfect), voice (active, middle, passive), mood (indicative, subjunctive, optative, imperative, participle, infinitive), person (first, second, third), number (singular, plural), gender (masculine, feminine, neuter) and case (nominative, genitive, dative, accusative, vocative). Person, gender and case MUST also offer "not applicable".
+- **FR-011**: Each field MUST offer a closed list of values: tense (present, imperfect, future, aorist, perfect, pluperfect), voice (active, middle, passive, middle or passive), mood (indicative, subjunctive, optative, imperative, participle, infinitive), person (first, second, third), number (singular, plural), gender (masculine, feminine, neuter) and case (nominative, genitive, dative, accusative, vocative). Person, gender and case MUST also offer "not applicable".
 - **FR-012**: Changing the part of speech or mood MUST remove fields that no longer apply, and only fields shown at the time of checking MUST be graded and saved.
 - **FR-013**: The form MUST NOT pre-select, suggest, order by likelihood or otherwise hint at any answer drawn from the source.
 
@@ -148,6 +155,7 @@ A student on a tablet parses words by tapping; another uses only the keyboard; a
 - **FR-014**: Checking MUST compare every shown field and the dictionary form with the source, and show for each the user's answer, the source's value and whether they agree, followed by the source's full parsing and dictionary form.
 - **FR-015**: The dictionary form MUST be compared with the source's lemma, not with the inflected form in the text, ignoring accents, breathing marks, capitalisation, final-sigma form and punctuation such as elision marks.
 - **FR-016**: Choosing "participle" MUST agree with a source word that is a verb in the participle mood.
+- **FR-016a**: Voice "middle or passive" MUST agree with a source voice of middle or passive when the source's tense is present, imperfect, perfect or pluperfect, where the two forms are the same, and MUST differ in the aorist and future, where they are not. "Middle" and "passive" MUST each agree only with the same source value.
 - **FR-017**: "Not applicable" MUST agree with a source field that is blank for that word.
 - **FR-018**: Empty answers MUST be graded as differing and labelled as unanswered; the check MUST NOT be blocked by them.
 - **FR-019**: The outcome MUST state whether every field agreed or how many differed, and MUST present differences as differences from the source, not as the user's error alone.

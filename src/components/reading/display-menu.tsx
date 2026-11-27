@@ -19,7 +19,13 @@ import {
   useSettingsStore,
 } from "@/lib/settings";
 import { POS_CATEGORIES, categoryStyle } from "@/lib/pos";
-export function DisplayMenu() {
+import type { ReadingMode } from "@/lib/learning/mode";
+
+/**
+ * In Learning mode the colouring settings stay editable but take effect only
+ * back in Reading mode; switching mode never writes a setting (spec 010 FR-005).
+ */
+export function DisplayMenu({ mode = "reading" }: { mode?: ReadingMode }) {
   const { settings, updateSettings, setCategory } = useSettingsStore();
   const id = useId();
   return (
@@ -138,12 +144,15 @@ export function DisplayMenu() {
               }
             />
           </div>
+          {mode === "learning" && (
+            <p className="setting-note">Paused while Learning mode is on</p>
+          )}
           {POS_CATEGORIES.map((category) => (
             <div key={category.key} className="setting-row">
               <label
                 htmlFor={`${id}-${category.key}`}
                 style={
-                  settings.posColor.enabled
+                  settings.posColor.enabled && mode !== "learning"
                     ? categoryStyle(category.key)
                     : undefined
                 }

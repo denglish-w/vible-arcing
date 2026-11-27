@@ -54,3 +54,18 @@ export const SwitchingCategoryOffUpdatesLegend: Story = {
     await expect(within(legend).getByText("Participle")).toBeVisible();
   },
 };
+export const LearningModePaused: Story = {
+  parameters: { settings: { posColor: { enabled: true } } },
+  render: () => <DisplayMenu mode="learning" />,
+  play: async ({ canvasElement }) => {
+    await userEvent.click(
+      within(canvasElement).getByRole("button", { name: "Display settings" }),
+    );
+    const menu = within(document.body);
+    await expect(
+      await menu.findByText("Paused while Learning mode is on"),
+    ).toBeVisible();
+    // Still editable (FR-005).
+    await expect(menu.getByLabelText("Colour words")).toBeEnabled();
+  },
+};

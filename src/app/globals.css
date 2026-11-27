@@ -628,6 +628,181 @@ h2 {
 .mobile-nav {
   display: none;
 }
+/* Learning mode (spec 010). Tokens only, so all three themes follow. */
+.reader-tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.mode-control {
+  display: flex;
+  gap: 4px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.mode-control .chip {
+  flex: none;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+.learning-notice {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+}
+.learning-notice p {
+  margin: 0;
+}
+.learning-notice a {
+  color: var(--primary);
+}
+.setting-note {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted-foreground);
+}
+.parsing-popover {
+  width: 360px;
+}
+.parsing-form h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0;
+}
+.parsing-reference {
+  font-size: 14px;
+  font-weight: normal;
+  color: var(--muted-foreground);
+}
+.parsing-previous {
+  margin: -8px 0 12px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.parsing-body {
+  display: grid;
+  gap: 10px;
+}
+.parsing-field {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.parsing-field input,
+.parsing-field select {
+  min-height: 36px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--background);
+  color: var(--foreground);
+  min-width: 0;
+}
+.parsing-field input {
+  font-size: 18px;
+}
+.parsing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+.parsing-actions .button {
+  font-size: 14px;
+}
+.button-check {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.parsing-problem,
+.parsing-save {
+  margin: 0;
+  font-size: 14px;
+  color: var(--primary);
+}
+.parsing-confirm {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.parsing-confirm legend {
+  padding: 0;
+  margin-top: 6px;
+  font-size: 14px;
+}
+.parsing-result {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+}
+.parsing-outcome {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+.comparison {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 12px;
+}
+.comparison th,
+.comparison td {
+  padding: 4px 6px 4px 0;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+.comparison thead th {
+  font-weight: normal;
+  color: var(--muted-foreground);
+}
+.comparison tbody th {
+  font-weight: normal;
+}
+.comparison .outcome {
+  white-space: nowrap;
+}
+/* Colour is the third cue after the symbol and the word (FR-033). */
+.comparison [data-outcome="differs"] .outcome,
+.comparison [data-outcome="unanswered"] .outcome {
+  color: var(--primary);
+  font-weight: 600;
+}
+.source-parsing h3 {
+  margin: 0 0 4px;
+}
+.source-parsing p {
+  margin: 0 0 8px;
+}
+.source-parsing .gloss {
+  font-style: italic;
+}
+.source-parsing dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+  margin: 0;
+}
+.source-parsing dt {
+  color: var(--muted-foreground);
+  text-transform: capitalize;
+}
+.source-parsing dd {
+  margin: 0;
+}
 @media (min-width: 640px) {
   .book-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -698,6 +873,27 @@ h2 {
     padding-right: 24px;
   }
   .chapter-grid {
+    gap: 8px;
+  }
+  /* The parsing form is a bottom sheet (from .word-detail); its actions stay
+     in reach while the body scrolls (FR-035). */
+  .parsing-popover {
+    padding-bottom: 0;
+  }
+  .parsing-form .parsing-actions {
+    position: sticky;
+    bottom: 0;
+    padding: 8px 0 12px;
+    background: var(--card);
+  }
+  .parsing-field {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .mode-control .chip {
+    padding: 6px 8px;
+  }
+  .reader-tools {
     gap: 8px;
   }
 }

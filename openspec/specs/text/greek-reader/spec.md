@@ -145,3 +145,27 @@ The credits page SHALL state that the application is not affiliated with or endo
 - **WHEN** the corpus store's attribution lists a dataset
 - **THEN** that dataset appears on the credits page
 
+
+### Requirement: Learning mode
+
+The reading screen SHALL offer a Learning mode, beside Reading mode, in which the user parses a word and checks the answer against the source's parsing (spec 010). The mode SHALL persist in the browser and fall back to Reading mode when the stored choice is missing or unreadable. In Learning mode the page SHALL hold only each word's text and identifier: no dictionary form, gloss, part of speech or parsing for any word reaches the browser until the user checks that word. Part-of-speech colouring, its legend and the word-detail popover SHALL be withheld, and switching back to Reading mode SHALL change no display setting. When the English line exists (spec 012) it SHALL be hidden in Learning mode.
+
+#### Scenario: Answers kept out of the page
+
+- **WHEN** a chapter is served in Learning mode
+- **THEN** its page contains no word's dictionary form, gloss, part of speech or parsing
+
+#### Scenario: Checking a parse
+
+- **WHEN** a user enters a dictionary form, part of speech and the fields that apply, and checks
+- **THEN** each field is shown as agreeing or differing from the source, with a word or symbol as well as colour, followed by the source's full parsing
+
+#### Scenario: Ambiguous middle and passive
+
+- **WHEN** a user answers "middle or passive" for a present, imperfect, perfect or pluperfect verb the source marks middle or passive
+- **THEN** the voice agrees; in the aorist or future it differs
+
+#### Scenario: Leaving Learning mode
+
+- **WHEN** a user switches from Learning back to Reading mode
+- **THEN** colouring and the legend return exactly as the display settings say, and the selected word is still selected

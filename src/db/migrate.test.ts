@@ -78,7 +78,7 @@ function backups(): string[] {
 describe("migrateApp", () => {
   it("creates the database and applies every migration, with no backup", () => {
     const result = migrateApp({ dataDir, migrationsFolder });
-    expect(result).toEqual({ created: true, applied: 1, backup: null });
+    expect(result).toEqual({ created: true, applied: 2, backup: null });
     expect(analysisIds()).toEqual([]);
     expect(backups()).toEqual([]);
   });
