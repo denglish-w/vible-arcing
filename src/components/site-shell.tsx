@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { GuardedLink } from "./reading/learning/guarded-link";
 import type { ReactNode } from "react";
 
 export function ChiRho() {
@@ -31,17 +31,17 @@ export function ChiRho() {
 }
 export function Logo() {
   return (
-    <Link href="/" className="logo">
+    <GuardedLink href="/" className="logo">
       <ChiRho />
       <span>[Product Name]</span>
-    </Link>
+    </GuardedLink>
   );
 }
 export function SiteFooter() {
   return (
     <footer className="site-footer">
       Greek text: SBLGNT · Morphology: MACULA ·{" "}
-      <Link href="/credits">Credits &amp; licences</Link>
+      <GuardedLink href="/credits">Credits &amp; licences</GuardedLink>
     </footer>
   );
 }

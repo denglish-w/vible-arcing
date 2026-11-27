@@ -10,7 +10,7 @@ Defined once in `src/lib/learning/fields.ts`; values equal the corpus values (re
 |---|---|
 | `FormPos` | noun, verb, participle, article, pronoun, adjective, adverb, preposition, conjunction, particle, numeral, interjection |
 | `tense` | present, imperfect, future, aorist, perfect, pluperfect |
-| `voice` | active, middle, passive |
+| `voice` | active, middle, passive, middle or passive (FR-016a) |
 | `mood` | indicative, subjunctive, optative, imperative, participle, infinitive |
 | `person` | first, second, third, `n/a` |
 | `number` | singular, plural |
@@ -56,7 +56,7 @@ Grading rules (`src/lib/learning/grade.ts`, pure):
 
 - `lemma`: `normaliseLemma(answer) === normaliseLemma(source.lemma)`. `normaliseLemma` = NFD, remove combining marks (accents, breathings, iota subscript, diaeresis), lower-case, ς→σ, remove elision marks (’ ʼ ᾿ ') and other punctuation and whitespace (research R5).
 - `pos`: agrees when the mapped source part of speech equals the answer, or the answer is participle and the source is a verb in the participle mood (FR-016).
-- Each field in `fieldsFor(answer.pos, answer.fields.mood)`: `n/a` agrees with an absent source value (FR-017); otherwise agrees on equal strings; empty is `unanswered` (FR-018).
+- Each field in `fieldsFor(answer.pos, answer.fields.mood)`: `n/a` agrees with an absent source value (FR-017); voice `middle or passive` agrees with a source middle or passive when the source tense is present, imperfect, perfect or pluperfect (FR-016a); otherwise agrees on equal strings; empty is `unanswered` (FR-018).
 - Overall: `allAgreed` is true only when every comparison is `agrees`; `differCount` counts the rest (FR-019).
 
 ## Source parsing (returned by a check only)

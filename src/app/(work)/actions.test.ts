@@ -1,6 +1,12 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { AppDb, CorpusDb } from "../../db/client.ts";
+import {
+  DatabaseDamagedError,
+  DatabaseMissingError,
+  DatabaseNeedsMigrationError,
+  type AppDb,
+  type CorpusDb,
+} from "../../db/client.ts";
 import { books, chapters, words } from "../../db/schema/corpus.ts";
 import { createTestAppDb, createTestCorpusDb } from "../../db/testing.ts";
 import { getWork } from "../../db/work.ts";
@@ -24,10 +30,15 @@ vi.mock("next/server", async (original) => ({
 const db = vi.hoisted(() => ({
   app: null as AppDb | null,
   corpus: null as CorpusDb | null,
+  /** When set, opening saved work throws it. */
+  failure: null as Error | null,
 }));
 vi.mock("../../db/client.ts", async (original) => ({
   ...(await original<typeof import("../../db/client.ts")>()),
-  getAppDb: () => db.app,
+  getAppDb: () => {
+    if (db.failure) throw db.failure;
+    return db.app;
+  },
   getCorpusDb: () => db.corpus,
 }));
 
@@ -35,6 +46,7 @@ const actions = await import("./actions.ts");
 const { GET: exportAnalysis } =
   await import("../api/analyses/[id]/export/route.ts");
 const { default: WorkPage } = await import("./work/page.tsx");
+const { default: AnalysisPage } = await import("./analysis/[id]/page.tsx");
 
 /** A corpus holding Philippians 1:3, the words the fixtures use. */
 function fixtureCorpus(): CorpusDb {
@@ -75,6 +87,7 @@ function fixtureCorpus(): CorpusDb {
 beforeEach(() => {
   db.app = createTestAppDb();
   db.corpus = fixtureCorpus();
+  db.failure = null;
   request.headers = new Headers({ host: "127.0.0.1:3000" });
   vi.clearAllMocks();
 });
@@ -280,4 +293,65 @@ describe("/work", () => {
     expect(html).toContain("Greeting diagram");
     expect(html).toContain("Philippians 1:3");
   });
+});
+
+describe("when saved work cannot be opened", () => {
+  const failures = {
+    missing: new DatabaseMissingError("app", "/secret/app.sqlite"),
+    damaged: new DatabaseDamagedError("/secret/app.sqlite", "malformed"),
+    "needs migration": new DatabaseNeedsMigrationError("/secret/app.sqlite"),
+  };
+
+  it.each(Object.entries(failures))(
+    "refuses saves and deletes when it is %s",
+    async (_name, failure) => {
+      db.failure = failure;
+      const unavailable = { ok: false, reason: "store-unavailable" };
+      const id = crypto.randomUUID();
+      expect(await actions.createAnalysis(input(VALID.Ground))).toEqual(
+        unavailable,
+      );
+      expect(await actions.saveAnalysis(id, 1, input(VALID.Ground))).toEqual(
+        unavailable,
+      );
+      expect(await actions.deleteDiagram(id)).toEqual(unavailable);
+      expect(revalidatePath).not.toHaveBeenCalled();
+    },
+  );
+
+  it("still throws other errors", async () => {
+    db.failure = new Error("disk on fire");
+    await expect(actions.createAnalysis(input(VALID.Ground))).rejects.toThrow(
+      "disk on fire",
+    );
+  });
+
+  it.each(Object.entries(failures))(
+    "shows one path-free message on the pages and answers 503 on export when it is %s",
+    async (_name, failure) => {
+      db.failure = failure;
+      for (const html of [
+        renderToStaticMarkup(await WorkPage()),
+        renderToStaticMarkup(
+          await AnalysisPage({
+            params: Promise.resolve({ id: crypto.randomUUID() }),
+          }),
+        ),
+      ]) {
+        expect(html).toContain("Saved work isn");
+        expect(html).toContain(
+          failure.message.replace(/`/g, "&#x60;").slice(0, 20),
+        );
+        expect(html).not.toContain("/secret");
+      }
+      const response = await exportAnalysis(
+        new Request("http://127.0.0.1:3000/api/analyses/x/export", {
+          headers: { "sec-fetch-site": "same-origin" },
+        }),
+        { params: Promise.resolve({ id: "x" }) },
+      );
+      expect(response.status).toBe(503);
+      expect(await response.text()).not.toContain("/secret");
+    },
+  );
 });

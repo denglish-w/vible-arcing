@@ -13,6 +13,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   DatabaseDamagedError,
   DatabaseMissingError,
+  DatabaseNeedsMigrationError,
   getAppDb,
   isDamageError,
   openApp,
@@ -67,6 +68,21 @@ describe("openApp", () => {
     const file = path.join(tmp, "app.sqlite");
     new Database(file).close();
     expect(() => openApp(file)).toThrow(/npm run db:migrate/);
+  });
+
+  it("refuses a store that lags the bundled migrations, and accepts one that does not", () => {
+    const file = migratedApp();
+    const bundled = path.join(repoRoot, "drizzle", "app");
+    openApp(file, bundled).$client.close();
+    const sqlite = new Database(file);
+    sqlite.exec(
+      "DELETE FROM __drizzle_migrations WHERE created_at = (SELECT max(created_at) FROM __drizzle_migrations)",
+    );
+    sqlite.close();
+    expect(() => openApp(file, bundled)).toThrow(DatabaseNeedsMigrationError);
+    expect(() => openApp(file, bundled)).toThrow(/npm run db:migrate/);
+    // Without a migrations folder to compare with, the check is skipped.
+    openApp(file).$client.close();
   });
 
   it("refuses a corrupt file and leaves it byte for byte unchanged", () => {

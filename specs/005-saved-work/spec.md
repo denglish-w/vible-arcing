@@ -175,5 +175,6 @@ Rebuilding the Greek corpus or upgrading the app never alters saved work, and a 
 - The size limit and the recognised document versions are set in the server and stated to the user at refusal; this spec does not fix their values.
 - The arcing and diagramming editors do not exist yet, so the autosave behaviour is exercised through the save loop and server actions rather than a finished editor.
 - Importing an exported file is not part of this feature; it comes with the arcing editor.
+- Parsing-practice attempts (spec 010) are a further kind of saved work in their own table: append-only, validated, exportable and kept across re-ingest, but not listed on `/work`.
 - The app is single-user and local only; accounts, sharing and Postgres are out of scope.
 - Constitution principles V and VII apply: work is kept and validated by one shared module, and the local-only protection is not weakened.

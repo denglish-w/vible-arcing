@@ -20,7 +20,8 @@ export type PermanentReason =
   | "not-found"
   | "too-large"
   | "unknown-version"
-  | "corpus-missing";
+  | "corpus-missing"
+  | "store-unavailable";
 
 export type AutosaveStatus =
   | { state: "saved" }

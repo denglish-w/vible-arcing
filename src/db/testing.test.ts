@@ -27,7 +27,7 @@ describe("test databases", () => {
 
   it("builds the saved-work tables with the app pragmas", () => {
     const db = createTestAppDb();
-    expect(tables(db)).toEqual(["analyses", "diagrams"]);
+    expect(tables(db)).toEqual(["analyses", "diagrams", "parse_attempts"]);
     expect(db.$client.pragma("foreign_keys", { simple: true })).toBe(1);
     expect(db.$client.pragma("trusted_schema", { simple: true })).toBe(0);
   });

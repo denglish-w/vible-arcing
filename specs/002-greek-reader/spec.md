@@ -161,4 +161,5 @@ A user opens the credits page and sees every work whose text or data the app shi
 - English glosses and morphology come from the loaded corpus data; the format of that data is specified elsewhere (`text/corpus-store`) and is out of scope here.
 - Visual identity, themes, colour categories and typefaces are specified in `003-visual-theme`; this spec covers how the reader uses them.
 - The reader has no editing, arcing or diagramming; those are separate features.
+- Learning mode (spec 010) extends the reading screen: a server-decided mode in which word facts are withheld until the user checks a parse.
 - The application is single-user and local; there are no accounts, so settings are per browser.

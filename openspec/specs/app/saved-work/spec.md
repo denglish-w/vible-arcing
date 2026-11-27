@@ -111,6 +111,25 @@ A user SHALL be able to download any saved analysis as a file that records its p
 - **WHEN** a user exports a saved analysis
 - **THEN** a file is downloaded that names the passage and edition and holds the analysis exactly as stored
 
+### Requirement: Parsing-practice attempts
+
+Every check in Learning mode SHALL be kept as an attempt (spec 010): the word by its MACULA identifier, the time, the user's answers, and the source's values and per-field outcome as computed by the server. Attempts SHALL be validated before they are stored (the word exists, every value is from the closed lists, only fields that apply are present), SHALL never be overwritten, SHALL survive restarts and corpus rebuilds (an attempt whose word no longer exists is kept), and SHALL be saved in the background with retry, so a result is never held up by saving. Attempts are not listed on `/work`. The user SHALL be able to download all attempts as a file naming each word's reference, text form and edition.
+
+#### Scenario: Retried save stored once
+
+- **WHEN** the same attempt is sent twice because the first response was lost
+- **THEN** one attempt is stored
+
+#### Scenario: Reopening a checked word
+
+- **WHEN** a user reopens a word they checked before
+- **THEN** the form is pre-filled with their last answers and says when it was checked and whether every field agreed, without showing the source's values
+
+#### Scenario: Exporting attempts
+
+- **WHEN** a user downloads their practice history
+- **THEN** the file lists every attempt with its reference, text form and edition
+
 ### Requirement: Listing, reopening and deleting work
 
 A user SHALL be able to list saved analyses and diagrams, showing for each its title, passage, kind and last-modified time, newest first. The list SHALL reflect the current stored work every time it is opened.

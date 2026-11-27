@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect } from "react";
 import {
   Popover,
   PopoverTrigger,
@@ -10,13 +10,17 @@ import { WordDetail } from "./word-detail";
 import type { CorpusChapter, CorpusWord } from "@/lib/corpus/format";
 import { wordCategory, categoryStyle } from "@/lib/pos";
 import { SIZE_SCALE, SPACING, useSettingsStore } from "@/lib/settings";
+import { restoreSelection, useSelectionStore } from "@/lib/learning/selection";
 
 /** The part of a chapter the reader shows; fixtures and the store both supply it. */
 export type ChapterText = Pick<CorpusChapter, "book" | "chapter" | "words">;
 
 export function GreekText({ data }: { data: ChapterText }) {
   const settings = useSettingsStore((state) => state.settings);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Shared with Learning mode, so the selected word survives a switch (spec 010 FR-006).
+  const selectedId = useSelectionStore((state) => state.selectedId);
+  const select = useSelectionStore((state) => state.select);
+  useEffect(() => restoreSelection(data.words), [data.words]);
   const verses = new Map<number, CorpusWord[]>();
   for (const word of data.words) {
     const verse = verses.get(word.v) ?? [];
@@ -48,11 +52,12 @@ export function GreekText({ data }: { data: ChapterText }) {
                 <Fragment key={word.id}>
                   <Popover
                     open={selectedId === word.id}
-                    onOpenChange={(open) =>
-                      setSelectedId((current) =>
+                    onOpenChange={(open) => {
+                      const current = useSelectionStore.getState().selectedId;
+                      select(
                         open ? word.id : current === word.id ? null : current,
-                      )
-                    }
+                      );
+                    }}
                   >
                     <PopoverTrigger asChild>
                       <button

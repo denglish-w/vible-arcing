@@ -4,6 +4,8 @@
 import { existsSync } from "node:fs";
 import Database from "better-sqlite3";
 import { drizzle } from "drizzle-orm/better-sqlite3";
+import { readMigrationFiles } from "drizzle-orm/migrator";
+import path from "node:path";
 import { dataPaths } from "./paths.ts";
 import * as appSchema from "./schema/app.ts";
 import * as corpusSchema from "./schema/corpus.ts";
@@ -46,6 +48,27 @@ export class DatabaseDamagedError extends Error {
   }
 }
 
+/** The saved-work database lags the migrations this build ships with. */
+export class DatabaseNeedsMigrationError extends Error {
+  readonly file: string;
+  constructor(file: string) {
+    super(
+      "The saved-work database needs updating. Stop the server and run `npm run db:migrate`.",
+    );
+    this.name = "DatabaseNeedsMigrationError";
+    this.file = file;
+  }
+}
+
+/** True when saved work cannot be opened: missing, damaged or behind the migrations. */
+export function isStoreUnavailable(error: unknown): error is Error {
+  return (
+    error instanceof DatabaseMissingError ||
+    error instanceof DatabaseDamagedError ||
+    error instanceof DatabaseNeedsMigrationError
+  );
+}
+
 const DAMAGE_CODES = new Set(["SQLITE_CORRUPT", "SQLITE_NOTADB"]);
 
 /** True for SQLite errors that mean the file itself is damaged. */
@@ -74,6 +97,25 @@ export function assertIntact(sqlite: Database.Database, file: string): void {
   if (result !== "ok") throw new DatabaseDamagedError(file, String(result));
 }
 
+// Must match drizzle's own rule in sqlite-core/dialect.js `migrate()`: a migration
+// is pending if its folderMillis is newer than the latest recorded created_at.
+// Recheck this when upgrading drizzle-orm.
+export function pendingMigrations(
+  sqlite: Database.Database,
+  migrationsFolder: string,
+): number {
+  const migrations = readMigrationFiles({ migrationsFolder });
+  const journal = sqlite
+    .prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?")
+    .get(MIGRATIONS_TABLE);
+  if (!journal) return migrations.length;
+  const last = sqlite
+    .prepare(`SELECT max(created_at) AS t FROM "${MIGRATIONS_TABLE}"`)
+    .get() as { t: number | null };
+  const applied = last.t === null ? -Infinity : Number(last.t);
+  return migrations.filter((m) => m.folderMillis > applied).length;
+}
+
 function corpusDrizzle(sqlite: Database.Database) {
   return drizzle({ client: sqlite, schema: corpusSchema });
 }
@@ -96,9 +138,10 @@ export function openCorpus(file: string): CorpusDb {
 
 /**
  * Opens saved work read-write. It is checked before anything changes it, and it
- * must have been set up by `db:migrate`.
+ * must have been set up by `db:migrate`. With `migrationsFolder`, a store that
+ * lags the migrations in it is refused with `DatabaseNeedsMigrationError`.
  */
-export function openApp(file: string): AppDb {
+export function openApp(file: string, migrationsFolder?: string): AppDb {
   if (!existsSync(file)) throw new DatabaseMissingError("app", file);
   const sqlite = new Database(file, { fileMustExist: true });
   try {
@@ -107,6 +150,8 @@ export function openApp(file: string): AppDb {
       .prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?")
       .get(MIGRATIONS_TABLE);
     if (!migrated) throw new DatabaseMissingError("app", file);
+    if (migrationsFolder && pendingMigrations(sqlite, migrationsFolder) > 0)
+      throw new DatabaseNeedsMigrationError(file);
     configureApp(sqlite);
   } catch (error) {
     sqlite.close();
@@ -136,7 +181,21 @@ export function getCorpusDb(): CorpusDb {
   return connections.__vibleCorpusDb;
 }
 
+/**
+ * Where the bundled migrations are: beside the project in dev, and inside the
+ * standalone output (next.config.ts traces them there, so the server's own
+ * directory has them under `npm start` and in the container). The parent
+ * directory is a fallback for a server started from a subfolder. Undefined when
+ * none exists, which skips the check (`db:migrate` runs before every start).
+ */
+function bundledMigrations(): string | undefined {
+  return [
+    path.resolve(process.cwd(), "drizzle", "app"),
+    path.resolve(process.cwd(), "..", "drizzle", "app"),
+  ].find((dir) => existsSync(path.join(dir, "meta", "_journal.json")));
+}
+
 export function getAppDb(): AppDb {
-  connections.__vibleAppDb ??= openApp(dataPaths().app);
+  connections.__vibleAppDb ??= openApp(dataPaths().app, bundledMigrations());
   return connections.__vibleAppDb;
 }

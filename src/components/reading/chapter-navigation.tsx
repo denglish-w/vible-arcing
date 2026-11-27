@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { GuardedLink } from "./learning/guarded-link";
 import { nextChapter, prevChapter, type Book } from "@/lib/books";
 
 export function ChapterNavigation({
@@ -16,27 +16,27 @@ export function ChapterNavigation({
   return (
     <nav aria-label="Chapter navigation" className={`chapter-nav ${className}`}>
       {previous && (
-        <Link
+        <GuardedLink
           className="button"
           href={`/read/${previous.book.slug}/${previous.chapter}`}
           aria-label={`Previous chapter: ${previous.book.name} ${previous.chapter}`}
         >
           <ChevronLeft size={16} />
-        </Link>
+        </GuardedLink>
       )}
       <span>
-        <Link href={`/book/${book.slug}`}>
+        <GuardedLink href={`/book/${book.slug}`}>
           {book.name} {chapter}
-        </Link>
+        </GuardedLink>
       </span>
       {next && (
-        <Link
+        <GuardedLink
           className="button"
           href={`/read/${next.book.slug}/${next.chapter}`}
           aria-label={`Next chapter: ${next.book.name} ${next.chapter}`}
         >
           <ChevronRight size={16} />
-        </Link>
+        </GuardedLink>
       )}
     </nav>
   );

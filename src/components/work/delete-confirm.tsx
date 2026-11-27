@@ -17,7 +17,7 @@ export function DeleteConfirm({
   onConfirm: () => Promise<unknown>;
 }) {
   const [confirming, setConfirming] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   const openRef = useRef<HTMLButtonElement>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -32,10 +32,15 @@ export function DeleteConfirm({
   const confirm = () =>
     startTransition(async () => {
       try {
-        await onConfirm();
-        setFailed(false);
+        const result = await onConfirm();
+        const unavailable =
+          typeof result === "object" &&
+          result !== null &&
+          "reason" in result &&
+          result.reason === "store-unavailable";
+        setFailed(unavailable ? "Saved work isn’t available." : null);
       } catch {
-        setFailed(true);
+        setFailed("It could not be deleted. Try again.");
       }
       setConfirming(false);
     });
@@ -43,7 +48,7 @@ export function DeleteConfirm({
   if (!confirming)
     return (
       <div className="delete-confirm">
-        {failed && <output>It could not be deleted. Try again.</output>}
+        {failed && <output>{failed}</output>}
         <Button ref={openRef} onClick={() => setConfirming(true)}>
           Delete<span className="sr-only"> “{title}”</span>
         </Button>
